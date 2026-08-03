@@ -3,11 +3,11 @@ import logoAsset from "@/assets/logo.png.asset.json";
 export function Cierre() {
   return (
     <section className="bg-wine text-wine-foreground">
-      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 md:py-24">
-        <h2 className="font-display text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
+      <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 md:py-20">
+        <h2 className="text-center font-display text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
           Empieza hoy
         </h2>
-        <div className="mt-6 space-y-3 text-base text-wine-foreground/85 sm:text-lg">
+        <div className="mt-6 space-y-3 text-justify hyphens-auto text-base text-wine-foreground/85 sm:text-lg">
           <p>Tu perro aprende todos los días.</p>
           <p>La pregunta es:</p>
           <p className="font-display text-2xl font-bold text-primary sm:text-3xl">
@@ -28,7 +28,7 @@ export function Cierre() {
         >
           Analizar a mi perro gratis
         </a>
-        <p className="mt-3 text-sm text-wine-foreground/70">
+        <p className="text-justify hyphens-auto mt-3 text-sm text-wine-foreground/70">
           Sin tarjeta de crédito. Sin compromiso.
         </p>
       </div>
@@ -45,7 +45,7 @@ export function Footer() {
           alt="Traductor Canino IA — Tu copiloto de crianza canina"
           className="h-16 w-auto min-w-0 max-w-full object-contain sm:h-24"
         />
-        <p className="shrink-0 text-sm text-muted-foreground">
+        <p className="text-justify hyphens-auto shrink-0 text-sm text-muted-foreground">
           © {new Date().getFullYear()}
         </p>
       </div>

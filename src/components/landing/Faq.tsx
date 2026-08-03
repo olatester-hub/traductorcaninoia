@@ -51,8 +51,8 @@ const faqs = [
 export function Faq() {
   return (
     <section className="bg-cream">
-      <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 md:py-20">
-        <h2 className="font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
+      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 md:py-16">
+        <h2 className="text-center font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
           Preguntas frecuentes
         </h2>
 
@@ -62,7 +62,7 @@ export function Faq() {
               <AccordionTrigger className="py-5 text-left font-display text-lg font-bold hover:no-underline sm:text-xl">
                 {f.q}
               </AccordionTrigger>
-              <AccordionContent className="space-y-2 text-base text-muted-foreground">
+              <AccordionContent className="space-y-2 text-justify hyphens-auto text-base text-muted-foreground">
                 {f.a.map((p) => (
                   <p key={p}>{p}</p>
                 ))}

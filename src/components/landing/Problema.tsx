@@ -1,15 +1,15 @@
 export function Problema() {
   return (
     <section className="bg-wine text-wine-foreground">
-      <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 md:py-20">
-        <h2 className="font-display text-3xl leading-[1] font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
+      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 md:py-16">
+        <h2 className="text-center font-display text-3xl leading-[1] font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
           Tu perro no está intentando portarse mal.
         </h2>
         <p className="mt-3 font-display text-2xl font-bold text-primary sm:text-3xl">
           Está intentando comunicarse.
         </p>
 
-        <div className="mt-8 space-y-4 text-base leading-relaxed text-wine-foreground/85 sm:text-lg">
+        <div className="mt-8 space-y-4 text-justify hyphens-auto text-base leading-relaxed text-wine-foreground/85 sm:text-lg">
           <p>
             Cuando ladra, rompe cosas, hace sus necesidades donde no corresponde o tira de la correa,
             la mayoría piensa que el problema está en el perro.

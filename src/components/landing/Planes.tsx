@@ -3,14 +3,14 @@ import { ShieldCheck } from "lucide-react";
 export function Planes() {
   return (
     <section id="planes" className="bg-background">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 md:py-20">
-        <h2 className="font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16">
+        <h2 className="text-center font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
           Elige el plan que mejor se adapte a ti
         </h2>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
           <article className="flex flex-col rounded-3xl border border-border bg-card p-6 sm:p-8">
-            <h3 className="font-display text-2xl font-bold">Plan Mensual</h3>
+            <h3 className="text-center font-display text-2xl font-bold">Plan Mensual</h3>
             <ul className="mt-5 space-y-2 text-base text-muted-foreground">
               <li>Acceso completo a todas las funciones.</li>
               <li>Actualizaciones continuas.</li>
@@ -28,7 +28,7 @@ export function Planes() {
 
           <article className="flex flex-col rounded-3xl bg-primary p-6 text-primary-foreground sm:p-8">
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-              <h3 className="min-w-0 truncate font-display text-2xl font-bold">Plan Anual</h3>
+              <h3 className="text-center min-w-0 truncate font-display text-2xl font-bold">Plan Anual</h3>
               <span className="shrink-0 rounded-full bg-wine px-3 py-1 text-xs font-bold text-wine-foreground">
                 Ahorra 33 %
               </span>
@@ -38,8 +38,8 @@ export function Planes() {
               <li>Ahorra aproximadamente un 33 % frente al pago mensual.</li>
             </ul>
             <p className="mt-6 font-display text-3xl font-extrabold sm:text-4xl">USD 55,99 al año</p>
-            <p className="mt-1 text-base font-bold">Equivale a solo USD 4,67 al mes.</p>
-            <p className="mt-3 text-base">
+            <p className="text-justify hyphens-auto mt-1 text-base font-bold">Equivale a solo USD 4,67 al mes.</p>
+            <p className="text-justify hyphens-auto mt-3 text-base">
               La mejor opción para acompañar a tu perro durante todo su proceso de crecimiento y
               aprendizaje.
             </p>
@@ -52,10 +52,10 @@ export function Planes() {
           </article>
         </div>
 
-        <div className="mt-10 rounded-3xl bg-secondary p-6 text-secondary-foreground sm:p-8">
+        <div className="mt-8 rounded-3xl bg-secondary p-6 text-secondary-foreground sm:p-8">
           <div className="flex items-center gap-3">
             <ShieldCheck className="size-7 shrink-0 text-primary" aria-hidden="true" />
-            <h2 className="min-w-0 font-display text-2xl font-extrabold sm:text-3xl">Garantía</h2>
+            <h2 className="text-center min-w-0 font-display text-2xl font-extrabold sm:text-3xl">Garantía</h2>
           </div>
           <div className="mt-4 space-y-3 text-base">
             <p>Tomes esta decisión con total tranquilidad.</p>
