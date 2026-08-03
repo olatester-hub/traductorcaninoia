@@ -1,3 +1,5 @@
+import logoAsset from "@/assets/logo.jpg.asset.json";
+
 export function Cierre() {
   return (
     <section className="bg-wine text-wine-foreground">
@@ -42,7 +44,7 @@ export function Footer() {
           src={logoAsset.url}
           alt="Traductor Canino IA — Tu copiloto de crianza canina"
           className="h-10 w-auto min-w-0 max-w-full object-contain mix-blend-multiply sm:h-12"
-        />developer
+        />
         <p className="shrink-0 text-sm text-muted-foreground">
           © {new Date().getFullYear()}
         </p>
