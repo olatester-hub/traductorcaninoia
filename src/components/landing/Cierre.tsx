@@ -1,4 +1,4 @@
-import logoAsset from "@/assets/logo.jpg.asset.json";
+import logoAsset from "@/assets/logo.png.asset.json";
 
 export function Cierre() {
   return (
@@ -43,7 +43,7 @@ export function Footer() {
         <img
           src={logoAsset.url}
           alt="Traductor Canino IA — Tu copiloto de crianza canina"
-          className="h-10 w-auto min-w-0 max-w-full object-contain mix-blend-multiply sm:h-12"
+          className="h-16 w-auto min-w-0 max-w-full object-contain sm:h-24"
         />
         <p className="shrink-0 text-sm text-muted-foreground">
           © {new Date().getFullYear()}
