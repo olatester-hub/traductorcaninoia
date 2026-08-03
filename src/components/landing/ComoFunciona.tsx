@@ -24,7 +24,7 @@ export function ComoFunciona() {
         <h2 className="text-center font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
           ¿Cómo funciona?
         </h2>
-        <p className="mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
+        <p className="text-justify hyphens-auto mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
           Solo responde unas preguntas o sube un video.
         </p>
 

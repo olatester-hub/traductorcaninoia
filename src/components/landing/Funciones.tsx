@@ -14,7 +14,7 @@ export function Funciones() {
           <article className="rounded-3xl bg-primary p-6 text-primary-foreground sm:p-7">
             <Brain className="size-7" aria-hidden="true" />
             <h3 className="text-center mt-4 font-display text-xl font-bold">Diagnóstico Inteligente</h3>
-            <p className="mt-2 text-base">
+            <p className="text-justify hyphens-auto mt-2 text-base">
               Descubre la verdadera causa del comportamiento antes de intentar corregirlo.
             </p>
           </article>
@@ -22,7 +22,7 @@ export function Funciones() {
           <article className="rounded-3xl border border-border bg-card p-6 sm:p-7">
             <Languages className="size-7 text-primary" aria-hidden="true" />
             <h3 className="text-center mt-4 font-display text-xl font-bold">Traductor de Conductas</h3>
-            <p className="mt-2 text-base text-muted-foreground">
+            <p className="text-justify hyphens-auto mt-2 text-base text-muted-foreground">
               Comprende qué significan realmente los ladridos, mordidas, ansiedad, miedo,
               destrucción, reactividad y otros comportamientos cotidianos.
             </p>
@@ -31,7 +31,7 @@ export function Funciones() {
           <article className="rounded-3xl bg-wine p-6 text-wine-foreground sm:p-7">
             <Video className="size-7 text-primary" aria-hidden="true" />
             <h3 className="text-center mt-4 font-display text-xl font-bold">Analizador de Video</h3>
-            <p className="mt-2 text-base text-wine-foreground/85">
+            <p className="text-justify hyphens-auto mt-2 text-base text-wine-foreground/85">
               Sube un video y recibe un análisis del lenguaje corporal junto con recomendaciones
               inmediatas.
             </p>
@@ -42,7 +42,7 @@ export function Funciones() {
               <div className="p-6 sm:p-7">
                 <Baby className="size-7" aria-hidden="true" />
                 <h3 className="text-center mt-4 font-display text-xl font-bold">Modo Cachorro</h3>
-                <p className="mt-2 text-base">
+                <p className="text-justify hyphens-auto mt-2 text-base">
                   Aprende a prevenir problemas antes de que aparezcan.
                 </p>
                 <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1 text-sm font-medium">
@@ -81,7 +81,7 @@ export function Funciones() {
             <div className="p-6 sm:p-7">
               <Dog className="size-7 text-primary" aria-hidden="true" />
               <h3 className="text-center mt-4 font-display text-xl font-bold">Modo Perro Adulto</h3>
-              <p className="mt-2 text-base text-muted-foreground">Corrige paso a paso:</p>
+              <p className="text-justify hyphens-auto mt-2 text-base text-muted-foreground">Corrige paso a paso:</p>
               <ul className="mt-3 space-y-1 text-sm font-medium">
                 {[
                   "Ladridos excesivos.",
@@ -100,7 +100,7 @@ export function Funciones() {
           <article className="rounded-3xl border border-border bg-secondary p-6 text-secondary-foreground sm:p-7">
             <CalendarClock className="size-7 text-primary" aria-hidden="true" />
             <h3 className="text-center mt-4 font-display text-xl font-bold">Predictor de Higiene</h3>
-            <p className="mt-2 text-base">
+            <p className="text-justify hyphens-auto mt-2 text-base">
               Recibe recordatorios inteligentes para reducir accidentes y acelerar el aprendizaje.
             </p>
           </article>
@@ -108,7 +108,7 @@ export function Funciones() {
           <article className="rounded-3xl bg-primary p-6 text-primary-foreground sm:p-7">
             <MessageCircle className="size-7" aria-hidden="true" />
             <h3 className="text-center mt-4 font-display text-xl font-bold">Asistente IA 24/7</h3>
-            <p className="mt-2 text-base">
+            <p className="text-justify hyphens-auto mt-2 text-base">
               Haz preguntas cuando quieras y obtén respuestas personalizadas basadas en el historial
               de tu perro.
             </p>

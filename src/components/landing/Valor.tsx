@@ -15,7 +15,7 @@ export function Valor() {
           <p>Compras la seguridad de saber que estás haciendo lo correcto para tu perro.</p>
         </div>
 
-        <p className="mt-6 text-base text-muted-foreground sm:text-lg">
+        <p className="text-justify hyphens-auto mt-6 text-base text-muted-foreground sm:text-lg">
           Y eso cambia por completo la experiencia de tenerlo en casa.
         </p>
 

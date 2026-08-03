@@ -11,11 +11,11 @@ export function Hero() {
           <h1 className="text-center mt-4 font-display text-4xl leading-[0.95] font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl">
             Tu Copiloto de Crianza Canina
           </h1>
-          <p className="mt-5 text-base text-muted-foreground sm:text-lg">
+          <p className="text-justify hyphens-auto mt-5 text-base text-muted-foreground sm:text-lg">
             La primera aplicación que interpreta el comportamiento de tu perro y te guía, paso a
             paso, para criar un compañero equilibrado desde el primer día.
           </p>
-          <p className="mt-4 text-base text-foreground/90 sm:text-lg">
+          <p className="text-justify hyphens-auto mt-4 text-base text-foreground/90 sm:text-lg">
             Descubre en menos de <strong className="font-bold">3 minutos</strong> por qué tu perro se
             comporta como lo hace y recibe un plan personalizado para educarlo con confianza,
             tranquilidad y resultados.
@@ -27,7 +27,7 @@ export function Hero() {
             >
               Haz tu primer diagnóstico completamente gratis
             </a>
-            <p className="mt-3 text-sm text-muted-foreground">
+            <p className="text-justify hyphens-auto mt-3 text-sm text-muted-foreground">
               Sin tarjeta de crédito. Sin compromiso.
             </p>
           </div>

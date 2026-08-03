@@ -49,7 +49,7 @@ export function Suscripcion() {
             <h3 className="text-center mt-4 font-display text-xl font-bold sm:text-2xl">
               Bono 1 — Calendario Inteligente de Salud Canina
             </h3>
-            <p className="mt-3 text-base text-wine-foreground/85">Programa automáticamente:</p>
+            <p className="text-justify hyphens-auto mt-3 text-base text-wine-foreground/85">Programa automáticamente:</p>
             <ul className="mt-3 space-y-1 text-base font-medium">
               {[
                 "Vacunas.",
@@ -62,7 +62,7 @@ export function Suscripcion() {
                 <li key={i}>{i}</li>
               ))}
             </ul>
-            <p className="mt-4 text-base text-wine-foreground/85">
+            <p className="text-justify hyphens-auto mt-4 text-base text-wine-foreground/85">
               Todo sincronizado según la edad y las necesidades de tu perro.
             </p>
           </article>
@@ -72,7 +72,7 @@ export function Suscripcion() {
             <h3 className="text-center mt-4 font-display text-xl font-bold sm:text-2xl">
               Bono 2 — Biblioteca de Juegos Inteligentes
             </h3>
-            <p className="mt-3 text-base">
+            <p className="text-justify hyphens-auto mt-3 text-base">
               Tendrás acceso a una colección de juegos y ejercicios prácticos para ayudar a tu perro
               a desarrollar:
             </p>

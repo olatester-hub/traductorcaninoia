@@ -28,7 +28,7 @@ export function Cierre() {
         >
           Analizar a mi perro gratis
         </a>
-        <p className="mt-3 text-sm text-wine-foreground/70">
+        <p className="text-justify hyphens-auto mt-3 text-sm text-wine-foreground/70">
           Sin tarjeta de crédito. Sin compromiso.
         </p>
       </div>
@@ -45,7 +45,7 @@ export function Footer() {
           alt="Traductor Canino IA — Tu copiloto de crianza canina"
           className="h-16 w-auto min-w-0 max-w-full object-contain sm:h-24"
         />
-        <p className="shrink-0 text-sm text-muted-foreground">
+        <p className="text-justify hyphens-auto shrink-0 text-sm text-muted-foreground">
           © {new Date().getFullYear()}
         </p>
       </div>

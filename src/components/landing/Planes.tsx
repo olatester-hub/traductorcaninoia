@@ -38,8 +38,8 @@ export function Planes() {
               <li>Ahorra aproximadamente un 33 % frente al pago mensual.</li>
             </ul>
             <p className="mt-6 font-display text-3xl font-extrabold sm:text-4xl">USD 55,99 al año</p>
-            <p className="mt-1 text-base font-bold">Equivale a solo USD 4,67 al mes.</p>
-            <p className="mt-3 text-base">
+            <p className="text-justify hyphens-auto mt-1 text-base font-bold">Equivale a solo USD 4,67 al mes.</p>
+            <p className="text-justify hyphens-auto mt-3 text-base">
               La mejor opción para acompañar a tu perro durante todo su proceso de crecimiento y
               aprendizaje.
             </p>
