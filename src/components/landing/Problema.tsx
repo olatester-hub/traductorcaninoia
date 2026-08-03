@@ -9,7 +9,7 @@ export function Problema() {
           Está intentando comunicarse.
         </p>
 
-        <div className="mt-8 space-y-4 text-base leading-relaxed text-wine-foreground/85 sm:text-lg">
+        <div className="mt-8 space-y-4 text-justify hyphens-auto text-base leading-relaxed text-wine-foreground/85 sm:text-lg">
           <p>
             Cuando ladra, rompe cosas, hace sus necesidades donde no corresponde o tira de la correa,
             la mayoría piensa que el problema está en el perro.

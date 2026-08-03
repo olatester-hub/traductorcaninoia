@@ -7,7 +7,7 @@ export function Cierre() {
         <h2 className="text-center font-display text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
           Empieza hoy
         </h2>
-        <div className="mt-6 space-y-3 text-base text-wine-foreground/85 sm:text-lg">
+        <div className="mt-6 space-y-3 text-justify hyphens-auto text-base text-wine-foreground/85 sm:text-lg">
           <p>Tu perro aprende todos los días.</p>
           <p>La pregunta es:</p>
           <p className="font-display text-2xl font-bold text-primary sm:text-3xl">

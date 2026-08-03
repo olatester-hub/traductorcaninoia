@@ -62,7 +62,7 @@ export function Faq() {
               <AccordionTrigger className="py-5 text-left font-display text-lg font-bold hover:no-underline sm:text-xl">
                 {f.q}
               </AccordionTrigger>
-              <AccordionContent className="space-y-2 text-base text-muted-foreground">
+              <AccordionContent className="space-y-2 text-justify hyphens-auto text-base text-muted-foreground">
                 {f.a.map((p) => (
                   <p key={p}>{p}</p>
                 ))}
