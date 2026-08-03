@@ -1,16 +1,15 @@
-import { PawPrint } from "lucide-react";
+import logoAsset from "@/assets/logo.jpg.asset.json";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur">
       <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 sm:px-6">
-        <a href="#inicio" className="flex min-w-0 items-center gap-2">
-          <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground">
-            <PawPrint className="size-5" aria-hidden="true" />
-          </span>
-          <span className="truncate font-display text-sm font-extrabold tracking-tight uppercase sm:text-base">
-            Traductor Canino IA
-          </span>
+        <a href="#inicio" className="flex min-w-0 items-center">
+          <img
+            src={logoAsset.url}
+            alt="Traductor Canino IA — Tu copiloto de crianza canina"
+            className="h-10 w-auto max-w-full object-contain mix-blend-multiply sm:h-12"
+          />
         </a>
         <a
           href="#diagnostico"

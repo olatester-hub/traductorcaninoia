@@ -38,9 +38,11 @@ export function Footer() {
   return (
     <footer className="bg-background">
       <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-8 sm:px-6">
-        <p className="min-w-0 font-display text-sm font-bold tracking-tight uppercase">
-          Traductor Canino IA
-        </p>
+        <img
+          src={logoAsset.url}
+          alt="Traductor Canino IA — Tu copiloto de crianza canina"
+          className="h-10 w-auto min-w-0 max-w-full object-contain mix-blend-multiply sm:h-12"
+        />developer
         <p className="shrink-0 text-sm text-muted-foreground">
           © {new Date().getFullYear()}
         </p>
