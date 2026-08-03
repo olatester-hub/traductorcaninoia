@@ -3,8 +3,8 @@ import logoAsset from "@/assets/logo.png.asset.json";
 export function Cierre() {
   return (
     <section className="bg-wine text-wine-foreground">
-      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 md:py-24">
-        <h2 className="font-display text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
+      <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 md:py-20">
+        <h2 className="text-center font-display text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
           Empieza hoy
         </h2>
         <div className="mt-6 space-y-3 text-base text-wine-foreground/85 sm:text-lg">

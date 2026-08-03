@@ -3,12 +3,12 @@ import heroPerro from "@/assets/hero-perro.jpg";
 export function Hero() {
   return (
     <section id="inicio" className="bg-cream">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-2 md:items-center md:gap-12 md:py-20">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-2 md:items-center md:gap-12 md:py-16">
         <div className="min-w-0">
           <p className="inline-flex rounded-full bg-accent px-3 py-1 text-xs font-bold tracking-widest text-accent-foreground uppercase">
             Traductor Canino IA
           </p>
-          <h1 className="mt-4 font-display text-4xl leading-[0.95] font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+          <h1 className="text-center mt-4 font-display text-4xl leading-[0.95] font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl">
             Tu Copiloto de Crianza Canina
           </h1>
           <p className="mt-5 text-base text-muted-foreground sm:text-lg">

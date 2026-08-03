@@ -20,17 +20,17 @@ const recibes = [
 export function ComoFunciona() {
   return (
     <section className="bg-background">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 md:py-20">
-        <h2 className="font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16">
+        <h2 className="text-center font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
           ¿Cómo funciona?
         </h2>
         <p className="mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
           Solo responde unas preguntas o sube un video.
         </p>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
           <div className="rounded-3xl border border-border bg-card p-6 sm:p-8">
-            <h3 className="font-display text-xl font-bold sm:text-2xl">
+            <h3 className="text-center font-display text-xl font-bold sm:text-2xl">
               La inteligencia artificial analiza:
             </h3>
             <ul className="mt-5 space-y-3">
@@ -44,7 +44,7 @@ export function ComoFunciona() {
           </div>
 
           <div className="rounded-3xl bg-accent p-6 text-accent-foreground sm:p-8">
-            <h3 className="font-display text-xl font-bold sm:text-2xl">
+            <h3 className="text-center font-display text-xl font-bold sm:text-2xl">
               En menos de tres minutos recibirás:
             </h3>
             <ul className="mt-5 space-y-3">

@@ -51,8 +51,8 @@ const faqs = [
 export function Faq() {
   return (
     <section className="bg-cream">
-      <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 md:py-20">
-        <h2 className="font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
+      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 md:py-16">
+        <h2 className="text-center font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
           Preguntas frecuentes
         </h2>
 

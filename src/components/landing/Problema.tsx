@@ -1,8 +1,8 @@
 export function Problema() {
   return (
     <section className="bg-wine text-wine-foreground">
-      <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 md:py-20">
-        <h2 className="font-display text-3xl leading-[1] font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
+      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 md:py-16">
+        <h2 className="text-center font-display text-3xl leading-[1] font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
           Tu perro no está intentando portarse mal.
         </h2>
         <p className="mt-3 font-display text-2xl font-bold text-primary sm:text-3xl">
