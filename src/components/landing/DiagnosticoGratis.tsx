@@ -16,9 +16,9 @@ const etapas = ["Cachorro (0-6 meses)", "Joven (6-18 meses)", "Adulto", "Senior"
 
 export function DiagnosticoGratis() {
   const [nombre, setNombre] = useState("");
-  const [etapa, setEtapa] = useState(etapas[0]);
+  const [etapa, setEtapa] = useState<string>(etapas[0] ?? "");
   const [raza, setRaza] = useState("");
-  const [conducta, setConducta] = useState(comportamientos[0]);
+  const [conducta, setConducta] = useState<string>(comportamientos[0] ?? "");
   const [estado, setEstado] = useState<"idle" | "loading" | "done">("idle");
 
   const onSubmit = (e: React.FormEvent) => {

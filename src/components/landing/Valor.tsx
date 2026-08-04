@@ -1,6 +1,6 @@
 export function Valor() {
   return (
-    <section id="diagnostico" className="bg-background">
+    <section className="bg-background">
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 md:py-16">
         <h2 className="text-center font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
           Lo que realmente estás comprando
