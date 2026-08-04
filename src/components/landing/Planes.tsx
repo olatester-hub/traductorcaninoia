@@ -4,6 +4,9 @@ export function Planes() {
   return (
     <section id="planes" className="bg-background">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16">
+        <div className="flex justify-center">
+          <span className="inline-flex rounded-full bg-primary/20 px-4 py-1.5 text-xs font-bold tracking-widest text-foreground/70 uppercase">Planes</span>
+        </div>
         <h2 className="text-center font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
           Elige el plan que mejor se adapte a ti
         </h2>

@@ -36,6 +36,21 @@ export function Problema() {
           <p>Porque cuando entiendes el motivo del comportamiento...</p>
           <p className="font-bold text-primary">Las decisiones correctas aparecen solas.</p>
         </div>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-3xl bg-primary p-6 text-primary-foreground">
+            <p className="font-display text-4xl font-extrabold">60 %</p>
+            <p className="mt-2 text-sm font-medium">
+              de las conductas problemáticas nacen de señales mal interpretadas por el propietario.
+            </p>
+          </div>
+          <div className="rounded-3xl bg-wine-foreground/10 p-6">
+            <p className="font-display text-4xl font-extrabold text-primary">65 %</p>
+            <p className="mt-2 text-sm font-medium text-wine-foreground/85">
+              se corrigen antes si actúas en las primeras semanas, con la guía correcta.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );

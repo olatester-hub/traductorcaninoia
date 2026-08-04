@@ -3,6 +3,7 @@ import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
 import { Problema } from "@/components/landing/Problema";
 import { ComoFunciona } from "@/components/landing/ComoFunciona";
+import { DiagnosticoGratis } from "@/components/landing/DiagnosticoGratis";
 import { Funciones } from "@/components/landing/Funciones";
 import { Valor } from "@/components/landing/Valor";
 import { Suscripcion } from "@/components/landing/Suscripcion";
@@ -36,6 +37,7 @@ function Index() {
         <Hero />
         <Problema />
         <ComoFunciona />
+        <DiagnosticoGratis />
         <Funciones />
         <Valor />
         <Suscripcion />
