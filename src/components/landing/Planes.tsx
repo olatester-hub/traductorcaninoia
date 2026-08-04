@@ -61,7 +61,7 @@ export function Planes() {
             <h2 className="text-center min-w-0 font-display text-2xl font-extrabold sm:text-3xl">Garantía</h2>
           </div>
           <div className="mt-4 space-y-3 text-base">
-            <p>Tomes esta decisión con total tranquilidad.</p>
+            <p>Toma esta decisión con total tranquilidad.</p>
             <p>
               Por eso comienzas con un <strong className="font-bold">Diagnóstico Gratuito</strong>,
               sin compromiso.
