@@ -6,6 +6,9 @@ export function Funciones() {
   return (
     <section id="funciones" className="bg-cream">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16">
+        <div className="flex justify-center">
+          <span className="inline-flex rounded-full bg-primary/20 px-4 py-1.5 text-xs font-bold tracking-widest text-foreground/70 uppercase">Funciones</span>
+        </div>
         <h2 className="text-center mx-auto max-w-3xl font-display text-3xl font-extrabold tracking-tight text-balance sm:text-4xl md:text-5xl">
           Todo lo que puedes hacer con TRADUCTOR CANINO IA
         </h2>
