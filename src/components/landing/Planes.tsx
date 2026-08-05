@@ -63,16 +63,29 @@ export function Planes() {
                 Ahorra 33 %
               </span>
             </div>
-            <ul className="mt-5 space-y-2 text-base">
-              <li>Todo lo incluido en el plan mensual.</li>
-              <li>Ahorra aproximadamente un 33 % frente al pago mensual.</li>
+            <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 55,99 al año</p>
+            <p className="mt-1 text-base font-bold">Equivale a solo USD 4,67 al mes.</p>
+            <ul className="mt-5 space-y-2">
+              {[
+                { label: "Todo lo incluido en el plan mensual", Icon: PackageCheck },
+                { label: "Ahorra aproximadamente un 33 % frente al pago mensual", Icon: PiggyBank },
+              ].map(({ label, Icon }) => (
+                <li
+                  key={label}
+                  className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 rounded-2xl bg-primary-foreground/15 px-3 py-2 text-base"
+                >
+                  <span className="grid size-7 shrink-0 place-items-center rounded-full bg-primary-foreground/25">
+                    <Icon className="size-4" aria-hidden="true" />
+                  </span>
+                  <span className="min-w-0 font-medium">{label}</span>
+                </li>
+              ))}
             </ul>
-            <p className="mt-6 font-display text-3xl font-extrabold sm:text-4xl">USD 55,99 al año</p>
-            <p className="text-justify hyphens-auto mt-1 text-base font-bold">Equivale a solo USD 4,67 al mes.</p>
-            <p className="text-justify hyphens-auto mt-3 text-base">
+            <p className="mt-4 text-base">
               La mejor opción para acompañar a tu perro durante todo su proceso de crecimiento y
               aprendizaje.
             </p>
+
             <a
               href="#diagnostico"
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-wine px-6 text-center text-base font-extrabold text-wine-foreground transition-transform hover:scale-[1.02]"
