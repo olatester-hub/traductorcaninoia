@@ -45,6 +45,50 @@ const comportamientos = [
 
 const intensidades = ["Ocasional", "Frecuente", "Constante"];
 
+const razas = [
+  "Mestizo / sin raza definida",
+  "Labrador Retriever",
+  "Golden Retriever",
+  "Pastor Alemán",
+  "Bulldog Francés",
+  "Bulldog Inglés",
+  "Poodle / Caniche",
+  "Chihuahua",
+  "Yorkshire Terrier",
+  "Beagle",
+  "Dachshund / Salchicha",
+  "Rottweiler",
+  "Boxer",
+  "Shih Tzu",
+  "Pomerania",
+  "Border Collie",
+  "Husky Siberiano",
+  "Schnauzer",
+  "Cocker Spaniel",
+  "Maltés",
+  "Pug",
+  "Pastor Australiano",
+  "Doberman",
+  "Gran Danés",
+  "Bichón Frisé",
+  "Jack Russell Terrier",
+  "Basset Hound",
+  "Akita",
+  "Shiba Inu",
+  "Weimaraner",
+  "Pitbull / American Bully",
+  "Setter Irlandés",
+  "San Bernardo",
+  "Samoyedo",
+  "Galgo / Whippet",
+  "Terranova",
+  "Cane Corso",
+  "Dálmata",
+  "Collie",
+  "Mastín",
+  "Otra raza",
+];
+
 type Estado = "form" | "loading" | "done";
 
 export function DiagnosticoGratis() {
@@ -54,13 +98,15 @@ export function DiagnosticoGratis() {
   const [etapa, setEtapa] = useState(etapas[0] ?? "");
   const [raza, setRaza] = useState("");
   const [entorno, setEntorno] = useState(entornos[0] ?? "");
-  const [conducta, setConducta] = useState(comportamientos[0] ?? "");
-  const [intensidad, setIntensidad] = useState(intensidades[1] ?? "");
+  const [conducta, setConducta] = useState("");
+  const [intensidad, setIntensidad] = useState("");
   const [detalle, setDetalle] = useState("");
+
+  const paso2Completo = conducta.trim() !== "" && intensidad.trim() !== "";
 
   const analizar = (e: React.FormEvent) => {
     e.preventDefault();
-    if (paso !== 2) return;
+    if (paso !== 2 || !paso2Completo) return;
     setEstado("loading");
     setTimeout(() => setEstado("done"), 1800);
   };
@@ -68,6 +114,9 @@ export function DiagnosticoGratis() {
   const reiniciar = () => {
     setEstado("form");
     setPaso(1);
+    setConducta("");
+    setIntensidad("");
+    setDetalle("");
   };
 
   const inputCls =
@@ -233,9 +282,15 @@ export function DiagnosticoGratis() {
                         <input
                           value={raza}
                           onChange={(e) => setRaza(e.target.value)}
-                          placeholder="Ej: Labrador / mestizo"
+                          list="razas-comunes"
+                          placeholder="Elige o escribe la raza"
                           className={inputCls}
                         />
+                        <datalist id="razas-comunes">
+                          {razas.map((x) => (
+                            <option key={x} value={x} />
+                          ))}
+                        </datalist>
                       </label>
                       <label className="min-w-0 text-sm font-bold">
                         <span className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-1.5">
@@ -261,10 +316,14 @@ export function DiagnosticoGratis() {
                           <span className="min-w-0">Comportamiento a resolver</span>
                         </span>
                         <select
+                          required
                           value={conducta}
                           onChange={(e) => setConducta(e.target.value)}
                           className={inputCls}
                         >
+                          <option value="" disabled>
+                            Selecciona la conducta observada
+                          </option>
                           {comportamientos.map((x) => (
                             <option key={x}>{x}</option>
                           ))}
@@ -325,7 +384,7 @@ export function DiagnosticoGratis() {
                       <>
                         <button
                           type="submit"
-                          disabled={estado === "loading"}
+                          disabled={estado === "loading" || !paso2Completo}
                           className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-primary px-7 text-base font-extrabold text-primary-foreground transition-transform hover:scale-[1.01] disabled:opacity-70"
                         >
                           {estado === "loading" ? (
