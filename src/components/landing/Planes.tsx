@@ -1,4 +1,12 @@
-import { ShieldCheck } from "lucide-react";
+import {
+  ShieldCheck,
+  Sparkles,
+  RefreshCw,
+  Infinity,
+  Bot,
+  PackageCheck,
+  PiggyBank,
+} from "lucide-react";
 
 export function Planes() {
   return (
