@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
   ShieldCheck,
   Sparkles,
@@ -48,12 +49,13 @@ export function Planes() {
               ))}
             </ul>
 
-            <a
-              href="#diagnostico"
+            <Link
+              to="/checkout"
+              search={{ plan: "mensual" }}
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 text-center text-base font-extrabold text-primary-foreground transition-transform hover:scale-[1.02]"
             >
-              Suscribirme por USD 6,99/mes
-            </a>
+              Empezar — USD 6,99/mes
+            </Link>
           </article>
 
           <article className="flex flex-col rounded-3xl bg-primary p-6 text-primary-foreground sm:p-8">
@@ -86,12 +88,13 @@ export function Planes() {
               aprendizaje.
             </p>
 
-            <a
-              href="#diagnostico"
+            <Link
+              to="/checkout"
+              search={{ plan: "anual" }}
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-wine px-6 text-center text-base font-extrabold text-wine-foreground transition-transform hover:scale-[1.02]"
             >
-              Suscribirme por USD 55,99/año
-            </a>
+              Empezar — USD 55,99/año
+            </Link>
           </article>
 
         </div>
