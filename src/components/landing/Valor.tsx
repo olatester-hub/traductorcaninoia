@@ -50,22 +50,26 @@ export function Valor() {
           >
             Analizar a mi perro gratis
           </a>
-          <div className="mt-5 space-y-3 text-base">
-            <p className="font-bold">Haz un diagnóstico inicial sin costo.</p>
-            <p>
-              La IA analizará la información que proporciones y te mostrará un informe con las
-              principales causas del comportamiento detectado.
-            </p>
-            <p>
-              Además, recibirás una vista previa del plan de mejora diseñado específicamente para tu
-              perro.
-            </p>
-            <p>
-              Si deseas acceder al plan completo, al seguimiento continuo, al análisis de videos y a
-              todas las herramientas inteligentes, solo tendrás que activar tu suscripción.
-            </p>
-            <p>Así podrás comprobar primero el valor de la aplicación antes de tomar una decisión.</p>
-          </div>
+          <p className="mt-5 font-display text-lg font-bold">Haz un diagnóstico inicial sin costo.</p>
+          <ul className="mt-4 space-y-2">
+            {[
+              "La IA analizará la información que proporciones y te mostrará un informe con las principales causas del comportamiento detectado.",
+              "Además, recibirás una vista previa del plan de mejora diseñado específicamente para tu perro.",
+              "Si deseas acceder al plan completo, al seguimiento continuo, al análisis de videos y a todas las herramientas inteligentes, solo tendrás que activar tu suscripción.",
+              "Así podrás comprobar primero el valor de la aplicación antes de tomar una decisión.",
+            ].map((t) => (
+              <li
+                key={t}
+                className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3 rounded-2xl bg-accent-foreground/10 p-3 text-base"
+              >
+                <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
+                  <Check className="size-4" aria-hidden="true" />
+                </span>
+                <span className="min-w-0">{t}</span>
+              </li>
+            ))}
+          </ul>
+
         </div>
       </div>
     </section>
