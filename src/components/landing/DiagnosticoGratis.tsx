@@ -282,9 +282,15 @@ export function DiagnosticoGratis() {
                         <input
                           value={raza}
                           onChange={(e) => setRaza(e.target.value)}
-                          placeholder="Ej: Labrador / mestizo"
+                          list="razas-comunes"
+                          placeholder="Elige o escribe la raza"
                           className={inputCls}
                         />
+                        <datalist id="razas-comunes">
+                          {razas.map((x) => (
+                            <option key={x} value={x} />
+                          ))}
+                        </datalist>
                       </label>
                       <label className="min-w-0 text-sm font-bold">
                         <span className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-1.5">
