@@ -98,13 +98,15 @@ export function DiagnosticoGratis() {
   const [etapa, setEtapa] = useState(etapas[0] ?? "");
   const [raza, setRaza] = useState("");
   const [entorno, setEntorno] = useState(entornos[0] ?? "");
-  const [conducta, setConducta] = useState(comportamientos[0] ?? "");
-  const [intensidad, setIntensidad] = useState(intensidades[1] ?? "");
+  const [conducta, setConducta] = useState("");
+  const [intensidad, setIntensidad] = useState("");
   const [detalle, setDetalle] = useState("");
+
+  const paso2Completo = conducta.trim() !== "" && intensidad.trim() !== "";
 
   const analizar = (e: React.FormEvent) => {
     e.preventDefault();
-    if (paso !== 2) return;
+    if (paso !== 2 || !paso2Completo) return;
     setEstado("loading");
     setTimeout(() => setEstado("done"), 1800);
   };
@@ -112,6 +114,9 @@ export function DiagnosticoGratis() {
   const reiniciar = () => {
     setEstado("form");
     setPaso(1);
+    setConducta("");
+    setIntensidad("");
+    setDetalle("");
   };
 
   const inputCls =
