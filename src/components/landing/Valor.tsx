@@ -1,4 +1,4 @@
-import { HeartHandshake, Lightbulb, ShieldCheck, Home, BadgeCheck } from "lucide-react";
+import { HeartHandshake, Lightbulb, ShieldCheck, Home, BadgeCheck, Check } from "lucide-react";
 
 const compras = [
   { label: "Tranquilidad", Icon: HeartHandshake },
