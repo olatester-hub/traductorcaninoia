@@ -11,9 +11,10 @@ export function Cierre() {
         <div className="mt-6 space-y-3 text-justify hyphens-auto text-base text-wine-foreground/85 sm:text-lg">
           <p>Tu perro aprende todos los días.</p>
           <p>La pregunta es:</p>
-          <p className="font-display text-2xl font-bold text-primary sm:text-3xl">
+          <p className="text-right font-display text-2xl font-bold text-primary sm:text-3xl">
             ¿Está aprendiendo lo correcto?
           </p>
+
           <p>
             Cuanto antes entiendas lo que intenta decirte, más fácil será construir una convivencia
             tranquila, equilibrada y feliz.
