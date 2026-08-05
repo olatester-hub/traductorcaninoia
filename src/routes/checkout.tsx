@@ -64,7 +64,7 @@ export const Route = createFileRoute("/checkout")({
 });
 
 function CheckoutPage() {
-  const { plan } = Route.useSearch();
+  const { plan } = Route.useSearch() as { plan: PlanId };
   const actual = planes[plan];
   const otro: PlanId = plan === "anual" ? "mensual" : "anual";
 
