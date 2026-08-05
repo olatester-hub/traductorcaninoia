@@ -28,14 +28,25 @@ export function Hero() {
           <h1 className="mt-4 text-center font-display text-4xl leading-[0.95] font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl md:text-left">
             Tu Copiloto de Crianza Canina
           </h1>
-          <p className="text-justify hyphens-auto mt-5 text-base text-muted-foreground sm:text-lg">
-            La primera aplicación que interpreta el comportamiento de tu perro y te guía, paso a
-            paso, para criar un compañero equilibrado desde el primer día.
-          </p>
-          <p className="text-justify hyphens-auto mt-4 text-base text-foreground/90 sm:text-lg">
-            Descubre en menos de <strong className="font-bold">3 minutos</strong> por qué tu perro se
-            comporta como lo hace y recibe un plan personalizado para educarlo con confianza.
-          </p>
+          <div className="mt-5 space-y-3">
+            <div className="rounded-3xl border border-primary/30 bg-blush/50 p-5 sm:p-6">
+              <p className="text-justify hyphens-auto text-base font-semibold text-foreground sm:text-lg">
+                La primera aplicación que interpreta el comportamiento de tu perro y te guía, paso a
+                paso, para criar un compañero <strong className="font-extrabold">equilibrado</strong>{" "}
+                desde el primer día.
+              </p>
+            </div>
+            <div className="rounded-3xl bg-wine p-5 text-wine-foreground sm:p-6">
+              <p className="text-justify hyphens-auto text-base font-semibold sm:text-lg">
+                Descubre en menos de{" "}
+                <strong className="font-extrabold text-primary">3 minutos</strong> por qué tu perro
+                se comporta como lo hace y recibe un{" "}
+                <strong className="font-extrabold text-primary">plan personalizado</strong> para
+                educarlo con confianza.
+              </p>
+            </div>
+          </div>
+
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href="#diagnostico"
