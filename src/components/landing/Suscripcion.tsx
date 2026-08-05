@@ -1,4 +1,36 @@
-import { Check, CalendarHeart, Puzzle } from "lucide-react";
+import {
+  Check,
+  CalendarHeart,
+  Puzzle,
+  Syringe,
+  Bug,
+  Droplets,
+  Scissors,
+  Stethoscope,
+  BellRing,
+  Hand,
+  Target,
+  Brain,
+  Smile,
+  HeartHandshake,
+} from "lucide-react";
+
+const bono1 = [
+  { label: "Vacunas", Icon: Syringe },
+  { label: "Desparasitación", Icon: Bug },
+  { label: "Baños", Icon: Droplets },
+  { label: "Corte de uñas", Icon: Scissors },
+  { label: "Revisiones veterinarias", Icon: Stethoscope },
+  { label: "Recordatorios personalizados", Icon: BellRing },
+];
+
+const bono2 = [
+  { label: "Autocontrol", Icon: Hand },
+  { label: "Concentración", Icon: Target },
+  { label: "Estimulación mental", Icon: Brain },
+  { label: "Confianza", Icon: Smile },
+  { label: "Equilibrio emocional", Icon: HeartHandshake },
+];
 
 const incluye = [
   "Diagnósticos personalizados ilimitados.",
