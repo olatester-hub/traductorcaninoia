@@ -1,4 +1,5 @@
 import { Sparkles } from "lucide-react";
+import { TrustChips } from "./Trust";
 import heroPerro from "@/assets/hero-perro.jpg";
 
 const stats = [
@@ -49,9 +50,8 @@ export function Hero() {
               Ver planes
             </a>
           </div>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Sin tarjeta de crédito. Sin compromiso.
-          </p>
+          <TrustChips className="mt-4 justify-center md:justify-start" />
+
 
           <dl className="mt-8 grid grid-cols-3 gap-3 border-t border-border pt-6">
             {stats.map((s) => (

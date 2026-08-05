@@ -1,4 +1,5 @@
 import logoAsset from "@/assets/logo.png.asset.json";
+import { TrustChips } from "./Trust";
 
 export function Cierre() {
   return (
@@ -28,9 +29,8 @@ export function Cierre() {
         >
           Analizar a mi perro gratis
         </a>
-        <p className="text-justify hyphens-auto mt-3 text-sm text-wine-foreground/70">
-          Sin tarjeta de crédito. Sin compromiso.
-        </p>
+        <TrustChips className="mt-4 justify-start" variant="dark" withTime />
+
       </div>
     </section>
   );
