@@ -316,10 +316,14 @@ export function DiagnosticoGratis() {
                           <span className="min-w-0">Comportamiento a resolver</span>
                         </span>
                         <select
+                          required
                           value={conducta}
                           onChange={(e) => setConducta(e.target.value)}
                           className={inputCls}
                         >
+                          <option value="" disabled>
+                            Selecciona la conducta observada
+                          </option>
                           {comportamientos.map((x) => (
                             <option key={x}>{x}</option>
                           ))}
