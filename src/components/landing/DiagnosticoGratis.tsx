@@ -45,6 +45,50 @@ const comportamientos = [
 
 const intensidades = ["Ocasional", "Frecuente", "Constante"];
 
+const razas = [
+  "Mestizo / sin raza definida",
+  "Labrador Retriever",
+  "Golden Retriever",
+  "Pastor Alemán",
+  "Bulldog Francés",
+  "Bulldog Inglés",
+  "Poodle / Caniche",
+  "Chihuahua",
+  "Yorkshire Terrier",
+  "Beagle",
+  "Dachshund / Salchicha",
+  "Rottweiler",
+  "Boxer",
+  "Shih Tzu",
+  "Pomerania",
+  "Border Collie",
+  "Husky Siberiano",
+  "Schnauzer",
+  "Cocker Spaniel",
+  "Maltés",
+  "Pug",
+  "Pastor Australiano",
+  "Doberman",
+  "Gran Danés",
+  "Bichón Frisé",
+  "Jack Russell Terrier",
+  "Basset Hound",
+  "Akita",
+  "Shiba Inu",
+  "Weimaraner",
+  "Pitbull / American Bully",
+  "Setter Irlandés",
+  "San Bernardo",
+  "Samoyedo",
+  "Galgo / Whippet",
+  "Terranova",
+  "Cane Corso",
+  "Dálmata",
+  "Collie",
+  "Mastín",
+  "Otra raza",
+];
+
 type Estado = "form" | "loading" | "done";
 
 export function DiagnosticoGratis() {
