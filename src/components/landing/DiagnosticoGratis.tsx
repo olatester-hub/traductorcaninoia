@@ -60,6 +60,7 @@ export function DiagnosticoGratis() {
 
   const analizar = (e: React.FormEvent) => {
     e.preventDefault();
+    if (paso !== 2) return;
     setEstado("loading");
     setTimeout(() => setEstado("done"), 1800);
   };
