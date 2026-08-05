@@ -1,6 +1,45 @@
-import { Brain, Languages, Video, Baby, Dog, CalendarClock, MessageCircle } from "lucide-react";
+import {
+  Brain,
+  Languages,
+  Video,
+  Baby,
+  Dog,
+  CalendarClock,
+  MessageCircle,
+  Droplets,
+  Bone,
+  Users,
+  Clock,
+  ShieldAlert,
+  Home,
+  Volume2,
+  Link2,
+  HeartCrack,
+  Sofa,
+  Zap,
+  Ghost,
+} from "lucide-react";
 import cachorro from "@/assets/cachorro.jpg";
 import perroAdulto from "@/assets/perro-adulto.jpg";
+
+const puppyItems = [
+  { label: "Higiene", Icon: Droplets },
+  { label: "Mordidas", Icon: Bone },
+  { label: "Socialización", Icon: Users },
+  { label: "Rutinas", Icon: Clock },
+  { label: "Límites", Icon: ShieldAlert },
+  { label: "Adaptación al hogar", Icon: Home },
+];
+
+const adultItems = [
+  { label: "Ladridos excesivos", Icon: Volume2 },
+  { label: "Tirones de correa", Icon: Link2 },
+  { label: "Ansiedad por separación", Icon: HeartCrack },
+  { label: "Conductas destructivas", Icon: Sofa },
+  { label: "Reactividad", Icon: Zap },
+  { label: "Miedos", Icon: Ghost },
+];
+
 
 export function Funciones() {
   return (
@@ -43,21 +82,24 @@ export function Funciones() {
           <article className="overflow-hidden rounded-3xl bg-accent text-accent-foreground md:col-span-2">
             <div className="grid gap-0 sm:grid-cols-[minmax(0,1fr)_40%]">
               <div className="p-6 sm:p-7">
-                <Baby className="size-7" aria-hidden="true" />
-                <h3 className="text-center mt-4 font-display text-xl font-bold">Modo Cachorro</h3>
-                <p className="text-justify hyphens-auto mt-2 text-base">
+                <div className="flex justify-center">
+                  <span className="grid size-11 place-items-center rounded-2xl bg-accent-foreground/10">
+                    <Baby className="size-6" aria-hidden="true" />
+                  </span>
+                </div>
+                <h3 className="text-center mt-3 font-display text-xl font-bold">Modo Cachorro</h3>
+                <p className="text-center mt-2 text-base">
                   Aprende a prevenir problemas antes de que aparezcan.
                 </p>
-                <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1 text-sm font-medium">
-                  {[
-                    "Higiene.",
-                    "Mordidas.",
-                    "Socialización.",
-                    "Rutinas.",
-                    "Límites.",
-                    "Adaptación al hogar.",
-                  ].map((i) => (
-                    <li key={i}>{i}</li>
+                <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+                  {puppyItems.map(({ label, Icon }) => (
+                    <li
+                      key={label}
+                      className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 rounded-full bg-accent-foreground/10 px-3 py-2 text-sm font-semibold"
+                    >
+                      <Icon className="size-4 shrink-0" aria-hidden="true" />
+                      <span className="min-w-0">{label}</span>
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -82,19 +124,22 @@ export function Funciones() {
               className="h-40 w-full object-cover"
             />
             <div className="p-6 sm:p-7">
-              <Dog className="size-7 text-primary" aria-hidden="true" />
-              <h3 className="text-center mt-4 font-display text-xl font-bold">Modo Perro Adulto</h3>
-              <p className="text-justify hyphens-auto mt-2 text-base text-muted-foreground">Corrige paso a paso:</p>
-              <ul className="mt-3 space-y-1 text-sm font-medium">
-                {[
-                  "Ladridos excesivos.",
-                  "Tirones de correa.",
-                  "Ansiedad por separación.",
-                  "Conductas destructivas.",
-                  "Reactividad.",
-                  "Miedos.",
-                ].map((i) => (
-                  <li key={i}>{i}</li>
+              <div className="flex justify-center">
+                <span className="grid size-11 place-items-center rounded-2xl bg-primary/15">
+                  <Dog className="size-6 text-primary" aria-hidden="true" />
+                </span>
+              </div>
+              <h3 className="text-center mt-3 font-display text-xl font-bold">Modo Perro Adulto</h3>
+              <p className="text-center mt-2 text-base text-muted-foreground">Corrige paso a paso:</p>
+              <ul className="mt-5 space-y-2">
+                {adultItems.map(({ label, Icon }) => (
+                  <li
+                    key={label}
+                    className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 rounded-2xl bg-secondary px-3 py-2 text-sm font-semibold text-secondary-foreground"
+                  >
+                    <Icon className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                    <span className="min-w-0">{label}</span>
+                  </li>
                 ))}
               </ul>
             </div>
