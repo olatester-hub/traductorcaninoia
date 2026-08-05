@@ -7,6 +7,8 @@ import {
   Bot,
   PackageCheck,
   PiggyBank,
+  CalendarHeart,
+  Puzzle,
 } from "lucide-react";
 
 export function Planes() {
@@ -71,6 +73,8 @@ export function Planes() {
               {[
                 { label: "Todo lo incluido en el plan mensual", Icon: PackageCheck },
                 { label: "Ahorra aproximadamente un 33 % frente al pago mensual", Icon: PiggyBank },
+                { label: "Bono 1 — Calendario Inteligente de Salud Canina", Icon: CalendarHeart },
+                { label: "Bono 2 — Biblioteca de Juegos Inteligentes", Icon: Puzzle },
               ].map(({ label, Icon }) => (
                 <li
                   key={label}
