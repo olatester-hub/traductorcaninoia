@@ -384,7 +384,7 @@ export function DiagnosticoGratis() {
                       <>
                         <button
                           type="submit"
-                          disabled={estado === "loading"}
+                          disabled={estado === "loading" || !paso2Completo}
                           className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-primary px-7 text-base font-extrabold text-primary-foreground transition-transform hover:scale-[1.01] disabled:opacity-70"
                         >
                           {estado === "loading" ? (
