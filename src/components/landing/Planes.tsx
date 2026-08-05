@@ -40,8 +40,6 @@ export function Planes() {
               ))}
             </ul>
 
-            <p className="mt-6 font-display text-3xl font-extrabold sm:text-4xl">USD 6,99 al mes.</p>
-            <p className="mt-1 text-sm text-muted-foreground">Cancela cuando quieras.</p>
             <a
               href="#diagnostico"
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 text-center text-base font-extrabold text-primary-foreground transition-transform hover:scale-[1.02]"
