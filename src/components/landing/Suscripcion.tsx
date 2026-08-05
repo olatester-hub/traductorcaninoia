@@ -48,50 +48,59 @@ export function Suscripcion() {
 
         <div className="mt-8 grid gap-5 md:grid-cols-2">
           <article className="rounded-3xl bg-wine p-6 text-wine-foreground sm:p-8">
-            <CalendarHeart className="size-7 text-primary" aria-hidden="true" />
-            <h3 className="text-center mt-4 font-display text-xl font-bold sm:text-2xl">
+            <div className="flex justify-center">
+              <span className="grid size-12 place-items-center rounded-2xl bg-primary/20">
+                <CalendarHeart className="size-6 text-primary" aria-hidden="true" />
+              </span>
+            </div>
+            <h3 className="text-center mt-3 font-display text-xl font-bold sm:text-2xl">
               Bono 1 — Calendario Inteligente de Salud Canina
             </h3>
-            <p className="text-justify hyphens-auto mt-3 text-base text-wine-foreground/85">Programa automáticamente:</p>
-            <ul className="mt-3 space-y-1 text-base font-medium">
-              {[
-                "Vacunas.",
-                "Desparasitación.",
-                "Baños.",
-                "Corte de uñas.",
-                "Revisiones veterinarias.",
-                "Recordatorios personalizados.",
-              ].map((i) => (
-                <li key={i}>{i}</li>
+            <p className="text-center mt-2 text-base text-wine-foreground/85">
+              Programa automáticamente:
+            </p>
+            <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+              {bono1.map(({ label, Icon }) => (
+                <li
+                  key={label}
+                  className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 rounded-full bg-wine-foreground/10 px-3 py-2 text-sm font-semibold"
+                >
+                  <Icon className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span className="min-w-0">{label}</span>
+                </li>
               ))}
             </ul>
-            <p className="text-justify hyphens-auto mt-4 text-base text-wine-foreground/85">
+            <p className="mt-5 text-center text-base text-wine-foreground/85">
               Todo sincronizado según la edad y las necesidades de tu perro.
             </p>
           </article>
 
           <article className="rounded-3xl bg-accent p-6 text-accent-foreground sm:p-8">
-            <Puzzle className="size-7" aria-hidden="true" />
-            <h3 className="text-center mt-4 font-display text-xl font-bold sm:text-2xl">
+            <div className="flex justify-center">
+              <span className="grid size-12 place-items-center rounded-2xl bg-accent-foreground/10">
+                <Puzzle className="size-6" aria-hidden="true" />
+              </span>
+            </div>
+            <h3 className="text-center mt-3 font-display text-xl font-bold sm:text-2xl">
               Bono 2 — Biblioteca de Juegos Inteligentes
             </h3>
-            <p className="text-justify hyphens-auto mt-3 text-base">
-              Tendrás acceso a una colección de juegos y ejercicios prácticos para ayudar a tu perro
-              a desarrollar:
+            <p className="text-center mt-2 text-base">
+              Colección de juegos y ejercicios prácticos para ayudar a tu perro a desarrollar:
             </p>
-            <ul className="mt-3 space-y-1 text-base font-medium">
-              {[
-                "Autocontrol.",
-                "Concentración.",
-                "Estimulación mental.",
-                "Confianza.",
-                "Equilibrio emocional.",
-              ].map((i) => (
-                <li key={i}>{i}</li>
+            <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+              {bono2.map(({ label, Icon }) => (
+                <li
+                  key={label}
+                  className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 rounded-full bg-accent-foreground/10 px-3 py-2 text-sm font-semibold"
+                >
+                  <Icon className="size-4 shrink-0" aria-hidden="true" />
+                  <span className="min-w-0">{label}</span>
+                </li>
               ))}
             </ul>
           </article>
         </div>
+
       </div>
     </section>
   );
