@@ -19,12 +19,27 @@ export function Planes() {
                 Flexible
               </span>
             </div>
-            <ul className="mt-5 space-y-2 text-base text-foreground/80">
-              <li>Acceso completo a todas las funciones.</li>
-              <li>Actualizaciones continuas.</li>
-              <li>Diagnósticos ilimitados.</li>
-              <li>Asistente IA.</li>
+            <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 6,99 al mes.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Cancela cuando quieras.</p>
+            <ul className="mt-5 space-y-2">
+              {[
+                { label: "Acceso completo a todas las funciones", Icon: Sparkles },
+                { label: "Actualizaciones continuas", Icon: RefreshCw },
+                { label: "Diagnósticos ilimitados", Icon: Infinity },
+                { label: "Asistente IA", Icon: Bot },
+              ].map(({ label, Icon }) => (
+                <li
+                  key={label}
+                  className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 rounded-2xl bg-card px-3 py-2 text-base"
+                >
+                  <span className="grid size-7 shrink-0 place-items-center rounded-full bg-primary/15">
+                    <Icon className="size-4 text-primary" aria-hidden="true" />
+                  </span>
+                  <span className="min-w-0 font-medium">{label}</span>
+                </li>
+              ))}
             </ul>
+
             <p className="mt-6 font-display text-3xl font-extrabold sm:text-4xl">USD 6,99 al mes.</p>
             <p className="mt-1 text-sm text-muted-foreground">Cancela cuando quieras.</p>
             <a
