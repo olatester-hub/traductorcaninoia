@@ -7,7 +7,9 @@ import {
   Brain,
   CheckCircle2,
   Dog,
+  Heart,
   Home,
+  ListChecks,
   Loader2,
   Lock,
   PawPrint,
@@ -15,8 +17,11 @@ import {
   Sparkles,
   Target,
   Timer,
+  TrendingUp,
 } from "lucide-react";
 import { TrustChips } from "./Trust";
+import { BreedPicker } from "./BreedPicker";
+import { CONDUCTAS, ENTORNO_NOTA, ETAPA_NOTA, INTENSIDAD_NOTA } from "@/lib/diagnostico";
 
 const etapas = [
   "Cachorro (< 6 meses)",
@@ -32,62 +37,9 @@ const entornos = [
   "Hogar con otras mascotas",
 ];
 
-const comportamientos = [
-  "Ladridos excesivos",
-  "Ansiedad por separación",
-  "Tirones de correa",
-  "Conductas destructivas",
-  "Reactividad con otros perros",
-  "Miedos y fobias",
-  "Higiene / accidentes en casa",
-  "Mordidas de juego",
-];
+const comportamientos = Object.keys(CONDUCTAS);
 
 const intensidades = ["Ocasional", "Frecuente", "Constante"];
-
-const razas = [
-  "Mestizo / sin raza definida",
-  "Labrador Retriever",
-  "Golden Retriever",
-  "Pastor Alemán",
-  "Bulldog Francés",
-  "Bulldog Inglés",
-  "Poodle / Caniche",
-  "Chihuahua",
-  "Yorkshire Terrier",
-  "Beagle",
-  "Dachshund / Salchicha",
-  "Rottweiler",
-  "Boxer",
-  "Shih Tzu",
-  "Pomerania",
-  "Border Collie",
-  "Husky Siberiano",
-  "Schnauzer",
-  "Cocker Spaniel",
-  "Maltés",
-  "Pug",
-  "Pastor Australiano",
-  "Doberman",
-  "Gran Danés",
-  "Bichón Frisé",
-  "Jack Russell Terrier",
-  "Basset Hound",
-  "Akita",
-  "Shiba Inu",
-  "Weimaraner",
-  "Pitbull / American Bully",
-  "Setter Irlandés",
-  "San Bernardo",
-  "Samoyedo",
-  "Galgo / Whippet",
-  "Terranova",
-  "Cane Corso",
-  "Dálmata",
-  "Collie",
-  "Mastín",
-  "Otra raza",
-];
 
 type Estado = "form" | "loading" | "done";
 
@@ -103,6 +55,7 @@ export function DiagnosticoGratis() {
   const [detalle, setDetalle] = useState("");
 
   const paso2Completo = conducta.trim() !== "" && intensidad.trim() !== "";
+  const ficha = conducta ? CONDUCTAS[conducta] : undefined;
 
   const analizar = (e: React.FormEvent) => {
     e.preventDefault();
@@ -171,7 +124,7 @@ export function DiagnosticoGratis() {
 
           <div className="grid md:grid-cols-[minmax(0,1fr)_42%]">
             <div className="min-w-0 p-6 sm:p-8">
-              {estado === "done" ? (
+              {estado === "done" && ficha ? (
                 <div>
                   <p className="inline-flex items-center gap-2 rounded-full bg-primary/20 px-3 py-1.5 text-xs font-bold tracking-widest uppercase">
                     <Search className="size-3.5 text-primary" aria-hidden="true" />
@@ -184,36 +137,103 @@ export function DiagnosticoGratis() {
                     {etapa} · {raza || "Mestizo"} · {entorno} · Intensidad: {intensidad.toLowerCase()}
                   </p>
 
-                  <ul className="mt-6 space-y-4">
-                    {[
-                      {
-                        icon: Activity,
-                        titulo: "Qué está ocurriendo",
-                        texto: `Señales compatibles con activación emocional sostenida: ${conducta.toLowerCase()} como forma de comunicar una necesidad no cubierta.`,
-                      },
-                      {
-                        icon: Brain,
-                        titulo: "Por qué ocurre",
-                        texto: `Combinación de etapa (${etapa.toLowerCase()}), nivel de estimulación y entorno (${entorno.toLowerCase()}).`,
-                      },
-                      {
-                        icon: AlertTriangle,
-                        titulo: "Errores a evitar",
-                        texto:
-                          "Regañar después del hecho y dar atención justo cuando aparece la conducta: ambos la refuerzan.",
-                      },
-                    ].map(({ icon: Icon, titulo, texto }) => (
-                      <li key={titulo} className="grid grid-cols-[auto_minmax(0,1fr)] gap-3">
-                        <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-2xl bg-primary/20">
-                          <Icon className="size-4 text-primary" aria-hidden="true" />
-                        </span>
-                        <div className="min-w-0">
-                          <p className="text-sm font-bold">{titulo}</p>
-                          <p className="mt-0.5 text-sm text-muted-foreground">{texto}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                  {/* 1. Interpretación */}
+                  <div className="mt-6 rounded-3xl bg-secondary/60 p-5">
+                    <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                      <Activity className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                      <span className="min-w-0">Interpretación: qué está ocurriendo</span>
+                    </p>
+                    <p className="mt-2 text-sm text-muted-foreground">{ficha.interpretacion}</p>
+                    {detalle.trim() ? (
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Contexto que indicaste ({detalle.trim()}): ese disparador es la puerta de
+                        entrada del patrón, y es donde primero debes trabajar.
+                      </p>
+                    ) : null}
+                  </div>
+
+                  {/* 2. Causa raíz emocional */}
+                  <div className="mt-4 rounded-3xl bg-wine p-5 text-wine-foreground">
+                    <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                      <Heart className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                      <span className="min-w-0">Causa raíz emocional</span>
+                    </p>
+                    <p className="mt-2 text-sm font-bold text-primary">{ficha.emocion}</p>
+                    <ul className="mt-3 space-y-2 text-sm text-wine-foreground/85">
+                      {ficha.causaRaiz.map((t) => (
+                        <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
+                          <Brain className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                          <span className="min-w-0">{t}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-3 rounded-2xl bg-wine-foreground/10 p-3 text-sm text-wine-foreground/90">
+                      {INTENSIDAD_NOTA[intensidad]}
+                    </p>
+                  </div>
+
+                  {/* 3. Errores comunes */}
+                  <div className="mt-4 rounded-3xl border border-destructive/30 bg-destructive/5 p-5">
+                    <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                      <AlertTriangle className="size-4 shrink-0 text-destructive" aria-hidden="true" />
+                      <span className="min-w-0">Errores comunes que refuerzan el problema</span>
+                    </p>
+                    <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                      {ficha.errores.map((t) => (
+                        <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
+                          <span
+                            className="mt-1.5 size-1.5 shrink-0 rounded-full bg-destructive"
+                            aria-hidden="true"
+                          />
+                          <span className="min-w-0">{t}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* 4. Plan de acción */}
+                  <div className="mt-4 rounded-3xl border border-border bg-background p-5">
+                    <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                      <ListChecks className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                      <span className="min-w-0">Plan de acción (primeros pasos)</span>
+                    </p>
+                    <ol className="mt-3 space-y-3">
+                      {ficha.plan.map((p, i) => (
+                        <li key={p.titulo} className="grid grid-cols-[auto_minmax(0,1fr)] gap-3">
+                          <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-extrabold text-primary-foreground">
+                            {i + 1}
+                          </span>
+                          <div className="min-w-0">
+                            <p className="text-sm font-bold">{p.titulo}</p>
+                            <p className="mt-0.5 text-sm text-muted-foreground">{p.detalle}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                    <div className="mt-4 space-y-2 rounded-2xl bg-secondary/60 p-3 text-sm text-muted-foreground">
+                      <p>{ETAPA_NOTA[etapa]}</p>
+                      <p>{ENTORNO_NOTA[entorno]}</p>
+                    </div>
+                  </div>
+
+                  {/* 5. Señales de progreso */}
+                  <div className="mt-4 rounded-3xl bg-blush/40 p-5">
+                    <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                      <TrendingUp className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                      <span className="min-w-0">Cómo saber que va bien (2-3 semanas)</span>
+                    </p>
+                    <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                      {ficha.senales.map((t) => (
+                        <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
+                          <CheckCircle2
+                            className="mt-0.5 size-4 shrink-0 text-primary"
+                            aria-hidden="true"
+                          />
+                          <span className="min-w-0">{t}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
                   <div className="mt-6 rounded-3xl border border-dashed border-primary/50 bg-primary/10 p-5">
                     <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-bold">
@@ -221,8 +241,8 @@ export function DiagnosticoGratis() {
                       <span className="min-w-0">Paso a paso exacto + seguimiento continuo</span>
                     </p>
                     <p className="mt-1.5 text-sm text-muted-foreground">
-                      El plan completo, el análisis de video y el asistente 24/7 se desbloquean al
-                      activar tu suscripción.
+                      El plan completo día a día, el análisis de video y el asistente 24/7 se
+                      desbloquean al activar tu suscripción.
                     </p>
                     <a
                       href="#planes"
@@ -274,24 +294,13 @@ export function DiagnosticoGratis() {
                           ))}
                         </select>
                       </label>
-                      <label className="min-w-0 text-sm font-bold">
+                      <div className="min-w-0 text-sm font-bold">
                         <span className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-1.5">
                           <Dog className="size-4 shrink-0 text-primary" aria-hidden="true" />
                           <span className="min-w-0">Raza o tipo</span>
                         </span>
-                        <input
-                          value={raza}
-                          onChange={(e) => setRaza(e.target.value)}
-                          list="razas-comunes"
-                          placeholder="Elige o escribe la raza"
-                          className={inputCls}
-                        />
-                        <datalist id="razas-comunes">
-                          {razas.map((x) => (
-                            <option key={x} value={x} />
-                          ))}
-                        </datalist>
-                      </label>
+                        <BreedPicker value={raza} onChange={setRaza} />
+                      </div>
                       <label className="min-w-0 text-sm font-bold">
                         <span className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-1.5">
                           <Home className="size-4 shrink-0 text-primary" aria-hidden="true" />
@@ -422,10 +431,11 @@ export function DiagnosticoGratis() {
               </p>
               <ul className="mt-4 space-y-3 text-sm text-wine-foreground/85">
                 {[
-                  { icon: Activity, t: "Qué está ocurriendo realmente." },
-                  { icon: Brain, t: "Por qué ocurre (causa raíz)." },
-                  { icon: AlertTriangle, t: "Qué errores refuerzan el problema." },
-                  { icon: Target, t: "Primeros pasos para corregirlo." },
+                  { icon: Activity, t: "Interpretación: qué está ocurriendo realmente." },
+                  { icon: Heart, t: "Causa raíz emocional detrás de la conducta." },
+                  { icon: AlertTriangle, t: "Errores comunes que refuerzan el problema." },
+                  { icon: ListChecks, t: "Plan de acción con los primeros pasos." },
+                  { icon: TrendingUp, t: "Señales de progreso para medir avances." },
                 ].map(({ icon: Icon, t }) => (
                   <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
                     <Icon className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
