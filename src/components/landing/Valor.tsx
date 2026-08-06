@@ -55,7 +55,7 @@ export function Valor() {
             {[
               "La IA analizará la información que proporciones y te mostrará un informe con las principales causas del comportamiento detectado.",
               "Además, recibirás una vista previa del plan de mejora diseñado específicamente para tu perro.",
-              "Si deseas acceder al plan completo, al seguimiento continuo, al análisis de videos y a todas las herramientas inteligentes, solo tendrás que activar tu suscripción.",
+              "Si deseas acceder al plan completo, al seguimiento continuo y a todas las herramientas inteligentes, solo tendrás que activar tu suscripción.",
               "Así podrás comprobar primero el valor de la aplicación antes de tomar una decisión.",
             ].map((t) => (
               <li

@@ -5,12 +5,11 @@ import {
   Cake,
   CalendarClock,
   Dog,
+  Eye,
   Home,
   ScanEye,
   Target,
-  Video,
 } from "lucide-react";
-import videoAnalisis from "@/assets/video-analisis.jpg";
 
 const analiza = [
   { icon: Cake, titulo: "Edad", texto: "Etapa biológica y nivel de energía natural." },
@@ -18,8 +17,9 @@ const analiza = [
   { icon: CalendarClock, titulo: "Rutinas", texto: "Horarios de paseo, descanso y alimentación." },
   { icon: Home, titulo: "Entorno familiar", texto: "Hogar, presencia de niños u otras mascotas." },
   { icon: ScanEye, titulo: "Comportamientos", texto: "Frecuencia e intensidad de las conductas." },
-  { icon: Video, titulo: "Lenguaje corporal", texto: "Postura y gestos (vía foto o video)." },
+  { icon: Eye, titulo: "Señales corporales", texto: "Postura y gestos que tú mismo describes." },
 ];
+
 
 const recibes = [
   { icon: Activity, titulo: "Qué está ocurriendo", texto: "Identificación clara de la emoción o estado actual." },
@@ -41,7 +41,7 @@ export function ComoFunciona() {
           ¿Cómo funciona?
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-base text-muted-foreground sm:text-lg">
-          Solo responde unas preguntas o sube un video.
+          Solo responde unas preguntas sobre tu perro.
         </p>
 
         <h3 className="mt-10 text-center font-display text-xl font-bold sm:text-2xl">
@@ -104,15 +104,6 @@ export function ComoFunciona() {
             Hacer mi diagnóstico gratis ahora
           </a>
         </div>
-
-        <img
-          src={videoAnalisis}
-          alt="Persona grabando un video de su perro en casa para analizarlo con la app"
-          loading="lazy"
-          width={1200}
-          height={900}
-          className="mt-6 aspect-[16/10] w-full rounded-3xl object-cover md:aspect-[21/8]"
-        />
       </div>
     </section>
   );

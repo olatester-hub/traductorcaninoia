@@ -241,7 +241,7 @@ export function DiagnosticoGratis() {
                       <span className="min-w-0">Paso a paso exacto + seguimiento continuo</span>
                     </p>
                     <p className="mt-1.5 text-sm text-muted-foreground">
-                      El plan completo día a día, el análisis de video y el asistente 24/7 se
+                      El plan completo día a día y el asistente 24/7 se
                       desbloquean al activar tu suscripción.
                     </p>
                     <a

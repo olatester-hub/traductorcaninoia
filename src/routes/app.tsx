@@ -1,0 +1,80 @@
+import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
+import logoAsset from "@/assets/logo.png.asset.json";
+import {
+  Activity,
+  CalendarHeart,
+  Eye,
+  Gamepad2,
+  LayoutDashboard,
+  ListChecks,
+  Scale,
+  Siren,
+  Stethoscope,
+} from "lucide-react";
+
+type NavItem = { to: string; label: string; icon: typeof Activity; exact?: boolean };
+
+export const NAV: NavItem[] = [
+  { to: "/app", label: "Panel", icon: LayoutDashboard, exact: true },
+  { to: "/app/diagnostico", label: "Diagnóstico", icon: Stethoscope },
+  { to: "/app/plan", label: "Plan 21 días", icon: ListChecks },
+  { to: "/app/rutina", label: "Rutina", icon: Activity },
+  { to: "/app/triaje", label: "Triaje", icon: Siren },
+  { to: "/app/senales", label: "Señales", icon: Eye },
+  { to: "/app/soluciones", label: "Soluciones", icon: Scale },
+  { to: "/app/calendario", label: "Salud", icon: CalendarHeart },
+  { to: "/app/juegos", label: "Juegos", icon: Gamepad2 },
+];
+
+export const Route = createFileRoute("/app")({
+  head: () => ({ meta: [{ name: "robots", content: "noindex" }] }),
+  component: AppLayout,
+});
+
+function AppLayout() {
+  return (
+    <div className="min-h-screen bg-background font-sans antialiased">
+      <header className="sticky top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2 sm:px-6">
+          <Link to="/" className="flex min-w-0 items-center">
+            <img
+              src={logoAsset.url}
+              alt="Traductor Canino IA"
+              className="h-12 w-auto max-w-full object-contain sm:h-16"
+            />
+          </Link>
+          <span className="shrink-0 rounded-full bg-primary/20 px-3 py-1 text-[11px] font-bold tracking-widest text-foreground/70 uppercase">
+            Área premium
+          </span>
+        </div>
+        <nav className="border-t border-border/60">
+          <ul className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-3 py-2 sm:px-5 [scrollbar-width:none]">
+            {NAV.map(({ to, label, icon: Icon, exact }) => (
+              <li key={to} className="shrink-0">
+                <Link
+                  to={to}
+                  activeOptions={{ exact: Boolean(exact) }}
+                  activeProps={{ className: "bg-primary text-primary-foreground" }}
+                  inactiveProps={{ className: "bg-secondary text-secondary-foreground" }}
+                  className="inline-flex min-h-10 items-center gap-2 rounded-full px-3.5 text-sm font-bold whitespace-nowrap"
+                >
+                  <Icon className="size-4 shrink-0" aria-hidden="true" />
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </header>
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 md:py-10">
+        <Outlet />
+      </main>
+      <footer className="border-t border-border/60 bg-cream">
+        <div className="mx-auto max-w-6xl px-4 py-6 text-center text-xs text-muted-foreground sm:px-6">
+          Herramienta de apoyo educativo. No sustituye la valoración de un veterinario ni de un
+          profesional de conducta presencial.
+        </div>
+      </footer>
+    </div>
+  );
+}
