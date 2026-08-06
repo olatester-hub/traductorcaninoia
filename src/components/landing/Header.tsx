@@ -12,12 +12,20 @@ export function Header() {
             className="h-16 w-auto max-w-full object-contain sm:h-24"
           />
         </a>
-        <a
-          href="#diagnostico"
-          className="inline-flex min-h-11 shrink-0 items-center rounded-full bg-primary px-4 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90"
-        >
-          Diagnóstico gratis
-        </a>
+        <div className="flex shrink-0 items-center gap-2">
+          <Link
+            to="/app"
+            className="inline-flex min-h-11 items-center rounded-full border border-border bg-secondary px-4 text-sm font-bold text-secondary-foreground transition-colors hover:bg-secondary/80"
+          >
+            Entrar a la app
+          </Link>
+          <a
+            href="#diagnostico"
+            className="inline-flex min-h-11 items-center rounded-full bg-primary px-4 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Diagnóstico gratis
+          </a>
+        </div>
       </div>
     </header>
   );
