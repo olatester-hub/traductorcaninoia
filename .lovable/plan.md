@@ -1,46 +1,69 @@
-## Objetivo
+# Cómo seguir: recomendación
 
-Construir la landing page de **TRADUCTOR CANINO IA** en `/` (reemplazando el placeholder), usando el copy exacto del archivo .md y el lenguaje visual de la imagen de referencia (bloques modulares tipo bento, colores cálidos, tipografía display grande, tarjetas redondeadas).
+**Recomendación: seguir en este mismo proyecto.** No abras otro proyecto ni otro chat.
 
-## Dirección visual (inspirada en la referencia, no copiada)
+Motivos concretos:
 
-- Paleta cálida: crema (fondo), ámbar/naranja (acento primario), rosa suave (acento secundario), burdeos oscuro (bloques de contraste), con tokens semánticos en `src/styles.css` (oklch), light + dark.
-- Tipografía: display condensada de peso alto para titulares + sans legible para cuerpo, cargada con `<link>` en `__root.tsx`.
-- Bordes redondeados generosos, bloques de color de ancho completo alternando crema / ámbar / burdeos, tarjetas con sombras suaves.
-- Sin gradientes morados genéricos, sin secciones "trusted by" inventadas.
+- El sistema de diseño (tokens crema/ámbar/burdeos, tipografía, chips con íconos) ya está en `src/styles.css` y en los componentes de `src/components/landing/*`. En un proyecto nuevo habría que rehacerlo.
+- El logo transparente, el favicon y las imágenes generadas ya viven acá.
+- La base de conocimiento del diagnóstico (`src/lib/diagnostico.ts`) y el `BreedPicker` son exactamente el núcleo del producto premium: la app se construye encima, no desde cero.
+- El embudo comercial necesita continuidad: landing → `/checkout` → app. Si la app vive en otro dominio, se rompe la venta, el login y la medición.
+- El contexto de este chat (decisiones de copy, precios, planes, bonos) no se transfiere a otro chat. Referenciar otro proyecto solo permite leer archivos, no heredar el criterio.
 
-## Estructura de secciones (copy exacto del .md, en orden)
+Cuándo *sí* convendría separar: solo si la app fuera un producto distinto, con otra marca o vendido aparte. No es el caso.
 
-1. **Hero** — "TRADUCTOR CANINO IA" / "Tu Copiloto de Crianza Canina" + párrafos + CTA "Haz tu primer diagnóstico completamente gratis" + nota "Sin tarjeta de crédito. Sin compromiso."
-2. **"Tu perro no está intentando portarse mal."** — bloque narrativo de contraste (burdeos), líneas cortas con ritmo.
-3. **¿Cómo funciona?** — lista de lo que analiza la IA + lista de lo que recibes en 3 minutos, en dos tarjetas.
-4. **Todo lo que puedes hacer** — grid bento de 7 funciones (Diagnóstico Inteligente, Traductor de Conductas, Analizador de Video, Modo Cachorro, Modo Perro Adulto, Predictor de Higiene, Asistente IA 24/7).
-5. **Lo que realmente estás comprando** — bloque tipográfico grande + CTA "Analizar a mi perro gratis" y el texto explicativo del diagnóstico gratuito.
-6. **Todo lo que incluye tu suscripción** — lista de 11 ítems con checks.
-7. **Bonos exclusivos** — 2 tarjetas (Calendario Inteligente de Salud Canina, Biblioteca de Juegos Inteligentes).
-8. **Planes** — Plan Mensual (USD 6,99/mes) y Plan Anual (USD 55,99/año, ahorro 33 %, equivale a USD 4,67/mes) destacado.
-9. **Garantía** — bloque con diagnóstico gratuito + 7 días de prueba.
-10. **Preguntas frecuentes** — acordeón con las 5 preguntas.
-11. **Empieza hoy** — cierre + CTA final.
-12. **Footer** minimalista.
+Sobre el prompt que tienes listo: pégalo en este mismo chat. Lo integro al plan en vez de arrancar un desarrollo paralelo.
 
-Todo el texto se usa literal del .md, sin reescribir ni añadir claims nuevos.
+## Arquitectura propuesta
 
-## UX y responsive
+```text
+/                     landing de ventas (ya existe)
+/checkout             resumen de plan (ya existe)
+/auth                 registro / inicio de sesión
+/app                  panel del usuario (protegido)
+/app/perros           perfiles de perro (multi-perro)
+/app/diagnostico      diagnóstico completo con IA
+/app/plan/:id         plan de acción con seguimiento
+/app/chat             asistente IA 24/7
+/app/calendario       Bono 1 — calendario de salud
+/app/juegos           Bono 2 — biblioteca de juegos
+```
 
-- Mobile-first: una columna en móvil, grids a partir de `sm`/`md`; filas con texto + icono usando `grid-cols-[minmax(0,1fr)_auto]`, `min-w-0`, `shrink-0`.
-- Botones táctiles ≥44px, CTA repetido en 3 puntos, tipografía escalada por breakpoint.
-- Nav superior simple (logo + un CTA); acordeón FAQ accesible (shadcn Accordion).
-- Los CTA hacen scroll a la sección de planes/diagnóstico (sin backend en esta fase).
+La landing queda intacta; la app vive bajo `/app` reutilizando los mismos tokens y componentes.
 
-## Imágenes
+## Fases
 
-Generar 3–4 imágenes de apoyo (perro con familia, mockup de app en móvil, cachorro) en `src/assets/` y usarlas en hero, sección "cómo funciona" y cierre. La imagen subida se usa solo como referencia visual.
+**Fase 1 — Backend y cuentas**
+Activar Lovable Cloud. Registro/login con email, perfiles de usuario, tabla de perros, tablas de diagnósticos y planes, con seguridad por usuario. Ruta `/app` protegida.
+
+**Fase 2 — Diagnóstico con IA (el corazón)**
+Reemplazar el simulador estático por un diagnóstico real con IA: mismo formulario, misma estructura de salida (interpretación, causa raíz emocional, errores comunes, plan de acción, señales de progreso), pero generado y personalizado por perro. `src/lib/diagnostico.ts` pasa a ser el prompt maestro que garantiza calidad y tono. Se guarda el historial.
+
+**Fase 3 — Plan de acción vivo**
+Cada plan con pasos accionables, check diario, racha, progreso semanal y reevaluación. Es lo que convierte una compra en una suscripción que se retiene.
+
+**Fase 4 — Asistente IA 24/7**
+Chat con memoria del perfil del perro y de los diagnósticos previos.
+
+**Fase 5 — Bonos**
+Calendario inteligente de salud (vacunas, desparasitación, recordatorios) y biblioteca de juegos filtrable por edad, energía y espacio.
+
+**Fase 6 — Monetización y cierre del embudo**
+Conectar el pago real (Paddle recomendado), muro de suscripción, diagnóstico gratuito como gancho hacia el registro, y estados de prueba/garantía de 7 días.
+
+## Orden de trabajo sugerido
+
+Fase 1 y 2 primero: con cuentas + un diagnóstico IA real ya tienes un producto vendible. Las fases 3–5 aumentan retención. La 6 se activa cuando quieras cobrar.
 
 ## Detalles técnicos
 
-- Reescribir `src/routes/index.tsx` con `head()` propio: título único (<60 chars), descripción (<160), og:title, og:description, og:type, twitter:card; H1 único.
-- Componentes en `src/components/landing/*` (Hero, Problema, ComoFunciona, Funciones, Incluye, Bonos, Planes, Garantia, Faq, Cierre, Footer).
-- Tokens de color/tipografía en `src/styles.css` con `@theme inline`; sin clases de color hardcodeadas.
-- Añadir shadcn Accordion y Button si no existen.
-- Sin backend: la landing es estática en esta fase.
+- Rutas nuevas en `src/routes/app/*` con layout protegido; la landing sigue en `src/routes/index.tsx`.
+- Lovable Cloud para base de datos, autenticación y funciones de servidor; políticas de acceso por usuario en cada tabla.
+- IA vía la pasarela integrada (sin claves propias), con salida estructurada validada para que el diagnóstico nunca rompa la interfaz.
+- Componentes de app en `src/components/app/*`, reutilizando `BreedPicker`, chips con íconos Lucide y los tokens existentes.
+- `head()` propio por ruta y `noindex` en las rutas privadas.
+- Todo mobile-first, igual que la landing.
+
+## Siguiente paso
+
+Pega acá tu prompt del producto. Con eso ajusto el alcance de las fases 2–5 y empezamos por la Fase 1.
