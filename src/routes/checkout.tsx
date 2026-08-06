@@ -94,7 +94,7 @@ function CheckoutPage() {
               Todo lo que incluye
             </h2>
             <ul className="mt-5 grid gap-2">
-              {[...incluye, ...bonos].map((item) => (
+              {(plan === "anual" ? [...incluye, ...bonos] : incluye).map((item) => (
                 <li
                   key={item}
                   className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3 rounded-2xl bg-background px-3 py-2"
