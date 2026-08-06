@@ -21,11 +21,11 @@ const faqs = [
     ],
   },
   {
-    q: "¿Necesito subir videos?",
+    q: "¿Cuánto tarda el diagnóstico?",
     a: [
-      "No.",
-      "Puedes obtener un diagnóstico respondiendo preguntas.",
-      "Los videos simplemente permiten un análisis aún más preciso.",
+      "Menos de tres minutos.",
+      "Solo respondes unas preguntas sobre tu perro y su entorno.",
+      "El informe se genera al instante, sin necesidad de grabar nada.",
     ],
   },
   {

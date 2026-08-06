@@ -30,7 +30,6 @@ const incluye = [
   "Diagnósticos personalizados ilimitados.",
   "Planes de acción adaptados a tu perro.",
   "Traductor de conductas.",
-  "Analizador de video con IA.",
   "Modo Cachorro.",
   "Modo Perro Adulto.",
   "Predictor Inteligente de Higiene.",

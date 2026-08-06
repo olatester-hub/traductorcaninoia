@@ -10,11 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppCalendarioRouteImport } from './routes/app.calendario'
+import { Route as AppDiagnosticoRouteImport } from './routes/app.diagnostico'
+import { Route as AppJuegosRouteImport } from './routes/app.juegos'
+import { Route as AppPlanRouteImport } from './routes/app.plan'
+import { Route as AppRutinaRouteImport } from './routes/app.rutina'
+import { Route as AppSenalesRouteImport } from './routes/app.senales'
+import { Route as AppSolucionesRouteImport } from './routes/app.soluciones'
+import { Route as AppTriajeRouteImport } from './routes/app.triaje'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
@@ -22,30 +37,141 @@ const CheckoutRoute = CheckoutRouteImport.update({
   path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCalendarioRoute = AppCalendarioRouteImport.update({
+  id: '/calendario',
+  path: '/calendario',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDiagnosticoRoute = AppDiagnosticoRouteImport.update({
+  id: '/diagnostico',
+  path: '/diagnostico',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppJuegosRoute = AppJuegosRouteImport.update({
+  id: '/juegos',
+  path: '/juegos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPlanRoute = AppPlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRutinaRoute = AppRutinaRouteImport.update({
+  id: '/rutina',
+  path: '/rutina',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSenalesRoute = AppSenalesRouteImport.update({
+  id: '/senales',
+  path: '/senales',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSolucionesRoute = AppSolucionesRouteImport.update({
+  id: '/soluciones',
+  path: '/soluciones',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTriajeRoute = AppTriajeRouteImport.update({
+  id: '/triaje',
+  path: '/triaje',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
   '/checkout': typeof CheckoutRoute
+  '/app/calendario': typeof AppCalendarioRoute
+  '/app/diagnostico': typeof AppDiagnosticoRoute
+  '/app/juegos': typeof AppJuegosRoute
+  '/app/plan': typeof AppPlanRoute
+  '/app/rutina': typeof AppRutinaRoute
+  '/app/senales': typeof AppSenalesRoute
+  '/app/soluciones': typeof AppSolucionesRoute
+  '/app/triaje': typeof AppTriajeRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
+  '/app/calendario': typeof AppCalendarioRoute
+  '/app/diagnostico': typeof AppDiagnosticoRoute
+  '/app/juegos': typeof AppJuegosRoute
+  '/app/plan': typeof AppPlanRoute
+  '/app/rutina': typeof AppRutinaRoute
+  '/app/senales': typeof AppSenalesRoute
+  '/app/soluciones': typeof AppSolucionesRoute
+  '/app/triaje': typeof AppTriajeRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
   '/checkout': typeof CheckoutRoute
+  '/app/calendario': typeof AppCalendarioRoute
+  '/app/diagnostico': typeof AppDiagnosticoRoute
+  '/app/juegos': typeof AppJuegosRoute
+  '/app/plan': typeof AppPlanRoute
+  '/app/rutina': typeof AppRutinaRoute
+  '/app/senales': typeof AppSenalesRoute
+  '/app/soluciones': typeof AppSolucionesRoute
+  '/app/triaje': typeof AppTriajeRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/checkout'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/checkout'
+    | '/app/calendario'
+    | '/app/diagnostico'
+    | '/app/juegos'
+    | '/app/plan'
+    | '/app/rutina'
+    | '/app/senales'
+    | '/app/soluciones'
+    | '/app/triaje'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/checkout'
-  id: '__root__' | '/' | '/checkout'
+  to:
+    | '/'
+    | '/checkout'
+    | '/app/calendario'
+    | '/app/diagnostico'
+    | '/app/juegos'
+    | '/app/plan'
+    | '/app/rutina'
+    | '/app/senales'
+    | '/app/soluciones'
+    | '/app/triaje'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/checkout'
+    | '/app/calendario'
+    | '/app/diagnostico'
+    | '/app/juegos'
+    | '/app/plan'
+    | '/app/rutina'
+    | '/app/senales'
+    | '/app/soluciones'
+    | '/app/triaje'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
   CheckoutRoute: typeof CheckoutRoute
 }
 
@@ -58,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout': {
       id: '/checkout'
       path: '/checkout'
@@ -65,23 +198,103 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/calendario': {
+      id: '/app/calendario'
+      path: '/calendario'
+      fullPath: '/app/calendario'
+      preLoaderRoute: typeof AppCalendarioRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/diagnostico': {
+      id: '/app/diagnostico'
+      path: '/diagnostico'
+      fullPath: '/app/diagnostico'
+      preLoaderRoute: typeof AppDiagnosticoRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/juegos': {
+      id: '/app/juegos'
+      path: '/juegos'
+      fullPath: '/app/juegos'
+      preLoaderRoute: typeof AppJuegosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/plan': {
+      id: '/app/plan'
+      path: '/plan'
+      fullPath: '/app/plan'
+      preLoaderRoute: typeof AppPlanRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/rutina': {
+      id: '/app/rutina'
+      path: '/rutina'
+      fullPath: '/app/rutina'
+      preLoaderRoute: typeof AppRutinaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/senales': {
+      id: '/app/senales'
+      path: '/senales'
+      fullPath: '/app/senales'
+      preLoaderRoute: typeof AppSenalesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/soluciones': {
+      id: '/app/soluciones'
+      path: '/soluciones'
+      fullPath: '/app/soluciones'
+      preLoaderRoute: typeof AppSolucionesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/triaje': {
+      id: '/app/triaje'
+      path: '/triaje'
+      fullPath: '/app/triaje'
+      preLoaderRoute: typeof AppTriajeRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppCalendarioRoute: typeof AppCalendarioRoute
+  AppDiagnosticoRoute: typeof AppDiagnosticoRoute
+  AppJuegosRoute: typeof AppJuegosRoute
+  AppPlanRoute: typeof AppPlanRoute
+  AppRutinaRoute: typeof AppRutinaRoute
+  AppSenalesRoute: typeof AppSenalesRoute
+  AppSolucionesRoute: typeof AppSolucionesRoute
+  AppTriajeRoute: typeof AppTriajeRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppCalendarioRoute: AppCalendarioRoute,
+  AppDiagnosticoRoute: AppDiagnosticoRoute,
+  AppJuegosRoute: AppJuegosRoute,
+  AppPlanRoute: AppPlanRoute,
+  AppRutinaRoute: AppRutinaRoute,
+  AppSenalesRoute: AppSenalesRoute,
+  AppSolucionesRoute: AppSolucionesRoute,
+  AppTriajeRoute: AppTriajeRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
   CheckoutRoute: CheckoutRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

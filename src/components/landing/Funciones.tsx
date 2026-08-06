@@ -1,7 +1,7 @@
 import {
   Brain,
   Languages,
-  Video,
+  Eye,
   Baby,
   Dog,
   CalendarClock,
@@ -71,11 +71,11 @@ export function Funciones() {
           </article>
 
           <article className="rounded-3xl bg-wine p-6 text-wine-foreground sm:p-7">
-            <Video className="size-7 text-primary" aria-hidden="true" />
-            <h3 className="text-center mt-4 font-display text-xl font-bold">Analizador de Video</h3>
+            <Eye className="size-7 text-primary" aria-hidden="true" />
+            <h3 className="text-center mt-4 font-display text-xl font-bold">Traductor de Señales Corporales</h3>
             <p className="text-justify hyphens-auto mt-2 text-base text-wine-foreground/85">
-              Sube un video y recibe un análisis del lenguaje corporal junto con recomendaciones
-              inmediatas.
+              Aprende a leer postura, orejas, cola y mirada para anticipar lo que tu perro va a
+              hacer antes de que ocurra.
             </p>
           </article>
 
