@@ -97,7 +97,7 @@ export function Planes() {
               search={{ plan: "anual" }}
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-wine px-6 text-center text-base font-extrabold text-wine-foreground transition-transform hover:scale-[1.02]"
             >
-              Empezar — USD 55,99/año
+              Empezar — USD 6,99
             </Link>
           </article>
 
