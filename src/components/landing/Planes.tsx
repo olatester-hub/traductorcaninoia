@@ -25,12 +25,12 @@ export function Planes() {
         <div className="mt-8 grid gap-5 md:grid-cols-2">
           <article className="relative flex flex-col rounded-3xl border-2 border-primary/40 bg-blush/30 p-6 shadow-lg shadow-primary/10 sm:p-8">
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-              <h3 className="min-w-0 text-center font-display text-2xl font-bold">Plan Mensual</h3>
+              <h3 className="min-w-0 text-center font-display text-2xl font-bold">Versión Básica</h3>
               <span className="shrink-0 rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground">
                 Flexible
               </span>
             </div>
-            <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 6,99 al mes.</p>
+            <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 4,99</p>
             <p className="mt-1 text-sm text-muted-foreground">Cancela cuando quieras.</p>
             <ul className="mt-5 space-y-2">
               {[
