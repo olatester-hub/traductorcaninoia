@@ -56,7 +56,7 @@ export function Planes() {
               search={{ plan: "mensual" }}
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 text-center text-base font-extrabold text-primary-foreground transition-transform hover:scale-[1.02]"
             >
-              Empezar — USD 6,99/mes
+              Empezar — USD 4,99
             </Link>
           </article>
 
