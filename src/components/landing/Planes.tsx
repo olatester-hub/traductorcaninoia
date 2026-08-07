@@ -25,12 +25,12 @@ export function Planes() {
         <div className="mt-8 grid gap-5 md:grid-cols-2">
           <article className="relative flex flex-col rounded-3xl border-2 border-primary/40 bg-blush/30 p-6 shadow-lg shadow-primary/10 sm:p-8">
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-              <h3 className="min-w-0 text-center font-display text-2xl font-bold">Plan Mensual</h3>
+              <h3 className="min-w-0 text-center font-display text-2xl font-bold">Versión Básica</h3>
               <span className="shrink-0 rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground">
                 Flexible
               </span>
             </div>
-            <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 6,99 al mes.</p>
+            <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 4,99</p>
             <p className="mt-1 text-sm text-muted-foreground">Cancela cuando quieras.</p>
             <ul className="mt-5 space-y-2">
               {[
@@ -56,23 +56,23 @@ export function Planes() {
               search={{ plan: "mensual" }}
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 text-center text-base font-extrabold text-primary-foreground transition-transform hover:scale-[1.02]"
             >
-              Empezar — USD 6,99/mes
+              Empezar — USD 4,99
             </Link>
           </article>
 
           <article className="flex flex-col rounded-3xl bg-primary p-6 text-primary-foreground sm:p-8">
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-              <h3 className="text-center min-w-0 truncate font-display text-2xl font-bold">Plan Anual</h3>
+              <h3 className="text-center min-w-0 truncate font-display text-2xl font-bold">Versión Completa</h3>
               <span className="shrink-0 rounded-full bg-wine px-3 py-1 text-xs font-bold text-wine-foreground">
-                Ahorra 33 %
+                Más completa
               </span>
             </div>
-            <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 55,99 al año</p>
-            <p className="mt-1 text-base font-bold">Equivale a solo USD 4,67 al mes.</p>
+            <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 6,99</p>
+            <p className="mt-1 text-base font-bold">La experiencia completa, con bonos incluidos.</p>
             <ul className="mt-5 space-y-2">
               {[
-                { label: "Todo lo incluido en el plan mensual", Icon: PackageCheck },
-                { label: "Ahorra aproximadamente un 33 % frente al pago mensual", Icon: PiggyBank },
+                { label: "Todo lo incluido en la Versión Básica", Icon: PackageCheck },
+                { label: "Acceso completo a todas las herramientas premium", Icon: PiggyBank },
                 { label: "Bono 1 — Calendario Inteligente de Salud Canina", Icon: CalendarHeart },
                 { label: "Bono 2 — Biblioteca de Juegos Inteligentes", Icon: Puzzle },
               ].map(({ label, Icon }) => (
@@ -97,7 +97,7 @@ export function Planes() {
               search={{ plan: "anual" }}
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-wine px-6 text-center text-base font-extrabold text-wine-foreground transition-transform hover:scale-[1.02]"
             >
-              Empezar — USD 55,99/año
+              Empezar — USD 6,99
             </Link>
           </article>
 

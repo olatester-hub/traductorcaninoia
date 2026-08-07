@@ -3,7 +3,7 @@ import { Check, ArrowLeft, ShieldCheck, Sparkles, Lock } from "lucide-react";
 
 const title = "Resumen de tu plan — Traductor Canino IA";
 const description =
-  "Revisa lo que incluye tu plan mensual o anual de Traductor Canino IA antes de completar el pago.";
+  "Revisa lo que incluye tu Versión Básica o Versión Completa de Traductor Canino IA antes de completar el pago.";
 
 type PlanId = "mensual" | "anual";
 
@@ -12,17 +12,17 @@ const planes: Record<
   { nombre: string; precio: string; ciclo: string; nota: string; extra?: string }
 > = {
   mensual: {
-    nombre: "Plan Mensual",
-    precio: "USD 6,99",
-    ciclo: "al mes",
+    nombre: "Versión Básica",
+    precio: "USD 4,99",
+    ciclo: "pago único",
     nota: "Cancela cuando quieras.",
   },
   anual: {
-    nombre: "Plan Anual",
-    precio: "USD 55,99",
-    ciclo: "al año",
-    nota: "Equivale a solo USD 4,67 al mes.",
-    extra: "Ahorra aproximadamente un 33 % frente al pago mensual.",
+    nombre: "Versión Completa",
+    precio: "USD 6,99",
+    ciclo: "pago único",
+    nota: "La experiencia completa, con bonos incluidos.",
+    extra: "Incluye todo lo de la Versión Básica más los bonos exclusivos.",
   },
 };
 
@@ -151,7 +151,7 @@ function CheckoutPage() {
               search={{ plan: otro }}
               className="mt-4 flex min-h-11 items-center justify-center rounded-full border border-primary-foreground/40 px-4 text-sm font-bold"
             >
-              Cambiar al {planes[otro].nombre.toLowerCase()}
+              Cambiar a la {planes[otro].nombre}
             </Link>
           </aside>
         </div>
