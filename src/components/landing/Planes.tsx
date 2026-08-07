@@ -62,17 +62,17 @@ export function Planes() {
 
           <article className="flex flex-col rounded-3xl bg-primary p-6 text-primary-foreground sm:p-8">
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-              <h3 className="text-center min-w-0 truncate font-display text-2xl font-bold">Plan Anual</h3>
+              <h3 className="text-center min-w-0 truncate font-display text-2xl font-bold">Versión Completa</h3>
               <span className="shrink-0 rounded-full bg-wine px-3 py-1 text-xs font-bold text-wine-foreground">
-                Ahorra 33 %
+                Más completa
               </span>
             </div>
-            <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 55,99 al año</p>
-            <p className="mt-1 text-base font-bold">Equivale a solo USD 4,67 al mes.</p>
+            <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 6,99</p>
+            <p className="mt-1 text-base font-bold">La experiencia completa, con bonos incluidos.</p>
             <ul className="mt-5 space-y-2">
               {[
-                { label: "Todo lo incluido en el plan mensual", Icon: PackageCheck },
-                { label: "Ahorra aproximadamente un 33 % frente al pago mensual", Icon: PiggyBank },
+                { label: "Todo lo incluido en la Versión Básica", Icon: PackageCheck },
+                { label: "Acceso completo a todas las herramientas premium", Icon: PiggyBank },
                 { label: "Bono 1 — Calendario Inteligente de Salud Canina", Icon: CalendarHeart },
                 { label: "Bono 2 — Biblioteca de Juegos Inteligentes", Icon: Puzzle },
               ].map(({ label, Icon }) => (
