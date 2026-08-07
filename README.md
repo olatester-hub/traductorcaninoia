@@ -1,14 +1,18 @@
-# Welcome to your Lovable project
+# Traductor Canino
+
+Usa el layout o diseño como referencia y crea una landing page profesional clara con UX, perfecta y 100% adaptable para móviles, usa la estructura exacta de copy que está en el archivo .md.
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://traductorcaninoapp.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/b8f17de7-460f-4493-8d4a-b7b637acd598).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +24,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
