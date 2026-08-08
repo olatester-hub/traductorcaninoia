@@ -24,6 +24,7 @@ import {
   diasDesde,
   useLocalState,
 } from "@/lib/app-store";
+import { useVersion } from "@/lib/version";
 
 const title = "Panel de tu perro — Traductor Canino IA";
 const description =
@@ -82,12 +83,14 @@ const HERRAMIENTAS = [
     texto: "Qué hacer cuando no avanza y qué métodos evitar (y por qué).",
   },
   {
+    bono: true,
     to: "/app/calendario",
     icon: CalendarHeart,
     titulo: "Calendario de salud",
     texto: "Bono 1: vacunas, antiparasitarios e higiene con próximas fechas.",
   },
   {
+    bono: true,
     to: "/app/juegos",
     icon: Gamepad2,
     titulo: "Biblioteca de juegos",
@@ -96,6 +99,8 @@ const HERRAMIENTAS = [
 ];
 
 function Panel() {
+  const version = useVersion();
+  const herramientas = version === "base" ? HERRAMIENTAS.filter((h) => !h.bono) : HERRAMIENTAS;
   const { value: perfil, setValue: setPerfil } = useLocalState<Perfil>(K.perfil, PERFIL_INICIAL);
   const { value: plan } = useLocalState<PlanGuardado | null>(K.plan, null);
 
@@ -219,7 +224,7 @@ function Panel() {
           Tus herramientas
         </h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {HERRAMIENTAS.map(({ to, icon: Icon, titulo, texto }) => (
+          {herramientas.map(({ to, icon: Icon, titulo, texto }) => (
             <Link
               key={to}
               to={to}

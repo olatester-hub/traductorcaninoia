@@ -27,7 +27,7 @@ export function Planes() {
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
               <h3 className="min-w-0 text-center font-display text-2xl font-bold">Versión Básica</h3>
               <span className="shrink-0 rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground">
-                Flexible
+                BASE
               </span>
             </div>
             <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 4,99</p>
@@ -64,7 +64,7 @@ export function Planes() {
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
               <h3 className="text-center min-w-0 truncate font-display text-2xl font-bold">Versión Completa</h3>
               <span className="shrink-0 rounded-full bg-wine px-3 py-1 text-xs font-bold text-wine-foreground">
-                Más completa
+                PREMIUM
               </span>
             </div>
             <p className="mt-4 font-display text-3xl font-extrabold sm:text-4xl">USD 6,99</p>

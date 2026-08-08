@@ -147,6 +147,15 @@ function CheckoutPage() {
             </p>
 
             <Link
+              to="/app"
+              search={{ v: plan === "mensual" ? "base" : "premium" }}
+              className="mt-4 flex min-h-11 items-center justify-center rounded-full bg-primary-foreground/15 px-4 text-sm font-bold"
+            >
+              Entrar a la app ({plan === "mensual" ? "BASE" : "PREMIUM"})
+            </Link>
+
+
+            <Link
               to="/checkout"
               search={{ plan: otro }}
               className="mt-4 flex min-h-11 items-center justify-center rounded-full border border-primary-foreground/40 px-4 text-sm font-bold"
