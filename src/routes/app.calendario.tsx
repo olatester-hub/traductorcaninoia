@@ -3,6 +3,8 @@ import { useMemo } from "react";
 import { BellRing, CalendarHeart, Check, RotateCcw } from "lucide-react";
 import { TAREAS_SALUD, formatoFecha, proximaFecha } from "@/lib/salud";
 import { K, PERFIL_INICIAL, type Perfil, hoyISO, useLocalState } from "@/lib/app-store";
+import { useVersion } from "@/lib/version";
+import { BonoBloqueado } from "@/components/app/BonoBloqueado";
 
 const title = "Calendario inteligente de salud — Traductor Canino IA";
 const description =
@@ -26,6 +28,7 @@ export const Route = createFileRoute("/app/calendario")({
 type Registro = Record<string, string>; // id -> última fecha ISO
 
 function CalendarioPage() {
+  const version = useVersion();
   const { value: perfil } = useLocalState<Perfil>(K.perfil, PERFIL_INICIAL);
   const { value: registro, setValue: setRegistro } = useLocalState<Registro>(K.salud, {});
 
@@ -49,6 +52,15 @@ function CalendarioPage() {
     .sort((a, b) => a.dias - b.dias);
 
   const pendientes = items.filter((i) => i.dias <= 0).length;
+
+  if (version === "base") {
+    return (
+      <BonoBloqueado
+        titulo="Calendario inteligente de salud"
+        texto="Bono 1: vacunas, desparasitación, higiene y controles con próximas fechas calculadas para la etapa de tu perro."
+      />
+    );
+  }
 
   return (
     <div className="space-y-6">

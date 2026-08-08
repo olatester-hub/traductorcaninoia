@@ -1,6 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { AlertTriangle, CheckCircle2, MinusCircle, Scale, Wrench } from "lucide-react";
+import {
+  AlertTriangle,
+  Beaker,
+  CalendarClock,
+  CheckCircle2,
+  Eye,
+  MinusCircle,
+  Scale,
+  ShieldAlert,
+  Wrench,
+} from "lucide-react";
 import { METODOS, SOLUCIONES } from "@/lib/soluciones";
 
 const title = "Soluciones y matriz de métodos — Traductor Canino IA";
@@ -38,7 +48,8 @@ function SolucionesPage() {
           Cuando no avanza: soluciones reales
         </h1>
         <p className="mt-2 max-w-2xl text-base text-muted-foreground">
-          Los seis atascos más frecuentes, por qué ocurren y el ajuste concreto que los desbloquea.
+          Los diez atascos más frecuentes, cómo reconocerlos, por qué ocurren y el ajuste concreto,
+          medible, que los desbloquea.
         </p>
       </header>
 
@@ -65,19 +76,67 @@ function SolucionesPage() {
                 </span>
               </button>
               {open ? (
-                <div className="border-t border-border p-5">
+                <div className="space-y-4 border-t border-border p-5">
+                  <div>
+                    <p className="flex items-center gap-2 text-xs font-bold tracking-widest text-muted-foreground uppercase">
+                      <Eye className="size-4 shrink-0 text-secondary-foreground" aria-hidden="true" />
+                      Señales de que es esto
+                    </p>
+                    <ul className="mt-2 space-y-2">
+                      {s.senalDeQueEsEsto.map((se) => (
+                        <li key={se} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2 text-sm">
+                          <span
+                            className="mt-1.5 size-1.5 shrink-0 rounded-full bg-secondary-foreground/60"
+                            aria-hidden="true"
+                          />
+                          <span className="min-w-0">{se}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
                   <p className="rounded-2xl bg-secondary/60 p-4 text-sm text-muted-foreground">
                     <span className="font-bold text-foreground">Por qué pasa: </span>
                     {s.porque}
                   </p>
-                  <ul className="mt-3 space-y-2">
-                    {s.ajuste.map((a) => (
-                      <li key={a} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2 text-sm">
-                        <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
-                        <span className="min-w-0">{a}</span>
-                      </li>
-                    ))}
-                  </ul>
+
+                  <p className="flex items-start gap-2 rounded-2xl border border-border p-4 text-sm text-muted-foreground">
+                    <Beaker className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                    <span>
+                      <span className="font-bold text-foreground">Mecanismo: </span>
+                      {s.mecanismo}
+                    </span>
+                  </p>
+
+                  <div>
+                    <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
+                      Ajuste, paso a paso
+                    </p>
+                    <ul className="mt-2 space-y-2">
+                      {s.ajuste.map((a) => (
+                        <li key={a} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2 text-sm">
+                          <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                          <span className="min-w-0">{a}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <p className="flex items-start gap-2 rounded-2xl bg-wine/10 p-4 text-sm text-wine">
+                    <ShieldAlert className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                    <span>
+                      <span className="font-bold">Error fatal: </span>
+                      {s.errorFatal}
+                    </span>
+                  </p>
+
+                  <p className="flex items-start gap-2 rounded-2xl bg-primary/10 p-4 text-sm text-foreground">
+                    <CalendarClock className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                    <span>
+                      <span className="font-bold">Qué esperar: </span>
+                      {s.plazo}
+                    </span>
+                  </p>
                 </div>
               ) : null}
             </article>
@@ -123,6 +182,17 @@ function SolucionesPage() {
                   </div>
                 </dl>
                 <p className="mt-3 text-sm text-muted-foreground">{m.razon}</p>
+                <p className="mt-3 rounded-2xl bg-blush/15 p-3 text-sm text-foreground">
+                  <span className="font-bold">Cuándo sí sirve: </span>
+                  {m.cuandoSiSirve}
+                </p>
+                <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
+                  <Beaker className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span>
+                    <span className="font-bold text-foreground">Evidencia: </span>
+                    {m.evidencia}
+                  </span>
+                </p>
               </article>
             );
           })}

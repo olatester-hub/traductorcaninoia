@@ -1,5 +1,6 @@
-import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
+import { Link, Outlet, createFileRoute, useSearch } from "@tanstack/react-router";
 import logoAsset from "@/assets/logo.png.asset.json";
+import { VERSION_LABEL, useVersion } from "@/lib/version";
 import {
   Activity,
   CalendarHeart,
@@ -12,7 +13,14 @@ import {
   Stethoscope,
 } from "lucide-react";
 
-type NavItem = { to: string; label: string; icon: typeof Activity; exact?: boolean };
+type NavItem = {
+  to: string;
+  label: string;
+  icon: typeof Activity;
+  exact?: boolean;
+  /** Solo disponible en la Versión Completa (bonos). */
+  bono?: boolean;
+};
 
 export const NAV: NavItem[] = [
   { to: "/app", label: "Panel", icon: LayoutDashboard, exact: true },
@@ -22,16 +30,23 @@ export const NAV: NavItem[] = [
   { to: "/app/triaje", label: "Triaje", icon: Siren },
   { to: "/app/senales", label: "Señales", icon: Eye },
   { to: "/app/soluciones", label: "Soluciones", icon: Scale },
-  { to: "/app/calendario", label: "Salud", icon: CalendarHeart },
-  { to: "/app/juegos", label: "Juegos", icon: Gamepad2 },
+  { to: "/app/calendario", label: "Salud", icon: CalendarHeart, bono: true },
+  { to: "/app/juegos", label: "Juegos", icon: Gamepad2, bono: true },
 ];
 
 export const Route = createFileRoute("/app")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    v: search["v"] === "base" || search["v"] === "premium" ? (search["v"] as string) : undefined,
+  }),
   head: () => ({ meta: [{ name: "robots", content: "noindex" }] }),
   component: AppLayout,
 });
 
 function AppLayout() {
+  const { v } = useSearch({ from: "/app" });
+  const version = useVersion(v);
+  const items = version === "base" ? NAV.filter((n) => !n.bono) : NAV;
+
   return (
     <div className="min-h-screen bg-background font-sans antialiased">
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur">
@@ -43,13 +58,19 @@ function AppLayout() {
               className="h-12 w-auto max-w-full object-contain sm:h-16"
             />
           </Link>
-          <span className="shrink-0 rounded-full bg-primary/20 px-3 py-1 text-[11px] font-bold tracking-widest text-foreground/70 uppercase">
-            Área premium
+          <span
+            className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-bold tracking-widest uppercase ${
+              version === "base"
+                ? "bg-secondary text-secondary-foreground"
+                : "bg-primary/20 text-foreground/70"
+            }`}
+          >
+            {VERSION_LABEL[version]}
           </span>
         </div>
         <nav className="border-t border-border/60">
           <ul className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-3 py-2 sm:px-5 [scrollbar-width:none]">
-            {NAV.map(({ to, label, icon: Icon, exact }) => (
+            {items.map(({ to, label, icon: Icon, exact }) => (
               <li key={to} className="shrink-0">
                 <Link
                   to={to}
@@ -69,6 +90,7 @@ function AppLayout() {
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 md:py-10">
         <Outlet />
       </main>
+
       <footer className="border-t border-border/60 bg-cream">
         <div className="mx-auto max-w-6xl px-4 py-6 text-center text-xs text-muted-foreground sm:px-6">
           Herramienta de apoyo educativo. No sustituye la valoración de un veterinario ni de un

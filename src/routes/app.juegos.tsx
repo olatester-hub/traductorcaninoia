@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import { Clock, Puzzle, Sparkles, Target } from "lucide-react";
 import { JUEGOS, type Juego } from "@/lib/juegos";
 import { K, PERFIL_INICIAL, type Perfil, useLocalState } from "@/lib/app-store";
+import { useVersion } from "@/lib/version";
+import { BonoBloqueado } from "@/components/app/BonoBloqueado";
 
 const title = "Biblioteca de juegos inteligentes — Traductor Canino IA";
 const description =
@@ -28,6 +30,7 @@ const ENERGIAS: Juego["energia"][] = ["Baja", "Media", "Alta"];
 const FOCOS: Juego["foco"][] = ["Olfato", "Autocontrol", "Mente", "Confianza", "Vínculo"];
 
 function JuegosPage() {
+  const version = useVersion();
   const { value: perfil } = useLocalState<Perfil>(K.perfil, PERFIL_INICIAL);
   const [espacio, setEspacio] = useState<string>("Todos");
   const [energia, setEnergia] = useState<string>("Todas");
@@ -50,6 +53,15 @@ function JuegosPage() {
     { label: "Energía", valor: energia, set: setEnergia, todos: "Todas", opciones: ENERGIAS },
     { label: "Foco", valor: foco, set: setFoco, todos: "Todos", opciones: FOCOS },
   ] as const;
+
+  if (version === "base") {
+    return (
+      <BonoBloqueado
+        titulo="Biblioteca de juegos inteligentes"
+        texto="Bono 2: juegos de olfato, calma y autocontrol filtrados por espacio, energía y foco, con instrucciones paso a paso."
+      />
+    );
+  }
 
   return (
     <div className="space-y-6">
