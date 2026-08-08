@@ -6,13 +6,25 @@ import {
   ArrowRight,
   Brain,
   CheckCircle2,
+  Eye,
   Heart,
+  Layers,
   ListChecks,
   RotateCcw,
+  Rocket,
+  Repeat,
   Sparkles,
+  Stethoscope,
   TrendingUp,
 } from "lucide-react";
-import { CONDUCTAS, ENTORNO_NOTA, ETAPA_NOTA, INTENSIDAD_NOTA } from "@/lib/diagnostico";
+import {
+  CONDUCTAS,
+  ENTORNO_NOTA,
+  ETAPA_NOTA,
+  INTENSIDAD_NOTA,
+  lecturaCombinada,
+  type FichaConducta,
+} from "@/lib/diagnostico";
 import { K, PERFIL_INICIAL, type Perfil, type PlanGuardado, hoyISO, useLocalState } from "@/lib/app-store";
 
 const title = "Diagnóstico interactivo — Traductor Canino IA";
@@ -36,22 +48,34 @@ export const Route = createFileRoute("/app/diagnostico")({
 
 const CONDUCTAS_LISTA = Object.keys(CONDUCTAS);
 const INTENSIDADES = ["Ocasional", "Frecuente", "Constante"];
+const MAX_CONDUCTAS = 2;
 
 function DiagnosticoApp() {
   const { value: perfil } = useLocalState<Perfil>(K.perfil, PERFIL_INICIAL);
   const { setValue: setPlan } = useLocalState<PlanGuardado | null>(K.plan, null);
   const navigate = useNavigate();
 
-  const [conducta, setConducta] = useState("");
+  const [conductas, setConductas] = useState<string[]>([]);
   const [intensidad, setIntensidad] = useState("");
   const [detalle, setDetalle] = useState("");
   const [listo, setListo] = useState(false);
 
-  const ficha = conducta ? CONDUCTAS[conducta] : undefined;
-  const completo = conducta !== "" && intensidad !== "";
+  const fichas = conductas
+    .map((c) => [c, CONDUCTAS[c]] as const)
+    .filter((x): x is readonly [string, FichaConducta] => Boolean(x[1]));
+  const completo = conductas.length > 0 && intensidad !== "";
+
+  const toggleConducta = (c: string) => {
+    setListo(false);
+    setConductas((prev) => {
+      if (prev.includes(c)) return prev.filter((x) => x !== c);
+      if (prev.length >= MAX_CONDUCTAS) return [prev[1]!, c];
+      return [...prev, c];
+    });
+  };
 
   const activarPlan = () => {
-    setPlan({ conducta, intensidad, creado: hoyISO(), hechos: {} });
+    setPlan({ conducta: conductas[0] ?? "", intensidad, creado: hoyISO(), hechos: {} });
     navigate({ to: "/app/plan" });
   };
 
@@ -75,26 +99,44 @@ function DiagnosticoApp() {
       </header>
 
       <section className="rounded-4xl border border-border bg-card p-6 sm:p-8">
-        <h2 className="font-display text-xl font-bold">1. Conducta observada</h2>
+        <h2 className="font-display text-xl font-bold">
+          1. Conducta observada{" "}
+          <span className="text-sm font-bold text-muted-foreground">
+            (puedes elegir hasta 2)
+          </span>
+        </h2>
         <div className="mt-4 grid gap-2 sm:grid-cols-2">
-          {CONDUCTAS_LISTA.map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => {
-                setConducta(c);
-                setListo(false);
-              }}
-              className={`min-h-12 rounded-2xl px-4 text-left text-sm font-bold transition-colors ${
-                conducta === c
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-secondary text-secondary-foreground hover:bg-primary/15"
-              }`}
-            >
-              {c}
-            </button>
-          ))}
+          {CONDUCTAS_LISTA.map((c) => {
+            const sel = conductas.includes(c);
+            return (
+              <button
+                key={c}
+                type="button"
+                aria-pressed={sel}
+                onClick={() => toggleConducta(c)}
+                className={`grid min-h-12 grid-cols-[auto_minmax(0,1fr)] items-center gap-2 rounded-2xl px-4 py-2 text-left text-sm font-bold transition-colors ${
+                  sel
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-secondary text-secondary-foreground hover:bg-primary/15"
+                }`}
+              >
+                <span
+                  className={`grid size-4 shrink-0 place-items-center rounded-md border-2 ${
+                    sel ? "border-primary-foreground" : "border-muted-foreground/40"
+                  }`}
+                  aria-hidden="true"
+                >
+                  {sel ? <CheckCircle2 className="size-3.5" /> : null}
+                </span>
+                <span className="min-w-0">{c}</span>
+              </button>
+            );
+          })}
         </div>
+        <p className="mt-2 text-xs text-muted-foreground">
+          Seleccionadas: {conductas.length} de {MAX_CONDUCTAS}. Si eliges una tercera, se reemplaza la
+          más antigua.
+        </p>
 
         <h2 className="mt-7 font-display text-xl font-bold">2. Frecuencia</h2>
         <div className="mt-4 grid grid-cols-3 gap-2">
@@ -137,97 +179,176 @@ function DiagnosticoApp() {
         </button>
       </section>
 
-      {listo && ficha ? (
-        <section className="space-y-4">
-          <div className="rounded-3xl bg-secondary/60 p-5 sm:p-6">
-            <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
-              <Activity className="size-4 shrink-0 text-primary" aria-hidden="true" />
-              <span className="min-w-0">Interpretación: qué está ocurriendo</span>
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">{ficha.interpretacion}</p>
-            {detalle.trim() ? (
-              <p className="mt-2 text-sm text-muted-foreground">
-                Contexto que indicaste ({detalle.trim()}): ese disparador es la puerta de entrada del
-                patrón y es donde primero debes trabajar.
+      {listo && fichas.length > 0 ? (
+        <section className="space-y-8">
+          {fichas.length === 2 ? (
+            <div className="rounded-3xl border border-primary/30 bg-primary/10 p-5 sm:p-6">
+              <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                <Layers className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                <span className="min-w-0">Cómo se relacionan las dos conductas</span>
               </p>
-            ) : null}
-          </div>
-
-          <div className="rounded-3xl bg-wine p-5 text-wine-foreground sm:p-6">
-            <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
-              <Heart className="size-4 shrink-0 text-primary" aria-hidden="true" />
-              <span className="min-w-0">Causa raíz emocional</span>
-            </p>
-            <p className="mt-2 text-sm font-bold text-primary">{ficha.emocion}</p>
-            <ul className="mt-3 space-y-2 text-sm text-wine-foreground/85">
-              {ficha.causaRaiz.map((t) => (
-                <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
-                  <Brain className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
-                  <span className="min-w-0">{t}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-3 rounded-2xl bg-wine-foreground/10 p-3 text-sm">
-              {INTENSIDAD_NOTA[intensidad]}
-            </p>
-          </div>
-
-          <div className="rounded-3xl border border-destructive/30 bg-destructive/5 p-5 sm:p-6">
-            <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
-              <AlertTriangle className="size-4 shrink-0 text-destructive" aria-hidden="true" />
-              <span className="min-w-0">Errores comunes que refuerzan el problema</span>
-            </p>
-            <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              {ficha.errores.map((t) => (
-                <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
-                  <span
-                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-destructive"
-                    aria-hidden="true"
-                  />
-                  <span className="min-w-0">{t}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="rounded-3xl border border-border bg-card p-5 sm:p-6">
-            <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
-              <ListChecks className="size-4 shrink-0 text-primary" aria-hidden="true" />
-              <span className="min-w-0">Plan de acción</span>
-            </p>
-            <ol className="mt-3 space-y-3">
-              {ficha.plan.map((p, i) => (
-                <li key={p.titulo} className="grid grid-cols-[auto_minmax(0,1fr)] gap-3">
-                  <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-extrabold text-primary-foreground">
-                    {i + 1}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-sm font-bold">{p.titulo}</p>
-                    <p className="mt-0.5 text-sm text-muted-foreground">{p.detalle}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <div className="mt-4 space-y-2 rounded-2xl bg-secondary/60 p-3 text-sm text-muted-foreground">
-              <p>{ETAPA_NOTA[perfil.etapa]}</p>
-              <p>{ENTORNO_NOTA[perfil.entorno]}</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {lecturaCombinada(fichas[0]![0], fichas[1]![0])}
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Ejes implicados: <span className="font-bold text-foreground">{fichas[0]![1].eje}</span> y{" "}
+                <span className="font-bold text-foreground">{fichas[1]![1].eje}</span>.
+              </p>
             </div>
-          </div>
+          ) : null}
 
-          <div className="rounded-3xl bg-blush/40 p-5 sm:p-6">
-            <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
-              <TrendingUp className="size-4 shrink-0 text-primary" aria-hidden="true" />
-              <span className="min-w-0">Cómo saber que va bien</span>
-            </p>
-            <ul className="mt-3 space-y-2 text-sm text-foreground/80">
-              {ficha.senales.map((t) => (
-                <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
-                  <span className="min-w-0">{t}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {fichas.map(([nombre, ficha]) => (
+            <div key={nombre} className="space-y-4">
+              <div className="flex flex-wrap items-center gap-2">
+                <h2 className="font-display text-2xl font-extrabold">{nombre}</h2>
+                <span className="rounded-full bg-secondary px-3 py-1 text-[11px] font-bold tracking-widest uppercase">
+                  Eje: {ficha.eje}
+                </span>
+              </div>
+
+              <div className="rounded-3xl bg-secondary/60 p-5 sm:p-6">
+                <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                  <Activity className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span className="min-w-0">Interpretación: qué está ocurriendo</span>
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">{ficha.interpretacion}</p>
+                {detalle.trim() ? (
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Contexto que indicaste ({detalle.trim()}): ese disparador es la puerta de entrada del
+                    patrón y es donde primero debes trabajar.
+                  </p>
+                ) : null}
+              </div>
+
+              <div className="rounded-3xl border border-border bg-card p-5 sm:p-6">
+                <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                  <Repeat className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span className="min-w-0">El ciclo que la mantiene viva</span>
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">{ficha.mecanismo}</p>
+              </div>
+
+              <div className="rounded-3xl bg-wine p-5 text-wine-foreground sm:p-6">
+                <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                  <Heart className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span className="min-w-0">Causa raíz emocional</span>
+                </p>
+                <p className="mt-2 text-sm font-bold text-primary">{ficha.emocion}</p>
+                <ul className="mt-3 space-y-2 text-sm text-wine-foreground/85">
+                  {ficha.causaRaiz.map((t) => (
+                    <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
+                      <Brain className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                      <span className="min-w-0">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 rounded-2xl bg-wine-foreground/10 p-3 text-sm">
+                  {INTENSIDAD_NOTA[intensidad]}
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-border bg-card p-5 sm:p-6">
+                <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                  <Eye className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span className="min-w-0">Lectura corporal: cómo confirmarlo</span>
+                </p>
+                <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  {ficha.lectura.map((t) => (
+                    <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
+                      <span
+                        className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary"
+                        aria-hidden="true"
+                      />
+                      <span className="min-w-0">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-3xl border border-destructive/30 bg-destructive/5 p-5 sm:p-6">
+                <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                  <AlertTriangle className="size-4 shrink-0 text-destructive" aria-hidden="true" />
+                  <span className="min-w-0">Errores comunes que refuerzan el problema</span>
+                </p>
+                <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  {ficha.errores.map((t) => (
+                    <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
+                      <span
+                        className="mt-1.5 size-1.5 shrink-0 rounded-full bg-destructive"
+                        aria-hidden="true"
+                      />
+                      <span className="min-w-0">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-3xl border border-border bg-card p-5 sm:p-6">
+                <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                  <ListChecks className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span className="min-w-0">Plan de acción</span>
+                </p>
+                <ol className="mt-3 space-y-3">
+                  {ficha.plan.map((p, i) => (
+                    <li key={p.titulo} className="grid grid-cols-[auto_minmax(0,1fr)] gap-3">
+                      <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-extrabold text-primary-foreground">
+                        {i + 1}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-sm font-bold">{p.titulo}</p>
+                        <p className="mt-0.5 text-sm text-muted-foreground">{p.detalle}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+                <div className="mt-4 space-y-2 rounded-2xl bg-secondary/60 p-3 text-sm text-muted-foreground">
+                  <p>{ETAPA_NOTA[perfil.etapa]}</p>
+                  <p>{ENTORNO_NOTA[perfil.entorno]}</p>
+                </div>
+              </div>
+
+              <div className="rounded-3xl bg-primary/15 p-5 sm:p-6">
+                <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                  <Rocket className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span className="min-w-0">Empieza por aquí (hoy, en menos de 5 minutos)</span>
+                </p>
+                <p className="mt-2 text-sm text-foreground/80">{ficha.primerPaso}</p>
+              </div>
+
+              <div className="rounded-3xl bg-blush/40 p-5 sm:p-6">
+                <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                  <TrendingUp className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span className="min-w-0">Cómo saber que va bien</span>
+                </p>
+                <ul className="mt-3 space-y-2 text-sm text-foreground/80">
+                  {ficha.senales.map((t) => (
+                    <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
+                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                      <span className="min-w-0">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-3xl border border-border bg-card p-5 sm:p-6">
+                <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                  <Stethoscope className="size-4 shrink-0 text-destructive" aria-hidden="true" />
+                  <span className="min-w-0">Cuándo consultar a un profesional</span>
+                </p>
+                <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  {ficha.banderas.map((t) => (
+                    <li key={t} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2">
+                      <span
+                        className="mt-1.5 size-1.5 shrink-0 rounded-full bg-destructive"
+                        aria-hidden="true"
+                      />
+                      <span className="min-w-0">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
 
           <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto]">
             <button
@@ -242,7 +363,7 @@ function DiagnosticoApp() {
               type="button"
               onClick={() => {
                 setListo(false);
-                setConducta("");
+                setConductas([]);
                 setIntensidad("");
                 setDetalle("");
               }}
@@ -252,6 +373,12 @@ function DiagnosticoApp() {
               Otro diagnóstico
             </button>
           </div>
+          {fichas.length === 2 ? (
+            <p className="text-center text-xs text-muted-foreground">
+              El seguimiento de 21 días se activa sobre «{fichas[0]![0]}», la primera conducta que
+              elegiste.
+            </p>
+          ) : null}
         </section>
       ) : null}
     </div>
