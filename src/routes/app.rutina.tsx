@@ -120,10 +120,14 @@ function RutinaPage() {
       <section className="rounded-4xl bg-wine p-6 text-wine-foreground sm:p-8">
         <h2 className="font-display text-xl font-bold">Lectura de la rutina</h2>
         <p className="mt-2 text-base text-wine-foreground/85">{lectura}</p>
+        <p className="mt-4 rounded-3xl bg-primary p-4 text-sm font-extrabold text-primary-foreground">
+          Prioridad de esta semana: {prioridad}
+        </p>
 
         <ul className="mt-5 space-y-3">
           {objetivos.map((o) => {
-            const ok = o.tope ? o.actual <= o.meta : o.actual >= o.meta * 0.75;
+            const ok = o.estado === "ok";
+            const justo = o.estado === "justo";
             const pct = Math.min(100, Math.round((o.actual / Math.max(o.meta, 1)) * 100));
             return (
               <li key={o.clave} className="rounded-3xl bg-wine-foreground/10 p-4">
@@ -131,7 +135,11 @@ function RutinaPage() {
                   <p className="min-w-0 text-sm font-bold">{o.etiqueta}</p>
                   <p
                     className={`shrink-0 rounded-full px-3 py-1 text-xs font-extrabold ${
-                      ok ? "bg-primary text-primary-foreground" : "bg-blush text-blush-foreground"
+                      ok
+                        ? "bg-primary text-primary-foreground"
+                        : justo
+                          ? "bg-accent text-accent-foreground"
+                          : "bg-blush text-blush-foreground"
                     }`}
                   >
                     {o.actual} / {o.meta} {o.unidad}
@@ -140,16 +148,40 @@ function RutinaPage() {
                 </div>
                 <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-wine-foreground/15">
                   <div
-                    className={`h-full rounded-full ${ok ? "bg-primary" : "bg-blush"}`}
+                    className={`h-full rounded-full ${ok ? "bg-primary" : justo ? "bg-accent" : "bg-blush"}`}
                     style={{ width: `${pct}%` }}
                   />
                 </div>
                 <p className="mt-2 text-sm text-wine-foreground/80">{o.consejo}</p>
+                <p className="mt-2 text-sm text-wine-foreground/70">
+                  <span className="font-bold text-wine-foreground">Por qué: </span>
+                  {o.porque}
+                </p>
+                {!ok ? (
+                  <>
+                    <p className="mt-2 text-sm text-wine-foreground/70">
+                      <span className="font-bold text-wine-foreground">Si falta: </span>
+                      {o.siFalta}
+                    </p>
+                    <ul className="mt-2 space-y-1">
+                      {o.como.map((c) => (
+                        <li
+                          key={c}
+                          className="grid grid-cols-[auto_minmax(0,1fr)] gap-2 text-sm text-wine-foreground/85"
+                        >
+                          <span aria-hidden="true">•</span>
+                          <span className="min-w-0">{c}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
               </li>
             );
           })}
         </ul>
       </section>
+
     </div>
   );
 }
