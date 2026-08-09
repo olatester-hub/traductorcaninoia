@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Eye, Search } from "lucide-react";
-import { NIVEL_COLOR, SENALES, ZONAS } from "@/lib/senales";
+import { NIVEL_COLOR, NIVEL_GUIA, SENALES, ZONAS } from "@/lib/senales";
 
 const title = "Traductor de señales corporales — Traductor Canino IA";
 const description =
