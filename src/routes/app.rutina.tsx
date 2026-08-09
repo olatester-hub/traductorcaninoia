@@ -33,7 +33,7 @@ function RutinaPage() {
   const [descanso, setDescanso] = useState(14);
   const [solo, setSolo] = useState(5);
 
-  const { objetivos, lectura } = useMemo(
+  const { objetivos, lectura, prioridad } = useMemo(
     () => calcularRutina({ etapa, energia, paseo, olfato, mental, descanso, solo }),
     [etapa, energia, paseo, olfato, mental, descanso, solo],
   );
