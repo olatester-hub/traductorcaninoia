@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Eye, Search } from "lucide-react";
-import { NIVEL_COLOR, SENALES, ZONAS } from "@/lib/senales";
+import { NIVEL_COLOR, NIVEL_GUIA, SENALES, ZONAS } from "@/lib/senales";
 
 const title = "Traductor de señales corporales — Traductor Canino IA";
 const description =
@@ -97,15 +97,25 @@ function SenalesPage() {
             </div>
             <h2 className="mt-3 font-display text-lg font-bold text-balance">{s.senal}</h2>
             <p className="mt-2 text-sm text-muted-foreground">{s.significa}</p>
+            <p className="mt-3 text-sm">
+              <span className="font-bold">Dónde suele aparecer: </span>
+              <span className="text-muted-foreground">{s.contexto}</span>
+            </p>
             <p className="mt-3 rounded-2xl bg-primary/10 p-3 text-sm font-semibold">
               Qué hacer: {s.quehacer}
             </p>
+            <p className="mt-2 rounded-2xl bg-wine/10 p-3 text-sm">
+              <span className="font-bold">Error frecuente: </span>
+              <span className="text-muted-foreground">{s.error}</span>
+            </p>
+            <p className="mt-2 text-xs text-muted-foreground">{NIVEL_GUIA[s.nivel]}</p>
           </article>
         ))}
         {lista.length === 0 ? (
           <p className="text-base text-muted-foreground">No hay señales para esa búsqueda.</p>
         ) : null}
       </section>
+
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { AlertTriangle, ArrowLeft, CheckCircle2, Siren, Stethoscope } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CheckCircle2, Eye, Siren, Stethoscope } from "lucide-react";
 import { NODOS, RESULTADOS } from "@/lib/triaje";
 
 const title = "Triaje de urgencia canina — Traductor Canino IA";
@@ -121,6 +121,37 @@ function TriajePage() {
               ))}
             </ul>
           </div>
+
+          <div className="rounded-4xl border border-border bg-card p-6 sm:p-8">
+            <h3 className="font-display text-lg font-extrabold">Por qué llegamos aquí</h3>
+            <p className="mt-2 text-sm text-muted-foreground">{resultado.porque}</p>
+
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-3xl bg-wine/10 p-4">
+                <h4 className="text-xs font-bold tracking-widest uppercase">Qué evitar</h4>
+                <ul className="mt-2 space-y-2">
+                  {resultado.evitar.map((e) => (
+                    <li key={e} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2 text-sm">
+                      <AlertTriangle className="mt-0.5 size-4 shrink-0 text-wine" aria-hidden="true" />
+                      <span className="min-w-0 text-muted-foreground">{e}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-3xl bg-primary/10 p-4">
+                <h4 className="text-xs font-bold tracking-widest uppercase">Qué observar y registrar</h4>
+                <ul className="mt-2 space-y-2">
+                  {resultado.observar.map((o) => (
+                    <li key={o} className="grid grid-cols-[auto_minmax(0,1fr)] gap-2 text-sm">
+                      <Eye className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                      <span className="min-w-0 text-muted-foreground">{o}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
 
           <div className="flex flex-wrap gap-3">
             <button
