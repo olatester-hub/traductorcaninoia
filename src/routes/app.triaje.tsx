@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { AlertTriangle, ArrowLeft, CheckCircle2, Siren, Stethoscope } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CheckCircle2, Eye, Siren, Stethoscope } from "lucide-react";
 import { NODOS, RESULTADOS } from "@/lib/triaje";
 
 const title = "Triaje de urgencia canina — Traductor Canino IA";
