@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Clock, Puzzle, Sparkles, Target } from "lucide-react";
 import { JUEGOS, type Juego } from "@/lib/juegos";
-import { K, PERFIL_INICIAL, type Perfil, useLocalState } from "@/lib/app-store";
+import { usePerros } from "@/lib/app-store";
 import { useVersion } from "@/lib/version";
 import { BonoBloqueado } from "@/components/app/BonoBloqueado";
 
@@ -31,7 +31,7 @@ const FOCOS: Juego["foco"][] = ["Olfato", "Autocontrol", "Mente", "Confianza", "
 
 function JuegosPage() {
   const version = useVersion();
-  const { value: perfil } = useLocalState<Perfil>(K.perfil, PERFIL_INICIAL);
+  const { perfil } = usePerros();
   const [espacio, setEspacio] = useState<string>("Todos");
   const [energia, setEnergia] = useState<string>("Todas");
   const [foco, setFoco] = useState<string>("Todos");

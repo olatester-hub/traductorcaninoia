@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Activity, Info, Moon, Timer } from "lucide-react";
 import { calcularRutina, type EntradaRutina } from "@/lib/rutina";
-import { ETAPAS, K, PERFIL_INICIAL, type Perfil, useLocalState } from "@/lib/app-store";
+import { ETAPAS, usePerros } from "@/lib/app-store";
 
 const title = "Calculadora de rutina diaria — Traductor Canino IA";
 const description =
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/app/rutina")({
 });
 
 function RutinaPage() {
-  const { value: perfil } = useLocalState<Perfil>(K.perfil, PERFIL_INICIAL);
+  const { perfil } = usePerros();
   const [etapa, setEtapa] = useState(perfil.etapa);
   const [energia, setEnergia] = useState<EntradaRutina["energia"]>(perfil.energia);
   const [paseo, setPaseo] = useState(45);

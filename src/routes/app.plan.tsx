@@ -2,7 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { CalendarCheck, Check, Flame, RotateCcw, Target, TrendingUp } from "lucide-react";
 import { CONDUCTAS } from "@/lib/diagnostico";
-import { K, PERFIL_INICIAL, type Perfil, type PlanGuardado, diasDesde, useLocalState } from "@/lib/app-store";
+import { K, type PlanGuardado, diasDesde, useLocalState, usePerros } from "@/lib/app-store";
 
 const title = "Plan de 21 días — Traductor Canino IA";
 const description =
@@ -42,7 +42,7 @@ const FASES = [
 ];
 
 function PlanPage() {
-  const { value: perfil } = useLocalState<Perfil>(K.perfil, PERFIL_INICIAL);
+  const { perfil } = usePerros();
   const { value: plan, setValue: setPlan } = useLocalState<PlanGuardado | null>(K.plan, null);
 
   const ficha = plan ? CONDUCTAS[plan.conducta] : undefined;
