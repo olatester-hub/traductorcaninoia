@@ -8,21 +8,23 @@ import {
   Eye,
   Gamepad2,
   ListChecks,
+  Plus,
   Scale,
   Siren,
   Sparkles,
   Stethoscope,
+  Trash2,
 } from "lucide-react";
 import { BreedPicker } from "@/components/landing/BreedPicker";
 import {
   ENTORNOS,
   ETAPAS,
   K,
-  PERFIL_INICIAL,
-  type Perfil,
+  MAX_PERROS,
   type PlanGuardado,
   diasDesde,
   useLocalState,
+  usePerros,
 } from "@/lib/app-store";
 import { useVersion } from "@/lib/version";
 
@@ -101,7 +103,8 @@ const HERRAMIENTAS = [
 function Panel() {
   const version = useVersion();
   const herramientas = version === "base" ? HERRAMIENTAS.filter((h) => !h.bono) : HERRAMIENTAS;
-  const { value: perfil, setValue: setPerfil } = useLocalState<Perfil>(K.perfil, PERFIL_INICIAL);
+  const { lista, perro, perfil, puedeAgregar, seleccionar, agregar, actualizar, eliminar } =
+    usePerros();
   const { value: plan } = useLocalState<PlanGuardado | null>(K.plan, null);
 
   const dia = useMemo(() => (plan ? Math.min(21, diasDesde(plan.creado) + 1) : 0), [plan]);
@@ -109,6 +112,10 @@ function Panel() {
 
   const inputCls =
     "mt-1.5 min-h-12 w-full rounded-2xl border border-input bg-background px-4 text-base outline-none focus:border-primary focus:ring-2 focus:ring-ring/40";
+
+  const set = (patch: Parameters<typeof actualizar>[1]) => {
+    if (perro) actualizar(perro.id, patch);
+  };
 
   return (
     <div className="space-y-8">
@@ -121,16 +128,55 @@ function Panel() {
           {perfil.nombre ? `Hola, ${perfil.nombre}` : "Empecemos por conocer a tu perro"}
         </h1>
         <p className="mt-2 max-w-2xl text-base text-wine-foreground/85">
-          Todo lo que registres aquí personaliza el diagnóstico, la rutina, el calendario de salud y
-          los juegos recomendados.
+          Puedes administrar hasta {MAX_PERROS} perros. El perro activo personaliza el diagnóstico,
+          la rutina, el calendario de salud y los juegos recomendados.
         </p>
+
+        <div className="mt-6 flex flex-wrap items-center gap-2">
+          {lista.map((p) => {
+            const activo = perro?.id === p.id;
+            return (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => seleccionar(p.id)}
+                className={`inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-bold transition-colors ${
+                  activo
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-wine-foreground/10 text-wine-foreground"
+                }`}
+              >
+                <Dog className="size-4 shrink-0" aria-hidden="true" />
+                <span className="max-w-40 truncate">
+                  {p.nombre.trim() || "Perro sin nombre"}
+                  {p.raza ? ` · ${p.raza}` : ""}
+                </span>
+              </button>
+            );
+          })}
+
+          {puedeAgregar ? (
+            <button
+              type="button"
+              onClick={agregar}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-wine-foreground/30 px-4 text-sm font-bold"
+            >
+              <Plus className="size-4" aria-hidden="true" />
+              Añadir perro
+            </button>
+          ) : (
+            <span className="text-xs font-semibold text-wine-foreground/70">
+              Máximo de {MAX_PERROS} perros alcanzado
+            </span>
+          )}
+        </div>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           <label className="block">
             <span className="text-sm font-bold">Nombre</span>
             <input
               value={perfil.nombre}
-              onChange={(e) => setPerfil({ ...perfil, nombre: e.target.value })}
+              onChange={(e) => set({ nombre: e.target.value })}
               placeholder="Ej: Luna"
               className={`${inputCls} text-foreground`}
             />
@@ -138,14 +184,14 @@ function Panel() {
           <div>
             <span className="text-sm font-bold">Raza o tipo</span>
             <div className="mt-1.5 text-foreground">
-              <BreedPicker value={perfil.raza} onChange={(v) => setPerfil({ ...perfil, raza: v })} />
+              <BreedPicker value={perfil.raza} onChange={(v) => set({ raza: v })} />
             </div>
           </div>
           <label className="block">
             <span className="text-sm font-bold">Etapa</span>
             <select
               value={perfil.etapa}
-              onChange={(e) => setPerfil({ ...perfil, etapa: e.target.value })}
+              onChange={(e) => set({ etapa: e.target.value })}
               className={`${inputCls} text-foreground`}
             >
               {ETAPAS.map((x) => (
@@ -157,7 +203,7 @@ function Panel() {
             <span className="text-sm font-bold">Entorno</span>
             <select
               value={perfil.entorno}
-              onChange={(e) => setPerfil({ ...perfil, entorno: e.target.value })}
+              onChange={(e) => set({ entorno: e.target.value })}
               className={`${inputCls} text-foreground`}
             >
               {ENTORNOS.map((x) => (
@@ -172,7 +218,7 @@ function Panel() {
                 <button
                   key={n}
                   type="button"
-                  onClick={() => setPerfil({ ...perfil, energia: n })}
+                  onClick={() => set({ energia: n })}
                   className={`min-h-11 rounded-2xl px-3 text-sm font-bold transition-colors ${
                     perfil.energia === n
                       ? "bg-primary text-primary-foreground"
@@ -185,23 +231,30 @@ function Panel() {
             </div>
           </div>
         </div>
+
+        {perro && lista.length > 1 ? (
+          <button
+            type="button"
+            onClick={() => eliminar(perro.id)}
+            className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-wine-foreground/30 px-4 text-sm font-bold"
+          >
+            <Trash2 className="size-4" aria-hidden="true" />
+            Eliminar este perro
+          </button>
+        ) : null}
       </section>
 
       <section className="grid gap-4 sm:grid-cols-3">
         <article className="rounded-3xl border border-border bg-card p-5">
           <Dog className="size-6 text-primary" aria-hidden="true" />
-          <p className="mt-3 text-sm text-muted-foreground">Perfil</p>
-          <p className="font-display text-xl font-bold">
-            {perfil.raza || "Sin raza definida"}
-          </p>
+          <p className="mt-3 text-sm text-muted-foreground">Perfil activo</p>
+          <p className="font-display text-xl font-bold">{perfil.raza || "Sin raza definida"}</p>
           <p className="text-sm text-muted-foreground">{perfil.etapa}</p>
         </article>
         <article className="rounded-3xl bg-primary p-5 text-primary-foreground">
           <ListChecks className="size-6" aria-hidden="true" />
           <p className="mt-3 text-sm opacity-90">Plan activo</p>
-          <p className="font-display text-xl font-bold">
-            {plan ? plan.conducta : "Aún sin plan"}
-          </p>
+          <p className="font-display text-xl font-bold">{plan ? plan.conducta : "Aún sin plan"}</p>
           <p className="text-sm opacity-90">
             {plan ? `Día ${dia} de 21 · ${hechos} tareas completadas` : "Haz tu diagnóstico"}
           </p>
