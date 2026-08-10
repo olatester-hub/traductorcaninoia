@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { activarLicencia } from "@/lib/version";
 import { Check, ArrowLeft, ShieldCheck, Sparkles, Lock } from "lucide-react";
 
 const title = "Resumen de tu plan — Traductor Canino IA";
@@ -64,6 +65,7 @@ export const Route = createFileRoute("/checkout")({
 
 function CheckoutPage() {
   const { plan } = Route.useSearch() as { plan: PlanId };
+  const navigate = useNavigate();
   const actual = planes[plan];
   const otro: PlanId = plan === "anual" ? "mensual" : "anual";
 
@@ -138,21 +140,18 @@ function CheckoutPage() {
 
             <button
               type="button"
+              onClick={() => {
+                activarLicencia(plan === "mensual" ? "base" : "premium");
+                void navigate({ to: "/app" });
+              }}
               className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-wine px-6 text-base font-extrabold text-wine-foreground transition-transform hover:scale-[1.02]"
             >
               Ir al pago
             </button>
             <p className="mt-3 text-center text-xs text-primary-foreground/80">
-              El cobro se habilitará al conectar la pasarela de pago.
+              El cobro se habilitará al conectar la pasarela de pago. Al confirmarlo se desbloquea
+              la {actual.nombre} en este dispositivo.
             </p>
-
-            <Link
-              to="/app"
-              search={{ v: plan === "mensual" ? "base" : "premium" }}
-              className="mt-4 flex min-h-11 items-center justify-center rounded-full bg-primary-foreground/15 px-4 text-sm font-bold"
-            >
-              Entrar a la app ({plan === "mensual" ? "BASE" : "PREMIUM"})
-            </Link>
 
 
             <Link
