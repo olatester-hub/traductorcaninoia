@@ -25,7 +25,7 @@ import {
   lecturaCombinada,
   type FichaConducta,
 } from "@/lib/diagnostico";
-import { K, PERFIL_INICIAL, type Perfil, type PlanGuardado, hoyISO, useLocalState } from "@/lib/app-store";
+import { K, type PlanGuardado, hoyISO, useLocalState, usePerros } from "@/lib/app-store";
 
 const title = "Diagnóstico interactivo — Traductor Canino IA";
 const description =
@@ -51,7 +51,7 @@ const INTENSIDADES = ["Ocasional", "Frecuente", "Constante"];
 const MAX_CONDUCTAS = 2;
 
 function DiagnosticoApp() {
-  const { value: perfil } = useLocalState<Perfil>(K.perfil, PERFIL_INICIAL);
+  const { perfil } = usePerros();
   const { setValue: setPlan } = useLocalState<PlanGuardado | null>(K.plan, null);
   const navigate = useNavigate();
 

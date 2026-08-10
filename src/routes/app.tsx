@@ -1,9 +1,12 @@
-import { Link, Outlet, createFileRoute, useSearch } from "@tanstack/react-router";
+import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
 import logoAsset from "@/assets/logo.png.asset.json";
-import { VERSION_LABEL, useVersion } from "@/lib/version";
+import { AccesoBloqueado } from "@/components/app/AccesoBloqueado";
+import { VERSION_LABEL, useLicencia } from "@/lib/version";
+import { usePerros } from "@/lib/app-store";
 import {
   Activity,
   CalendarHeart,
+  Dog,
   Eye,
   Gamepad2,
   LayoutDashboard,
@@ -35,17 +38,19 @@ export const NAV: NavItem[] = [
 ];
 
 export const Route = createFileRoute("/app")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    v: search["v"] === "base" || search["v"] === "premium" ? (search["v"] as string) : undefined,
-  }),
   head: () => ({ meta: [{ name: "robots", content: "noindex" }] }),
   component: AppLayout,
 });
 
 function AppLayout() {
-  const { v } = useSearch({ from: "/app" });
-  const version = useVersion(v);
+  const { version, hydrated } = useLicencia();
+  const { perfil, lista } = usePerros();
+
+  if (!hydrated) return <div className="min-h-screen bg-background" />;
+  if (!version) return <AccesoBloqueado />;
+
   const items = version === "base" ? NAV.filter((n) => !n.bono) : NAV;
+  const nombre = perfil.nombre.trim();
 
   return (
     <div className="min-h-screen bg-background font-sans antialiased">
@@ -58,15 +63,26 @@ function AppLayout() {
               className="h-12 w-auto max-w-full object-contain sm:h-16"
             />
           </Link>
-          <span
-            className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-bold tracking-widest uppercase ${
-              version === "base"
-                ? "bg-secondary text-secondary-foreground"
-                : "bg-primary/20 text-foreground/70"
-            }`}
-          >
-            {VERSION_LABEL[version]}
-          </span>
+          <div className="flex shrink-0 items-center gap-2">
+            {lista.length > 0 ? (
+              <Link
+                to="/app"
+                className="hidden items-center gap-1.5 rounded-full bg-secondary px-3 py-1 text-xs font-bold text-secondary-foreground sm:inline-flex"
+              >
+                <Dog className="size-3.5" aria-hidden="true" />
+                {nombre || "Sin nombre"}
+              </Link>
+            ) : null}
+            <span
+              className={`rounded-full px-3 py-1 text-[11px] font-bold tracking-widest uppercase ${
+                version === "base"
+                  ? "bg-secondary text-secondary-foreground"
+                  : "bg-primary/20 text-foreground/70"
+              }`}
+            >
+              {VERSION_LABEL[version]}
+            </span>
+          </div>
         </div>
         <nav className="border-t border-border/60">
           <ul className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-3 py-2 sm:px-5 [scrollbar-width:none]">
