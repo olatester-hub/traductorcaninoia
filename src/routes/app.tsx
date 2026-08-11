@@ -5,6 +5,7 @@ import { VERSION_LABEL, useLicencia } from "@/lib/version";
 import { usePerros } from "@/lib/app-store";
 import {
   Activity,
+  BellRing,
   CalendarHeart,
   Dog,
   Eye,
@@ -30,6 +31,7 @@ export const NAV: NavItem[] = [
   { to: "/app/diagnostico", label: "Diagnóstico", icon: Stethoscope },
   { to: "/app/plan", label: "Plan 21 días", icon: ListChecks },
   { to: "/app/rutina", label: "Rutina", icon: Activity },
+  { to: "/app/recordatorios", label: "Recordatorios", icon: BellRing },
   { to: "/app/triaje", label: "Triaje", icon: Siren },
   { to: "/app/senales", label: "Señales", icon: Eye },
   { to: "/app/soluciones", label: "Soluciones", icon: Scale },
@@ -67,10 +69,10 @@ function AppLayout() {
             {lista.length > 0 ? (
               <Link
                 to="/app"
-                className="hidden items-center gap-1.5 rounded-full bg-secondary px-3 py-1 text-xs font-bold text-secondary-foreground sm:inline-flex"
+                className="inline-flex max-w-32 items-center gap-1.5 rounded-full bg-secondary px-3 py-1 text-xs font-bold text-secondary-foreground sm:max-w-none"
               >
-                <Dog className="size-3.5" aria-hidden="true" />
-                {nombre || "Sin nombre"}
+                <Dog className="size-3.5 shrink-0" aria-hidden="true" />
+                <span className="truncate">{nombre || "Sin nombre"}</span>
               </Link>
             ) : null}
             <span

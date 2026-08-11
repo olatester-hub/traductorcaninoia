@@ -25,7 +25,14 @@ import {
   lecturaCombinada,
   type FichaConducta,
 } from "@/lib/diagnostico";
-import { K, type PlanGuardado, hoyISO, useLocalState, usePerros } from "@/lib/app-store";
+import {
+  K,
+  type PlanGuardado,
+  hoyISO,
+  useDatosPerro,
+  useHistorial,
+  usePerros,
+} from "@/lib/app-store";
 
 const title = "Diagnóstico interactivo — Traductor Canino IA";
 const description =
@@ -52,13 +59,15 @@ const MAX_CONDUCTAS = 2;
 
 function DiagnosticoApp() {
   const { perfil } = usePerros();
-  const { setValue: setPlan } = useLocalState<PlanGuardado | null>(K.plan, null);
+  const { setValue: setPlan } = useDatosPerro<PlanGuardado | null>(K.plan, null);
+  const { registrar } = useHistorial();
   const navigate = useNavigate();
 
   const [conductas, setConductas] = useState<string[]>([]);
   const [intensidad, setIntensidad] = useState("");
   const [detalle, setDetalle] = useState("");
   const [listo, setListo] = useState(false);
+  const [conductaPlan, setConductaPlan] = useState("");
 
   const fichas = conductas
     .map((c) => [c, CONDUCTAS[c]] as const)
@@ -74,8 +83,25 @@ function DiagnosticoApp() {
     });
   };
 
+  const elegida = conductaPlan && conductas.includes(conductaPlan) ? conductaPlan : conductas[0] ?? "";
+
+  const generar = () => {
+    setListo(true);
+    setConductaPlan(conductas[0] ?? "");
+    registrar({
+      tipo: "diagnostico",
+      titulo: `Diagnóstico: ${conductas.join(" + ")}`,
+      detalle: `Frecuencia ${intensidad.toLowerCase()}${detalle.trim() ? ` · ${detalle.trim()}` : ""}`,
+    });
+  };
+
   const activarPlan = () => {
-    setPlan({ conducta: conductas[0] ?? "", intensidad, creado: hoyISO(), hechos: {} });
+    setPlan({ conducta: elegida, intensidad, creado: hoyISO(), hechos: {} });
+    registrar({
+      tipo: "plan",
+      titulo: `Plan de 21 días activado: ${elegida}`,
+      detalle: `Frecuencia ${intensidad.toLowerCase()}`,
+    });
     navigate({ to: "/app/plan" });
   };
 
@@ -171,7 +197,7 @@ function DiagnosticoApp() {
         <button
           type="button"
           disabled={!completo}
-          onClick={() => setListo(true)}
+          onClick={generar}
           className="mt-6 inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-primary px-7 text-base font-extrabold text-primary-foreground disabled:opacity-40"
         >
           Generar diagnóstico
@@ -350,6 +376,43 @@ function DiagnosticoApp() {
             </div>
           ))}
 
+          {fichas.length === 2 ? (
+            <div className="rounded-3xl border border-border bg-card p-5 sm:p-6">
+              <p className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 text-sm font-extrabold">
+                <ListChecks className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                <span className="min-w-0">¿Cuál conducta quieres seguir 21 días?</span>
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Trabaja una a la vez: elige la que más te limita hoy. La otra suele mejorar por
+                arrastre y podrás activarla después.
+              </p>
+              <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                {fichas.map(([nombre]) => {
+                  const sel = elegida === nombre;
+                  return (
+                    <button
+                      key={nombre}
+                      type="button"
+                      aria-pressed={sel}
+                      onClick={() => setConductaPlan(nombre)}
+                      className={`grid min-h-12 grid-cols-[auto_minmax(0,1fr)] items-center gap-2 rounded-2xl px-4 py-2 text-left text-sm font-bold transition-colors ${
+                        sel
+                          ? "bg-wine text-wine-foreground"
+                          : "bg-secondary text-secondary-foreground hover:bg-primary/15"
+                      }`}
+                    >
+                      <CheckCircle2
+                        className={`size-4 shrink-0 ${sel ? "text-primary" : "text-muted-foreground/50"}`}
+                        aria-hidden="true"
+                      />
+                      <span className="min-w-0">{nombre}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
+
           <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto]">
             <button
               type="button"
@@ -364,6 +427,7 @@ function DiagnosticoApp() {
               onClick={() => {
                 setListo(false);
                 setConductas([]);
+                setConductaPlan("");
                 setIntensidad("");
                 setDetalle("");
               }}
@@ -375,8 +439,7 @@ function DiagnosticoApp() {
           </div>
           {fichas.length === 2 ? (
             <p className="text-center text-xs text-muted-foreground">
-              El seguimiento de 21 días se activa sobre «{fichas[0]![0]}», la primera conducta que
-              elegiste.
+              El seguimiento de 21 días se activará sobre «{elegida}».
             </p>
           ) : null}
         </section>

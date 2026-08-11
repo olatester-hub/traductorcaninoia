@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Clock, Puzzle, Sparkles, Target } from "lucide-react";
+import { Clock, Dog, Puzzle, Sparkles, Target } from "lucide-react";
 import { JUEGOS, type Juego } from "@/lib/juegos";
-import { usePerros } from "@/lib/app-store";
+import { K, useDatosPerro, usePerros } from "@/lib/app-store";
 import { useVersion } from "@/lib/version";
 import { BonoBloqueado } from "@/components/app/BonoBloqueado";
 
@@ -32,9 +32,15 @@ const FOCOS: Juego["foco"][] = ["Olfato", "Autocontrol", "Mente", "Confianza", "
 function JuegosPage() {
   const version = useVersion();
   const { perfil } = usePerros();
-  const [espacio, setEspacio] = useState<string>("Todos");
-  const [energia, setEnergia] = useState<string>("Todas");
-  const [foco, setFoco] = useState<string>("Todos");
+  const { value: filtro, setValue: setFiltro } = useDatosPerro(K.juegos, {
+    espacio: "Todos",
+    energia: "Todas",
+    foco: "Todos",
+  });
+  const { espacio, energia, foco } = filtro;
+  const setEspacio = (v: string) => setFiltro((f) => ({ ...f, espacio: v }));
+  const setEnergia = (v: string) => setFiltro((f) => ({ ...f, energia: v }));
+  const setFoco = (v: string) => setFiltro((f) => ({ ...f, foco: v }));
   const [abierto, setAbierto] = useState<string | null>(null);
 
   const lista = useMemo(
@@ -80,6 +86,14 @@ function JuegosPage() {
       </header>
 
       <section className="space-y-4 rounded-4xl border border-border bg-card p-5 sm:p-6">
+        <button
+          type="button"
+          onClick={() => setFiltro({ espacio: "Todos", energia: perfil.energia, foco: "Todos" })}
+          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-wine px-5 text-sm font-extrabold text-wine-foreground"
+        >
+          <Dog className="size-4 text-primary" aria-hidden="true" />
+          Recomendados para {perfil.nombre || "tu perro"}
+        </button>
         {filtros.map(({ label, valor, set, todos, opciones }) => (
           <div key={label}>
             <p className="text-sm font-bold">{label}</p>

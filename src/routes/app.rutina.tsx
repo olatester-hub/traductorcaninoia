@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Activity, Info, Moon, Timer } from "lucide-react";
 import { calcularRutina, type EntradaRutina } from "@/lib/rutina";
-import { ETAPAS, usePerros } from "@/lib/app-store";
+import { ETAPAS, K, useDatosPerro, usePerros } from "@/lib/app-store";
 
 const title = "Calculadora de rutina diaria — Traductor Canino IA";
 const description =
@@ -25,13 +25,24 @@ export const Route = createFileRoute("/app/rutina")({
 
 function RutinaPage() {
   const { perfil } = usePerros();
-  const [etapa, setEtapa] = useState(perfil.etapa);
-  const [energia, setEnergia] = useState<EntradaRutina["energia"]>(perfil.energia);
-  const [paseo, setPaseo] = useState(45);
-  const [olfato, setOlfato] = useState(10);
-  const [mental, setMental] = useState(5);
-  const [descanso, setDescanso] = useState(14);
-  const [solo, setSolo] = useState(5);
+  const { value: guardado, setValue: setGuardado } = useDatosPerro<EntradaRutina | null>(
+    K.rutina,
+    null,
+  );
+
+  const datos: EntradaRutina = guardado ?? {
+    etapa: perfil.etapa,
+    energia: perfil.energia,
+    paseo: 45,
+    olfato: 10,
+    mental: 5,
+    descanso: 14,
+    solo: 5,
+  };
+  const { etapa, energia, paseo, olfato, mental, descanso, solo } = datos;
+  const patch = (p: Partial<EntradaRutina>) => setGuardado({ ...datos, ...p });
+  const setEtapa = (v: string) => patch({ etapa: v });
+  const setEnergia = (v: EntradaRutina["energia"]) => patch({ energia: v });
 
   const { objetivos, lectura, prioridad } = useMemo(
     () => calcularRutina({ etapa, energia, paseo, olfato, mental, descanso, solo }),
@@ -39,11 +50,11 @@ function RutinaPage() {
   );
 
   const sliders = [
-    { label: "Paseo (min/día)", value: paseo, set: setPaseo, max: 180, step: 5, icon: Activity },
-    { label: "Olfateo libre (min/día)", value: olfato, set: setOlfato, max: 90, step: 5, icon: Timer },
-    { label: "Trabajo mental (min/día)", value: mental, set: setMental, max: 90, step: 5, icon: Info },
-    { label: "Descanso real (h/día)", value: descanso, set: setDescanso, max: 22, step: 1, icon: Moon },
-    { label: "Horas seguidas solo", value: solo, set: setSolo, max: 12, step: 1, icon: Timer },
+    { label: "Paseo (min/día)", value: paseo, set: (v: number) => patch({ paseo: v }), max: 180, step: 5, icon: Activity },
+    { label: "Olfateo libre (min/día)", value: olfato, set: (v: number) => patch({ olfato: v }), max: 90, step: 5, icon: Timer },
+    { label: "Trabajo mental (min/día)", value: mental, set: (v: number) => patch({ mental: v }), max: 90, step: 5, icon: Info },
+    { label: "Descanso real (h/día)", value: descanso, set: (v: number) => patch({ descanso: v }), max: 22, step: 1, icon: Moon },
+    { label: "Horas seguidas solo", value: solo, set: (v: number) => patch({ solo: v }), max: 12, step: 1, icon: Timer },
   ];
 
   return (

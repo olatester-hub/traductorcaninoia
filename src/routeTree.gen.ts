@@ -17,6 +17,7 @@ import { Route as AppCalendarioRouteImport } from './routes/app.calendario'
 import { Route as AppDiagnosticoRouteImport } from './routes/app.diagnostico'
 import { Route as AppJuegosRouteImport } from './routes/app.juegos'
 import { Route as AppPlanRouteImport } from './routes/app.plan'
+import { Route as AppRecordatoriosRouteImport } from './routes/app.recordatorios'
 import { Route as AppRutinaRouteImport } from './routes/app.rutina'
 import { Route as AppSenalesRouteImport } from './routes/app.senales'
 import { Route as AppSolucionesRouteImport } from './routes/app.soluciones'
@@ -62,6 +63,11 @@ const AppPlanRoute = AppPlanRouteImport.update({
   path: '/plan',
   getParentRoute: () => AppRoute,
 } as any)
+const AppRecordatoriosRoute = AppRecordatoriosRouteImport.update({
+  id: '/recordatorios',
+  path: '/recordatorios',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppRutinaRoute = AppRutinaRouteImport.update({
   id: '/rutina',
   path: '/rutina',
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/app/diagnostico': typeof AppDiagnosticoRoute
   '/app/juegos': typeof AppJuegosRoute
   '/app/plan': typeof AppPlanRoute
+  '/app/recordatorios': typeof AppRecordatoriosRoute
   '/app/rutina': typeof AppRutinaRoute
   '/app/senales': typeof AppSenalesRoute
   '/app/soluciones': typeof AppSolucionesRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/app/diagnostico': typeof AppDiagnosticoRoute
   '/app/juegos': typeof AppJuegosRoute
   '/app/plan': typeof AppPlanRoute
+  '/app/recordatorios': typeof AppRecordatoriosRoute
   '/app/rutina': typeof AppRutinaRoute
   '/app/senales': typeof AppSenalesRoute
   '/app/soluciones': typeof AppSolucionesRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/app/diagnostico': typeof AppDiagnosticoRoute
   '/app/juegos': typeof AppJuegosRoute
   '/app/plan': typeof AppPlanRoute
+  '/app/recordatorios': typeof AppRecordatoriosRoute
   '/app/rutina': typeof AppRutinaRoute
   '/app/senales': typeof AppSenalesRoute
   '/app/soluciones': typeof AppSolucionesRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/app/diagnostico'
     | '/app/juegos'
     | '/app/plan'
+    | '/app/recordatorios'
     | '/app/rutina'
     | '/app/senales'
     | '/app/soluciones'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/app/diagnostico'
     | '/app/juegos'
     | '/app/plan'
+    | '/app/recordatorios'
     | '/app/rutina'
     | '/app/senales'
     | '/app/soluciones'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/app/diagnostico'
     | '/app/juegos'
     | '/app/plan'
+    | '/app/recordatorios'
     | '/app/rutina'
     | '/app/senales'
     | '/app/soluciones'
@@ -233,6 +245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPlanRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/recordatorios': {
+      id: '/app/recordatorios'
+      path: '/recordatorios'
+      fullPath: '/app/recordatorios'
+      preLoaderRoute: typeof AppRecordatoriosRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/rutina': {
       id: '/app/rutina'
       path: '/rutina'
@@ -269,6 +288,7 @@ interface AppRouteChildren {
   AppDiagnosticoRoute: typeof AppDiagnosticoRoute
   AppJuegosRoute: typeof AppJuegosRoute
   AppPlanRoute: typeof AppPlanRoute
+  AppRecordatoriosRoute: typeof AppRecordatoriosRoute
   AppRutinaRoute: typeof AppRutinaRoute
   AppSenalesRoute: typeof AppSenalesRoute
   AppSolucionesRoute: typeof AppSolucionesRoute
@@ -281,6 +301,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppDiagnosticoRoute: AppDiagnosticoRoute,
   AppJuegosRoute: AppJuegosRoute,
   AppPlanRoute: AppPlanRoute,
+  AppRecordatoriosRoute: AppRecordatoriosRoute,
   AppRutinaRoute: AppRutinaRoute,
   AppSenalesRoute: AppSenalesRoute,
   AppSolucionesRoute: AppSolucionesRoute,

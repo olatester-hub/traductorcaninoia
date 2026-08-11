@@ -3,10 +3,13 @@ import { useMemo } from "react";
 import {
   Activity,
   ArrowRight,
+  BellRing,
   CalendarHeart,
   Dog,
   Eye,
+  FileDown,
   Gamepad2,
+  History,
   ListChecks,
   Plus,
   Scale,
@@ -23,7 +26,8 @@ import {
   MAX_PERROS,
   type PlanGuardado,
   diasDesde,
-  useLocalState,
+  useDatosPerro,
+  useHistorial,
   usePerros,
 } from "@/lib/app-store";
 import { useVersion } from "@/lib/version";
@@ -67,6 +71,12 @@ const HERRAMIENTAS = [
     texto: "Detecta déficits de paseo, olfato, trabajo mental y descanso.",
   },
   {
+    to: "/app/recordatorios",
+    icon: BellRing,
+    titulo: "Recordatorios semanales",
+    texto: "Programa la rutina de la semana y marca cada hábito cumplido.",
+  },
+  {
     to: "/app/triaje",
     icon: Siren,
     titulo: "Triaje de urgencia",
@@ -103,9 +113,19 @@ const HERRAMIENTAS = [
 function Panel() {
   const version = useVersion();
   const herramientas = version === "base" ? HERRAMIENTAS.filter((h) => !h.bono) : HERRAMIENTAS;
-  const { lista, perro, perfil, puedeAgregar, seleccionar, agregar, actualizar, eliminar } =
-    usePerros();
-  const { value: plan } = useLocalState<PlanGuardado | null>(K.plan, null);
+  const {
+    lista,
+    perro,
+    perfil,
+    puedeAgregar,
+    seleccionar,
+    agregar,
+    actualizar,
+    eliminar,
+    eliminarTodos,
+  } = usePerros();
+  const { value: plan } = useDatosPerro<PlanGuardado | null>(K.plan, null);
+  const { sesiones, limpiar } = useHistorial();
 
   const dia = useMemo(() => (plan ? Math.min(21, diasDesde(plan.creado) + 1) : 0), [plan]);
   const hechos = plan ? Object.values(plan.hechos).filter(Boolean).length : 0;
@@ -232,16 +252,34 @@ function Panel() {
           </div>
         </div>
 
-        {perro && lista.length > 1 ? (
-          <button
-            type="button"
-            onClick={() => eliminar(perro.id)}
-            className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-wine-foreground/30 px-4 text-sm font-bold"
-          >
-            <Trash2 className="size-4" aria-hidden="true" />
-            Eliminar este perro
-          </button>
-        ) : null}
+        <div className="mt-5 flex flex-wrap gap-2">
+          {perro ? (
+            <button
+              type="button"
+              onClick={() => {
+                if (window.confirm(`¿Eliminar a ${perfil.nombre || "este perro"} y sus datos?`))
+                  eliminar(perro.id);
+              }}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-wine-foreground/30 px-4 text-sm font-bold"
+            >
+              <Trash2 className="size-4" aria-hidden="true" />
+              Eliminar este perro
+            </button>
+          ) : null}
+          {lista.length > 0 ? (
+            <button
+              type="button"
+              onClick={() => {
+                if (window.confirm("¿Eliminar todos los perros y su información guardada?"))
+                  eliminarTodos();
+              }}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-blush px-4 text-sm font-bold text-blush-foreground"
+            >
+              <Trash2 className="size-4" aria-hidden="true" />
+              Eliminar todos
+            </button>
+          ) : null}
+        </div>
       </section>
 
       <section className="grid gap-4 sm:grid-cols-3">
@@ -293,6 +331,64 @@ function Panel() {
             </Link>
           ))}
         </div>
+      </section>
+
+      <section className="rounded-4xl border border-border bg-card p-6 sm:p-8">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 font-display text-2xl font-extrabold">
+            <History className="size-5 shrink-0 text-primary" aria-hidden="true" />
+            <span className="min-w-0">Historial de sesiones</span>
+          </h2>
+          {sesiones.length > 0 ? (
+            <button
+              type="button"
+              onClick={() => {
+                if (window.confirm("¿Borrar el historial de este perro?")) limpiar();
+              }}
+              className="inline-flex min-h-10 items-center gap-2 rounded-full bg-secondary px-4 text-sm font-bold"
+            >
+              <Trash2 className="size-4" aria-hidden="true" />
+              Borrar
+            </button>
+          ) : null}
+        </div>
+        {sesiones.length === 0 ? (
+          <p className="mt-3 text-sm text-muted-foreground">
+            Aquí quedará registrado cada diagnóstico, plan activado, PDF descargado y hábito de la
+            rutina que marques con {perfil.nombre || "tu perro"}.
+          </p>
+        ) : (
+          <ul className="mt-4 space-y-2">
+            {sesiones.map((s) => (
+              <li
+                key={s.id}
+                className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3 rounded-2xl bg-secondary/60 p-4"
+              >
+                <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-xl bg-primary/15 text-primary">
+                  {s.tipo === "pdf" ? (
+                    <FileDown className="size-4" aria-hidden="true" />
+                  ) : s.tipo === "plan" ? (
+                    <ListChecks className="size-4" aria-hidden="true" />
+                  ) : s.tipo === "rutina" ? (
+                    <Activity className="size-4" aria-hidden="true" />
+                  ) : (
+                    <Stethoscope className="size-4" aria-hidden="true" />
+                  )}
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-sm font-bold">{s.titulo}</span>
+                  <span className="mt-0.5 block text-sm text-muted-foreground">{s.detalle}</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">
+                    {new Date(s.fecha).toLocaleString("es", {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
     </div>
   );
