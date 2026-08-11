@@ -1,5 +1,5 @@
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
-import logoAsset from "@/assets/logo.png.asset.json";
+import logoUrl from "@/assets/logo.png";
 import { AccesoBloqueado } from "@/components/app/AccesoBloqueado";
 import { VERSION_LABEL, useLicencia } from "@/lib/version";
 import { usePerros } from "@/lib/app-store";
@@ -60,7 +60,7 @@ function AppLayout() {
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2 sm:px-6">
           <Link to="/" className="flex min-w-0 items-center">
             <img
-              src={logoAsset.url}
+              src={logoUrl}
               alt="Traductor Canino IA"
               className="h-12 w-auto max-w-full object-contain sm:h-16"
             />

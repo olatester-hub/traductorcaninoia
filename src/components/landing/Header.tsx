@@ -1,4 +1,4 @@
-import logoAsset from "@/assets/logo.png.asset.json";
+import logoUrl from "@/assets/logo.png";
 
 export function Header() {
   return (
@@ -6,7 +6,7 @@ export function Header() {
       <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 sm:px-6">
         <a href="#inicio" className="flex min-w-0 items-center">
           <img
-            src={logoAsset.url}
+            src={logoUrl}
             alt="Traductor Canino IA — Tu copiloto de crianza canina"
             className="h-10 w-auto max-w-full object-contain sm:h-24"
           />

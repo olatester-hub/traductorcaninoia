@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Crown, Lock, ShieldCheck } from "lucide-react";
-import logoAsset from "@/assets/logo.png.asset.json";
+import logoUrl from "@/assets/logo.png";
 
 /** Muro de acceso: sin licencia comprada no se muestra ninguna versión de la app. */
 export function AccesoBloqueado() {
@@ -9,7 +9,7 @@ export function AccesoBloqueado() {
       <div className="mx-auto flex max-w-2xl flex-col items-center px-4 py-12 text-center sm:px-6">
         <Link to="/" className="inline-flex">
           <img
-            src={logoAsset.url}
+            src={logoUrl}
             alt="Traductor Canino IA"
             className="h-14 w-auto object-contain sm:h-20"
           />
