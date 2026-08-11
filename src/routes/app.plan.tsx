@@ -1,8 +1,16 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
-import { CalendarCheck, Check, Flame, RotateCcw, Target, TrendingUp } from "lucide-react";
+import { CalendarCheck, Check, FileDown, Flame, RotateCcw, Target, TrendingUp } from "lucide-react";
 import { CONDUCTAS } from "@/lib/diagnostico";
-import { K, type PlanGuardado, diasDesde, useLocalState, usePerros } from "@/lib/app-store";
+import {
+  K,
+  type PlanGuardado,
+  diasDesde,
+  useDatosPerro,
+  useHistorial,
+  usePerros,
+} from "@/lib/app-store";
+import { descargarPlanPdf } from "@/lib/pdf";
 
 const title = "Plan de 21 días — Traductor Canino IA";
 const description =
@@ -43,7 +51,8 @@ const FASES = [
 
 function PlanPage() {
   const { perfil } = usePerros();
-  const { value: plan, setValue: setPlan } = useLocalState<PlanGuardado | null>(K.plan, null);
+  const { value: plan, setValue: setPlan } = useDatosPerro<PlanGuardado | null>(K.plan, null);
+  const { registrar } = useHistorial();
 
   const ficha = plan ? CONDUCTAS[plan.conducta] : undefined;
   const diaActual = plan ? Math.min(21, diasDesde(plan.creado) + 1) : 0;
@@ -79,6 +88,15 @@ function PlanPage() {
       </div>
     );
   }
+
+  const descargarPdf = () => {
+    descargarPlanPdf({ perfil, plan, ficha, diaActual, hechos, total, fases: FASES });
+    registrar({
+      tipo: "pdf",
+      titulo: `PDF del plan «${plan.conducta}»`,
+      detalle: `Día ${diaActual} de 21 · ${hechos}/${total} tareas completadas`,
+    });
+  };
 
   const toggle = (dia: number, paso: number) => {
     const key = `${dia}-${paso}`;
@@ -130,6 +148,15 @@ function PlanPage() {
           <div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} />
         </div>
         <p className="mt-3 text-sm text-wine-foreground/85">{fase.foco}</p>
+
+        <button
+          type="button"
+          onClick={descargarPdf}
+          className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-extrabold text-primary-foreground"
+        >
+          <FileDown className="size-4" aria-hidden="true" />
+          Descargar plan en PDF
+        </button>
       </header>
 
       <section className="rounded-4xl border border-border bg-card p-6 sm:p-8">
@@ -219,7 +246,14 @@ function PlanPage() {
         </ul>
         <button
           type="button"
-          onClick={() => setPlan(null)}
+          onClick={() => {
+            registrar({
+              tipo: "plan",
+              titulo: `Plan reiniciado: ${plan.conducta}`,
+              detalle: `Se cerró en el día ${diaActual} con ${hechos}/${total} tareas`,
+            });
+            setPlan(null);
+          }}
           className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-accent-foreground/10 px-5 text-sm font-bold"
         >
           <RotateCcw className="size-4" aria-hidden="true" />
