@@ -25,13 +25,24 @@ export const Route = createFileRoute("/app/rutina")({
 
 function RutinaPage() {
   const { perfil } = usePerros();
-  const [etapa, setEtapa] = useState(perfil.etapa);
-  const [energia, setEnergia] = useState<EntradaRutina["energia"]>(perfil.energia);
-  const [paseo, setPaseo] = useState(45);
-  const [olfato, setOlfato] = useState(10);
-  const [mental, setMental] = useState(5);
-  const [descanso, setDescanso] = useState(14);
-  const [solo, setSolo] = useState(5);
+  const { value: guardado, setValue: setGuardado } = useDatosPerro<EntradaRutina | null>(
+    K.rutina,
+    null,
+  );
+
+  const datos: EntradaRutina = guardado ?? {
+    etapa: perfil.etapa,
+    energia: perfil.energia,
+    paseo: 45,
+    olfato: 10,
+    mental: 5,
+    descanso: 14,
+    solo: 5,
+  };
+  const { etapa, energia, paseo, olfato, mental, descanso, solo } = datos;
+  const patch = (p: Partial<EntradaRutina>) => setGuardado({ ...datos, ...p });
+  const setEtapa = (v: string) => patch({ etapa: v });
+  const setEnergia = (v: EntradaRutina["energia"]) => patch({ energia: v });
 
   const { objetivos, lectura, prioridad } = useMemo(
     () => calcularRutina({ etapa, energia, paseo, olfato, mental, descanso, solo }),
