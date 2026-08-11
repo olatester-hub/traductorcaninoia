@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { BellRing, CalendarHeart, Check, RotateCcw } from "lucide-react";
 import { TAREAS_SALUD, formatoFecha, proximaFecha } from "@/lib/salud";
-import { K, hoyISO, useLocalState, usePerros } from "@/lib/app-store";
+import { K, hoyISO, useDatosPerro, usePerros } from "@/lib/app-store";
 import { useVersion } from "@/lib/version";
 import { BonoBloqueado } from "@/components/app/BonoBloqueado";
 
@@ -30,7 +30,7 @@ type Registro = Record<string, string>; // id -> última fecha ISO
 function CalendarioPage() {
   const version = useVersion();
   const { perfil } = usePerros();
-  const { value: registro, setValue: setRegistro } = useLocalState<Registro>(K.salud, {});
+  const { value: registro, setValue: setRegistro } = useDatosPerro<Registro>(K.salud, {});
 
   const tareas = useMemo(
     () => TAREAS_SALUD.filter((t) => (t.etapas as string[]).includes(perfil.etapa)),

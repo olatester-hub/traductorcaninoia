@@ -89,6 +89,7 @@ export const K = {
   juegos: "tci.juegos.favoritos",
   historial: "tci.historial",
   recordatorios: "tci.recordatorios",
+  rutina: "tci.rutina",
 } as const;
 
 export const MAX_PERROS = 3;
