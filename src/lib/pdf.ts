@@ -136,6 +136,7 @@ export function descargarPlanPdf({
     ctx.y += 7;
   }
 
+  ctx.y += 6;
   salto(ctx, 14);
   ctx.doc.setFontSize(8.5);
   ctx.doc.setTextColor(120, 120, 120);
