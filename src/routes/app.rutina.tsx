@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Activity, Info, Moon, Timer } from "lucide-react";
 import { calcularRutina, type EntradaRutina } from "@/lib/rutina";
-import { ETAPAS, usePerros } from "@/lib/app-store";
+import { ETAPAS, K, useDatosPerro, usePerros } from "@/lib/app-store";
 
 const title = "Calculadora de rutina diaria — Traductor Canino IA";
 const description =
@@ -50,11 +50,11 @@ function RutinaPage() {
   );
 
   const sliders = [
-    { label: "Paseo (min/día)", value: paseo, set: setPaseo, max: 180, step: 5, icon: Activity },
-    { label: "Olfateo libre (min/día)", value: olfato, set: setOlfato, max: 90, step: 5, icon: Timer },
-    { label: "Trabajo mental (min/día)", value: mental, set: setMental, max: 90, step: 5, icon: Info },
-    { label: "Descanso real (h/día)", value: descanso, set: setDescanso, max: 22, step: 1, icon: Moon },
-    { label: "Horas seguidas solo", value: solo, set: setSolo, max: 12, step: 1, icon: Timer },
+    { label: "Paseo (min/día)", value: paseo, set: (v: number) => patch({ paseo: v }), max: 180, step: 5, icon: Activity },
+    { label: "Olfateo libre (min/día)", value: olfato, set: (v: number) => patch({ olfato: v }), max: 90, step: 5, icon: Timer },
+    { label: "Trabajo mental (min/día)", value: mental, set: (v: number) => patch({ mental: v }), max: 90, step: 5, icon: Info },
+    { label: "Descanso real (h/día)", value: descanso, set: (v: number) => patch({ descanso: v }), max: 22, step: 1, icon: Moon },
+    { label: "Horas seguidas solo", value: solo, set: (v: number) => patch({ solo: v }), max: 12, step: 1, icon: Timer },
   ];
 
   return (
