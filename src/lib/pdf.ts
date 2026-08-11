@@ -16,12 +16,14 @@ function salto(ctx: Ctx, alto: number) {
 }
 
 function titulo(ctx: Ctx, texto: string, tam = 14) {
-  salto(ctx, 12);
+  // Espacio superior y "keep with next" para no dejar títulos huérfanos.
+  if (ctx.y > MARGEN + 2) ctx.y += 6;
+  salto(ctx, 26);
   ctx.doc.setFont("helvetica", "bold");
   ctx.doc.setFontSize(tam);
   ctx.doc.setTextColor(60, 20, 30);
   ctx.doc.text(texto, MARGEN, ctx.y);
-  ctx.y += tam * 0.55 + 3;
+  ctx.y += tam * 0.55 + 4;
 }
 
 function parrafo(ctx: Ctx, texto: string, opciones?: { bold?: boolean; sangria?: number }) {
