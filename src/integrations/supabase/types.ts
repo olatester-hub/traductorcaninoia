@@ -14,7 +14,72 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      hotmart_eventos: {
+        Row: {
+          created_at: string
+          email: string | null
+          evento: string | null
+          id: string
+          payload: Json
+          transaction: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          evento?: string | null
+          id?: string
+          payload: Json
+          transaction?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          evento?: string | null
+          id?: string
+          payload?: Json
+          transaction?: string | null
+        }
+        Relationships: []
+      }
+      licencias: {
+        Row: {
+          comprador_nombre: string | null
+          created_at: string
+          email: string
+          estado: string
+          hotmart_offer: string | null
+          hotmart_product_id: string | null
+          hotmart_transaction: string | null
+          id: string
+          updated_at: string
+          version: string
+        }
+        Insert: {
+          comprador_nombre?: string | null
+          created_at?: string
+          email: string
+          estado?: string
+          hotmart_offer?: string | null
+          hotmart_product_id?: string | null
+          hotmart_transaction?: string | null
+          id?: string
+          updated_at?: string
+          version: string
+        }
+        Update: {
+          comprador_nombre?: string | null
+          created_at?: string
+          email?: string
+          estado?: string
+          hotmart_offer?: string | null
+          hotmart_product_id?: string | null
+          hotmart_transaction?: string | null
+          id?: string
+          updated_at?: string
+          version?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
