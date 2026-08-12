@@ -34,13 +34,14 @@ export function AccesoBloqueado() {
             <h2 className="mt-1 font-display text-xl font-extrabold">Versión Básica</h2>
             <p className="mt-1 font-display text-2xl font-extrabold">USD 4,99</p>
             <p className="text-sm text-muted-foreground">Pago único, sin bonos.</p>
-            <Link
-              to="/checkout"
-              search={{ plan: "mensual" }}
+            <a
+              href="https://pay.hotmart.com/L107111884K?off=pjr5hqql"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-4 flex min-h-11 items-center justify-center rounded-full bg-secondary px-5 text-sm font-extrabold text-secondary-foreground"
             >
               Comprar la Versión Básica
-            </Link>
+            </a>
           </article>
 
           <article className="rounded-3xl bg-wine p-6 text-left text-wine-foreground">
@@ -48,14 +49,15 @@ export function AccesoBloqueado() {
             <h2 className="mt-1 font-display text-xl font-extrabold">Versión Completa</h2>
             <p className="mt-1 font-display text-2xl font-extrabold">USD 6,99</p>
             <p className="text-sm opacity-85">Pago único, con los 2 bonos.</p>
-            <Link
-              to="/checkout"
-              search={{ plan: "anual" }}
+            <a
+              href="https://pay.hotmart.com/L107111884K?off=axlr8y2x"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-4 flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-extrabold text-primary-foreground"
             >
               <Crown className="size-4" aria-hidden="true" />
               Comprar la Versión Completa
-            </Link>
+            </a>
           </article>
         </div>
 

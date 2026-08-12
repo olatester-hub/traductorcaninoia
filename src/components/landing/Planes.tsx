@@ -51,13 +51,14 @@ export function Planes() {
               ))}
             </ul>
 
-            <Link
-              to="/checkout"
-              search={{ plan: "mensual" }}
+            <a
+              href="https://pay.hotmart.com/L107111884K?off=pjr5hqql"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 text-center text-base font-extrabold text-primary-foreground transition-transform hover:scale-[1.02]"
             >
-              Empezar — USD 4,99
-            </Link>
+              Comprar Versión Básica
+            </a>
           </article>
 
           <article className="flex flex-col rounded-3xl bg-primary p-6 text-primary-foreground sm:p-8">
@@ -92,13 +93,14 @@ export function Planes() {
               aprendizaje.
             </p>
 
-            <Link
-              to="/checkout"
-              search={{ plan: "anual" }}
+            <a
+              href="https://pay.hotmart.com/L107111884K?off=axlr8y2x"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-wine px-6 text-center text-base font-extrabold text-wine-foreground transition-transform hover:scale-[1.02]"
             >
-              Empezar — USD 6,99
-            </Link>
+              Comprar Versión Completa
+            </a>
           </article>
 
         </div>
