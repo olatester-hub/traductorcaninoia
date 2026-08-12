@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
+import { Route as BaseRouteImport } from './routes/base'
 import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as PremiumRouteImport } from './routes/premium'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppCalendarioRouteImport } from './routes/app.calendario'
 import { Route as AppDiagnosticoRouteImport } from './routes/app.diagnostico'
@@ -33,9 +35,19 @@ const AppRoute = AppRouteImport.update({
   path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BaseRoute = BaseRouteImport.update({
+  id: '/base',
+  path: '/base',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutRoute = CheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PremiumRoute = PremiumRouteImport.update({
+  id: '/premium',
+  path: '/premium',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -92,7 +104,9 @@ const AppTriajeRoute = AppTriajeRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/base': typeof BaseRoute
   '/checkout': typeof CheckoutRoute
+  '/premium': typeof PremiumRoute
   '/app/calendario': typeof AppCalendarioRoute
   '/app/diagnostico': typeof AppDiagnosticoRoute
   '/app/juegos': typeof AppJuegosRoute
@@ -106,7 +120,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/base': typeof BaseRoute
   '/checkout': typeof CheckoutRoute
+  '/premium': typeof PremiumRoute
   '/app/calendario': typeof AppCalendarioRoute
   '/app/diagnostico': typeof AppDiagnosticoRoute
   '/app/juegos': typeof AppJuegosRoute
@@ -122,7 +138,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/base': typeof BaseRoute
   '/checkout': typeof CheckoutRoute
+  '/premium': typeof PremiumRoute
   '/app/calendario': typeof AppCalendarioRoute
   '/app/diagnostico': typeof AppDiagnosticoRoute
   '/app/juegos': typeof AppJuegosRoute
@@ -139,7 +157,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/base'
     | '/checkout'
+    | '/premium'
     | '/app/calendario'
     | '/app/diagnostico'
     | '/app/juegos'
@@ -153,7 +173,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/base'
     | '/checkout'
+    | '/premium'
     | '/app/calendario'
     | '/app/diagnostico'
     | '/app/juegos'
@@ -168,7 +190,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/app'
+    | '/base'
     | '/checkout'
+    | '/premium'
     | '/app/calendario'
     | '/app/diagnostico'
     | '/app/juegos'
@@ -184,7 +208,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  BaseRoute: typeof BaseRoute
   CheckoutRoute: typeof CheckoutRoute
+  PremiumRoute: typeof PremiumRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -203,11 +229,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/base': {
+      id: '/base'
+      path: '/base'
+      fullPath: '/base'
+      preLoaderRoute: typeof BaseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout': {
       id: '/checkout'
       path: '/checkout'
       fullPath: '/checkout'
       preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/premium': {
+      id: '/premium'
+      path: '/premium'
+      fullPath: '/premium'
+      preLoaderRoute: typeof PremiumRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
@@ -314,7 +354,9 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  BaseRoute: BaseRoute,
   CheckoutRoute: CheckoutRoute,
+  PremiumRoute: PremiumRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
