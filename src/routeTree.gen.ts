@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BaseRouteImport } from './routes/base'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as PremiumRouteImport } from './routes/premium'
@@ -24,6 +25,7 @@ import { Route as AppRutinaRouteImport } from './routes/app.rutina'
 import { Route as AppSenalesRouteImport } from './routes/app.senales'
 import { Route as AppSolucionesRouteImport } from './routes/app.soluciones'
 import { Route as AppTriajeRouteImport } from './routes/app.triaje'
+import { Route as ApiPublicHotmartRouteImport } from './routes/api/public/hotmart'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -33,6 +35,11 @@ const IndexRoute = IndexRouteImport.update({
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BaseRoute = BaseRouteImport.update({
@@ -100,10 +107,16 @@ const AppTriajeRoute = AppTriajeRouteImport.update({
   path: '/triaje',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicHotmartRoute = ApiPublicHotmartRouteImport.update({
+  id: '/api/public/hotmart',
+  path: '/api/public/hotmart',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRoute
   '/base': typeof BaseRoute
   '/checkout': typeof CheckoutRoute
   '/premium': typeof PremiumRoute
@@ -117,9 +130,11 @@ export interface FileRoutesByFullPath {
   '/app/soluciones': typeof AppSolucionesRoute
   '/app/triaje': typeof AppTriajeRoute
   '/app/': typeof AppIndexRoute
+  '/api/public/hotmart': typeof ApiPublicHotmartRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/base': typeof BaseRoute
   '/checkout': typeof CheckoutRoute
   '/premium': typeof PremiumRoute
@@ -133,11 +148,13 @@ export interface FileRoutesByTo {
   '/app/soluciones': typeof AppSolucionesRoute
   '/app/triaje': typeof AppTriajeRoute
   '/app': typeof AppIndexRoute
+  '/api/public/hotmart': typeof ApiPublicHotmartRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRoute
   '/base': typeof BaseRoute
   '/checkout': typeof CheckoutRoute
   '/premium': typeof PremiumRoute
@@ -151,12 +168,14 @@ export interface FileRoutesById {
   '/app/soluciones': typeof AppSolucionesRoute
   '/app/triaje': typeof AppTriajeRoute
   '/app/': typeof AppIndexRoute
+  '/api/public/hotmart': typeof ApiPublicHotmartRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/app'
+    | '/auth'
     | '/base'
     | '/checkout'
     | '/premium'
@@ -170,9 +189,11 @@ export interface FileRouteTypes {
     | '/app/soluciones'
     | '/app/triaje'
     | '/app/'
+    | '/api/public/hotmart'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/base'
     | '/checkout'
     | '/premium'
@@ -186,10 +207,12 @@ export interface FileRouteTypes {
     | '/app/soluciones'
     | '/app/triaje'
     | '/app'
+    | '/api/public/hotmart'
   id:
     | '__root__'
     | '/'
     | '/app'
+    | '/auth'
     | '/base'
     | '/checkout'
     | '/premium'
@@ -203,14 +226,17 @@ export interface FileRouteTypes {
     | '/app/soluciones'
     | '/app/triaje'
     | '/app/'
+    | '/api/public/hotmart'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRoute
   BaseRoute: typeof BaseRoute
   CheckoutRoute: typeof CheckoutRoute
   PremiumRoute: typeof PremiumRoute
+  ApiPublicHotmartRoute: typeof ApiPublicHotmartRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -227,6 +253,13 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/base': {
@@ -320,6 +353,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTriajeRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/public/hotmart': {
+      id: '/api/public/hotmart'
+      path: '/api/public/hotmart'
+      fullPath: '/api/public/hotmart'
+      preLoaderRoute: typeof ApiPublicHotmartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -354,9 +394,11 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  AuthRoute: AuthRoute,
   BaseRoute: BaseRoute,
   CheckoutRoute: CheckoutRoute,
   PremiumRoute: PremiumRoute,
+  ApiPublicHotmartRoute: ApiPublicHotmartRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

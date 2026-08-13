@@ -1,0 +1,1 @@
+ALTER TABLE public.licencias ADD CONSTRAINT licencias_email_unique UNIQUE (email);

@@ -1,6 +1,10 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { activarLicencia } from "@/lib/version";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, ArrowLeft, ShieldCheck, Sparkles, Lock } from "lucide-react";
+
+const PAGO: Record<"mensual" | "anual", string> = {
+  mensual: "https://pay.hotmart.com/L107111884K?off=pjr5hqql",
+  anual: "https://pay.hotmart.com/L107111884K?off=axlr8y2x",
+};
 
 const title = "Resumen de tu plan — Traductor Canino IA";
 const description =
@@ -65,7 +69,7 @@ export const Route = createFileRoute("/checkout")({
 
 function CheckoutPage() {
   const { plan } = Route.useSearch() as { plan: PlanId };
-  const navigate = useNavigate();
+  
   const actual = planes[plan];
   const otro: PlanId = plan === "anual" ? "mensual" : "anual";
 
@@ -138,20 +142,19 @@ function CheckoutPage() {
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                activarLicencia(plan === "mensual" ? "base" : "premium");
-                void navigate({ to: "/app" });
-              }}
+            <a
+              href={PAGO[plan]}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-wine px-6 text-base font-extrabold text-wine-foreground transition-transform hover:scale-[1.02]"
             >
               Ir al pago
-            </button>
+            </a>
             <p className="mt-3 text-center text-xs text-primary-foreground/80">
-              El cobro se habilitará al conectar la pasarela de pago. Al confirmarlo se desbloquea
-              la {actual.nombre} en este dispositivo.
+              Pagas de forma segura en Hotmart. Al aprobarse el pago, entra con el mismo correo de
+              tu compra y se desbloquea la {actual.nombre}.
             </p>
+
 
 
             <Link
