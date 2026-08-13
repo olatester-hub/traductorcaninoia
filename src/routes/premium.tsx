@@ -1,6 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { activarLicencia } from "@/lib/version";
 
 export const Route = createFileRoute("/premium")({
   head: () => ({
@@ -24,13 +23,12 @@ function AccesoPremium() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    activarLicencia("premium");
-    void navigate({ to: "/app", replace: true });
+    void navigate({ to: "/auth", replace: true });
   }, [navigate]);
 
   return (
     <div className="grid min-h-screen place-items-center bg-background px-6 text-center">
-      <p className="text-base font-bold text-muted-foreground">Activando la Versión Completa…</p>
+      <p className="text-base font-bold text-muted-foreground">Validando tu compra…</p>
     </div>
   );
 }
