@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Crown, Lock, ShieldCheck } from "lucide-react";
+import { Crown, Lock, LogIn, ShieldCheck } from "lucide-react";
 import logoUrl from "@/assets/logo.png";
 
 /** Muro de acceso: sin licencia comprada no se muestra ninguna versión de la app. */
@@ -25,6 +25,15 @@ export function AccesoBloqueado() {
           El panel, el diagnóstico y todas las herramientas se activan al completar el pago. Elige
           tu versión y entra al instante.
         </p>
+
+        <Link
+          to="/auth"
+          className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-border bg-card px-6 text-sm font-extrabold"
+        >
+          <LogIn className="size-4" aria-hidden="true" />
+          Ya compré — entrar con mi correo
+        </Link>
+
 
         <div className="mt-8 grid w-full gap-4 sm:grid-cols-2">
           <article className="rounded-3xl border border-border bg-card p-6 text-left">
