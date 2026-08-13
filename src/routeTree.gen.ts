@@ -24,6 +24,7 @@ import { Route as AppRutinaRouteImport } from './routes/app.rutina'
 import { Route as AppSenalesRouteImport } from './routes/app.senales'
 import { Route as AppSolucionesRouteImport } from './routes/app.soluciones'
 import { Route as AppTriajeRouteImport } from './routes/app.triaje'
+import { Route as ApiPublicHotmartRouteImport } from './routes/api/public/hotmart'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -100,6 +101,11 @@ const AppTriajeRoute = AppTriajeRouteImport.update({
   path: '/triaje',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicHotmartRoute = ApiPublicHotmartRouteImport.update({
+  id: '/api/public/hotmart',
+  path: '/api/public/hotmart',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -117,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/app/soluciones': typeof AppSolucionesRoute
   '/app/triaje': typeof AppTriajeRoute
   '/app/': typeof AppIndexRoute
+  '/api/public/hotmart': typeof ApiPublicHotmartRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/app/soluciones': typeof AppSolucionesRoute
   '/app/triaje': typeof AppTriajeRoute
   '/app': typeof AppIndexRoute
+  '/api/public/hotmart': typeof ApiPublicHotmartRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/app/soluciones': typeof AppSolucionesRoute
   '/app/triaje': typeof AppTriajeRoute
   '/app/': typeof AppIndexRoute
+  '/api/public/hotmart': typeof ApiPublicHotmartRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/app/soluciones'
     | '/app/triaje'
     | '/app/'
+    | '/api/public/hotmart'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -186,6 +196,7 @@ export interface FileRouteTypes {
     | '/app/soluciones'
     | '/app/triaje'
     | '/app'
+    | '/api/public/hotmart'
   id:
     | '__root__'
     | '/'
@@ -203,6 +214,7 @@ export interface FileRouteTypes {
     | '/app/soluciones'
     | '/app/triaje'
     | '/app/'
+    | '/api/public/hotmart'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -211,6 +223,7 @@ export interface RootRouteChildren {
   BaseRoute: typeof BaseRoute
   CheckoutRoute: typeof CheckoutRoute
   PremiumRoute: typeof PremiumRoute
+  ApiPublicHotmartRoute: typeof ApiPublicHotmartRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -320,6 +333,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTriajeRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/public/hotmart': {
+      id: '/api/public/hotmart'
+      path: '/api/public/hotmart'
+      fullPath: '/api/public/hotmart'
+      preLoaderRoute: typeof ApiPublicHotmartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -357,6 +377,7 @@ const rootRouteChildren: RootRouteChildren = {
   BaseRoute: BaseRoute,
   CheckoutRoute: CheckoutRoute,
   PremiumRoute: PremiumRoute,
+  ApiPublicHotmartRoute: ApiPublicHotmartRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
