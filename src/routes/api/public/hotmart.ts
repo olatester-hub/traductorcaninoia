@@ -108,19 +108,41 @@ export const Route = createFileRoute("/api/public/hotmart")({
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-        await supabaseAdmin.from("hotmart_eventos").insert({
+        const { error: errorLog } = await supabaseAdmin.from("hotmart_eventos").insert({
           evento,
           transaction,
           email: email || null,
           payload: payload as never,
         });
-
-        if (!email) return new Response("ok (sin email)", { status: 200 });
+        if (errorLog) console.error("[hotmart] log evento", errorLog.message);
 
         const version =
           productId === idPremium ? "premium" : productId === idBase ? "base" : null;
 
+        // Modo de prueba: registra el evento y devuelve el diagnóstico sin tocar licencias.
+        const esPrueba =
+          new URL(request.url).searchParams.get("test") === "1" ||
+          request.headers.get("x-hotmart-test") === "1";
+
+        if (esPrueba) {
+          return Response.json({
+            ok: true,
+            modo: "prueba",
+            recibido: true,
+            evento,
+            email: email || null,
+            product_id: productId || null,
+            version_detectada: version,
+            estado_compra: estadoCompra || null,
+            transaction,
+            nota: "Evento registrado en el historial. No se creó ni modificó ninguna licencia.",
+          });
+        }
+
+        if (!email) return new Response("ok (sin email)", { status: 200 });
+
         if (!version) return new Response("ok (producto no reconocido)", { status: 200 });
+
 
         const revocar = REVOCADOS.has(evento ?? "") || estadoCompra === "REFUNDED";
         const aprobar =
