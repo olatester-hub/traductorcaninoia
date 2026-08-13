@@ -27,6 +27,50 @@ const REVOCADOS = new Set([
 export const Route = createFileRoute("/api/public/hotmart")({
   server: {
     handlers: {
+      // Modo de prueba / diagnóstico: verifica configuración y muestra los últimos eventos recibidos.
+      GET: async ({ request }) => {
+        const hottok = process.env["HOTMART_HOTTOK"];
+        const url = new URL(request.url);
+        const enviado =
+          request.headers.get("x-hotmart-hottok") ??
+          request.headers.get("hottok") ??
+          url.searchParams.get("hottok") ??
+          "";
+
+        const estadoConfig = {
+          endpoint: "/api/public/hotmart",
+          hottok_configurado: Boolean(hottok),
+          producto_base_configurado: Boolean(process.env["HOTMART_PRODUCT_BASE"]),
+          producto_premium_configurado: Boolean(process.env["HOTMART_PRODUCT_PREMIUM"]),
+          hora_servidor: new Date().toISOString(),
+        };
+
+        if (!hottok || enviado !== hottok) {
+          return Response.json({ ok: true, autenticado: false, ...estadoConfig });
+        }
+
+        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+        const { data, error } = await supabaseAdmin
+          .from("hotmart_eventos")
+          .select("id, evento, email, transaction, created_at")
+          .order("created_at", { ascending: false })
+          .limit(20);
+
+        if (error) {
+          return Response.json(
+            { ok: false, autenticado: true, ...estadoConfig, error: error.message },
+            { status: 500 },
+          );
+        }
+
+        return Response.json({
+          ok: true,
+          autenticado: true,
+          ...estadoConfig,
+          total_mostrados: data?.length ?? 0,
+          ultimos_eventos: data ?? [],
+        });
+      },
       POST: async ({ request }) => {
         const hottok = process.env["HOTMART_HOTTOK"];
         const idBase = process.env["HOTMART_PRODUCT_BASE"];
