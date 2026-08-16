@@ -52,7 +52,7 @@ export function Planes() {
             </ul>
 
             <a
-              href="https://pay.hotmart.com/L107111884K?off=pjr5hqql"
+              href="https://pay.hotmart.com/D107140120R"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 text-center text-base font-extrabold text-primary-foreground transition-transform hover:scale-[1.02]"
