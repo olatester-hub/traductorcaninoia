@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, ArrowLeft, ShieldCheck, Sparkles, Lock } from "lucide-react";
 
 const PAGO: Record<"mensual" | "anual", string> = {
-  mensual: "https://pay.hotmart.com/L107111884K?off=pjr5hqql",
+  mensual: "https://pay.hotmart.com/D107140120R",
   anual: "https://pay.hotmart.com/L107111884K?off=axlr8y2x",
 };
 

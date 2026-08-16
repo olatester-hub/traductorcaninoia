@@ -44,7 +44,7 @@ export function AccesoBloqueado() {
             <p className="mt-1 font-display text-2xl font-extrabold">USD 4,99</p>
             <p className="text-sm text-muted-foreground">Pago único, sin bonos.</p>
             <a
-              href="https://pay.hotmart.com/L107111884K?off=pjr5hqql"
+              href="https://pay.hotmart.com/D107140120R"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 flex min-h-11 items-center justify-center rounded-full bg-secondary px-5 text-sm font-extrabold text-secondary-foreground"
