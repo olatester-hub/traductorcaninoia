@@ -98,6 +98,15 @@ function AppLayout() {
             >
               {VERSION_LABEL[version]}
             </span>
+            {soyAdmin ? (
+              <Link
+                to="/app/admin/diagnostico"
+                className="inline-flex items-center gap-1.5 rounded-full bg-wine px-3 py-1 text-[11px] font-bold tracking-widest text-wine-foreground uppercase"
+              >
+                <Settings className="size-3" aria-hidden="true" />
+                Admin
+              </Link>
+            ) : null}
           </div>
         </div>
         <nav className="border-t border-border/60">
