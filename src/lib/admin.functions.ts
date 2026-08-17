@@ -88,7 +88,7 @@ export const listarLicencias = createServerFn({ method: "GET" })
 
 export const simularCompraHotmart = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { email: string; version: "base" | "premium"; nombre?: string }) => input)
+  .validator((input: { email: string; version: "base" | "premium"; nombre?: string }) => input)
   .handler(async ({ context, data }) => {
     const adminEmail = context.claims["email"] as string | undefined;
     requireAdmin(adminEmail);
