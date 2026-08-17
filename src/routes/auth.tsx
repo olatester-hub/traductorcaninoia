@@ -35,14 +35,17 @@ function AuthPage() {
     e.preventDefault();
     setCargando(true);
     setError(null);
+    const redirectTo =
+      typeof window !== "undefined" ? `${window.location.origin}/app` : undefined;
     const { error: err } = await supabase.auth.signInWithOtp({
       email: email.trim().toLowerCase(),
-      options: { shouldCreateUser: true },
+      options: { shouldCreateUser: true, ...(redirectTo ? { emailRedirectTo: redirectTo } : {}) },
     });
     setCargando(false);
     if (err) setError(err.message);
     else setPaso("codigo");
   }
+
 
   async function verificar(e: React.FormEvent) {
     e.preventDefault();
