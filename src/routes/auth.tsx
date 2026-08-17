@@ -35,14 +35,17 @@ function AuthPage() {
     e.preventDefault();
     setCargando(true);
     setError(null);
+    const redirectTo =
+      typeof window !== "undefined" ? `${window.location.origin}/app` : undefined;
     const { error: err } = await supabase.auth.signInWithOtp({
       email: email.trim().toLowerCase(),
-      options: { shouldCreateUser: true },
+      options: { shouldCreateUser: true, ...(redirectTo ? { emailRedirectTo: redirectTo } : {}) },
     });
     setCargando(false);
     if (err) setError(err.message);
     else setPaso("codigo");
   }
+
 
   async function verificar(e: React.FormEvent) {
     e.preventDefault();
@@ -79,8 +82,10 @@ function AuthPage() {
           Entra con tu compra
         </h1>
         <p className="mt-3 text-base text-muted-foreground">
-          Usa el mismo correo con el que compraste en Hotmart. Te enviamos un código de 6 dígitos.
+          Usa el mismo correo con el que compraste en Hotmart. Te enviamos un correo con un botón de
+          acceso directo a la app (y un código de 6 dígitos si prefieres escribirlo aquí).
         </p>
+
 
         <div className="mt-8 w-full rounded-3xl border border-border bg-card p-6 text-left">
           {paso === "email" ? (
@@ -112,8 +117,9 @@ function AuthPage() {
           ) : (
             <form onSubmit={verificar} className="grid gap-3">
               <label htmlFor="codigo" className="text-sm font-bold">
-                Código enviado a {email}
+                Revisa {email}: abre el botón del correo o escribe aquí el código
               </label>
+
               <input
                 id="codigo"
                 inputMode="numeric"
