@@ -1,8 +1,11 @@
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import logoUrl from "@/assets/logo.png";
 import { AccesoBloqueado } from "@/components/app/AccesoBloqueado";
 import { VERSION_LABEL, useLicencia } from "@/lib/version";
 import { usePerros } from "@/lib/app-store";
+import { verificarSoyAdmin } from "@/lib/admin.functions";
 import {
   Activity,
   BellRing,
@@ -13,6 +16,7 @@ import {
   LayoutDashboard,
   ListChecks,
   Scale,
+  Settings,
   Siren,
   Stethoscope,
 } from "lucide-react";
@@ -45,8 +49,18 @@ export const Route = createFileRoute("/app")({
 });
 
 function AppLayout() {
-  const { version, hydrated } = useLicencia();
+  const { version, hydrated, email: licenciaEmail } = useLicencia();
   const { perfil, lista } = usePerros();
+  const [soyAdmin, setSoyAdmin] = useState(false);
+  const fetchSoyAdmin = useServerFn(verificarSoyAdmin);
+
+  useEffect(() => {
+    if (licenciaEmail) {
+      fetchSoyAdmin()
+        .then((res) => setSoyAdmin(res.esAdmin))
+        .catch(() => setSoyAdmin(false));
+    }
+  }, [fetchSoyAdmin, licenciaEmail]);
 
   if (!hydrated) return <div className="min-h-screen bg-background" />;
   if (!version) return <AccesoBloqueado />;
@@ -84,6 +98,15 @@ function AppLayout() {
             >
               {VERSION_LABEL[version]}
             </span>
+            {soyAdmin ? (
+              <Link
+                to="/app/admin/diagnostico"
+                className="inline-flex items-center gap-1.5 rounded-full bg-wine px-3 py-1 text-[11px] font-bold tracking-widest text-wine-foreground uppercase"
+              >
+                <Settings className="size-3" aria-hidden="true" />
+                Admin
+              </Link>
+            ) : null}
           </div>
         </div>
         <nav className="border-t border-border/60">

@@ -26,6 +26,7 @@ import { Route as AppSenalesRouteImport } from './routes/app.senales'
 import { Route as AppSolucionesRouteImport } from './routes/app.soluciones'
 import { Route as AppTriajeRouteImport } from './routes/app.triaje'
 import { Route as ApiPublicHotmartRouteImport } from './routes/api/public/hotmart'
+import { Route as AppAdminDiagnosticoRouteImport } from './routes/app.admin.diagnostico'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -112,6 +113,11 @@ const ApiPublicHotmartRoute = ApiPublicHotmartRouteImport.update({
   path: '/api/public/hotmart',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppAdminDiagnosticoRoute = AppAdminDiagnosticoRouteImport.update({
+  id: '/admin/diagnostico',
+  path: '/admin/diagnostico',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -131,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/app/triaje': typeof AppTriajeRoute
   '/app/': typeof AppIndexRoute
   '/api/public/hotmart': typeof ApiPublicHotmartRoute
+  '/app/admin/diagnostico': typeof AppAdminDiagnosticoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -149,6 +156,7 @@ export interface FileRoutesByTo {
   '/app/triaje': typeof AppTriajeRoute
   '/app': typeof AppIndexRoute
   '/api/public/hotmart': typeof ApiPublicHotmartRoute
+  '/app/admin/diagnostico': typeof AppAdminDiagnosticoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -169,6 +177,7 @@ export interface FileRoutesById {
   '/app/triaje': typeof AppTriajeRoute
   '/app/': typeof AppIndexRoute
   '/api/public/hotmart': typeof ApiPublicHotmartRoute
+  '/app/admin/diagnostico': typeof AppAdminDiagnosticoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -190,6 +199,7 @@ export interface FileRouteTypes {
     | '/app/triaje'
     | '/app/'
     | '/api/public/hotmart'
+    | '/app/admin/diagnostico'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -208,6 +218,7 @@ export interface FileRouteTypes {
     | '/app/triaje'
     | '/app'
     | '/api/public/hotmart'
+    | '/app/admin/diagnostico'
   id:
     | '__root__'
     | '/'
@@ -227,6 +238,7 @@ export interface FileRouteTypes {
     | '/app/triaje'
     | '/app/'
     | '/api/public/hotmart'
+    | '/app/admin/diagnostico'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -360,6 +372,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHotmartRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/admin/diagnostico': {
+      id: '/app/admin/diagnostico'
+      path: '/admin/diagnostico'
+      fullPath: '/app/admin/diagnostico'
+      preLoaderRoute: typeof AppAdminDiagnosticoRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -374,6 +393,7 @@ interface AppRouteChildren {
   AppSolucionesRoute: typeof AppSolucionesRoute
   AppTriajeRoute: typeof AppTriajeRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppAdminDiagnosticoRoute: typeof AppAdminDiagnosticoRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -387,6 +407,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppSolucionesRoute: AppSolucionesRoute,
   AppTriajeRoute: AppTriajeRoute,
   AppIndexRoute: AppIndexRoute,
+  AppAdminDiagnosticoRoute: AppAdminDiagnosticoRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
