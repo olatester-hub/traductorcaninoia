@@ -1,69 +1,39 @@
-# Cómo seguir: recomendación
+# Plan: Pruebas funcionales del flujo de venta completo sin tarjeta real
 
-**Recomendación: seguir en este mismo proyecto.** No abras otro proyecto ni otro chat.
+## Objetivo
+Permitirte probar el flujo completo de venta —landing → checkout Hotmart → webhook → licencia → login → app— sin usar una tarjeta bancaria real, usando cupones de 100% de descuento en Hotmart y un panel de diagnóstico interno.
 
-Motivos concretos:
+## Pasos a implementar
 
-- El sistema de diseño (tokens crema/ámbar/burdeos, tipografía, chips con íconos) ya está en `src/styles.css` y en los componentes de `src/components/landing/*`. En un proyecto nuevo habría que rehacerlo.
-- El logo transparente, el favicon y las imágenes generadas ya viven acá.
-- La base de conocimiento del diagnóstico (`src/lib/diagnostico.ts`) y el `BreedPicker` son exactamente el núcleo del producto premium: la app se construye encima, no desde cero.
-- El embudo comercial necesita continuidad: landing → `/checkout` → app. Si la app vive en otro dominio, se rompe la venta, el login y la medición.
-- El contexto de este chat (decisiones de copy, precios, planes, bonos) no se transfiere a otro chat. Referenciar otro proyecto solo permite leer archivos, no heredar el criterio.
+### 1. Configurar cupones de 100% en Hotmart
+- Crear un cupón de descuento del 100% para el producto de la **Versión Básica**.
+- Crear otro cupón del 100% para el producto de la **Versión Completa / Premium**.
+- Configurar los cupones para uso ilimitado (o con un límite alto) durante la fase de pruebas.
+- Anotar los códigos de cupón para usarlos en las pruebas.
 
-Cuándo *sí* convendría separar: solo si la app fuera un producto distinto, con otra marca o vendido aparte. No es el caso.
+### 2. Verificar la configuración del webhook en Hotmart
+- Asegurar que la URL del webhook apunte a `/api/public/hotmart` del entorno publicado o de preview.
+- Confirmar que el `HOTMART_HOTTOK` configurado en el proyecto coincide con el de Hotmart.
+- Verificar que los eventos `PURCHASE_APPROVED`, `PURCHASE_COMPLETE`, `PURCHASE_REFUNDED` y `SUBSCRIPTION_CANCELLATION` estén activos.
 
-Sobre el prompt que tienes listo: pégalo en este mismo chat. Lo integro al plan en vez de arrancar un desarrollo paralelo.
+### 3. Construir un panel de diagnóstico interno en la app
+- Crear una ruta protegida `/app/admin/diagnostico` accesible solo para emails autorizados.
+- Mostrar:
+  - Estado de la configuración del webhook (Hottok, IDs de productos).
+  - Últimos eventos recibidos desde Hotmart.
+  - Licencias activas/revocadas en la base de datos.
+  - Botón para simular manualmente un evento de compra aprobada (como respaldo).
 
-## Arquitectura propuesta
+### 4. Documentar el flujo de prueba paso a paso
+- Instrucciones para aplicar el cupón 100% en el checkout de Hotmart.
+- Qué datos de comprador usar (emails de prueba).
+- Cómo verificar que el webhook llegó y creó la licencia.
+- Cómo iniciar sesión con el mismo email de la compra de prueba.
+- Cómo confirmar que la versión correcta se desbloqueó en `/app`.
 
-```text
-/                     landing de ventas (ya existe)
-/checkout             resumen de plan (ya existe)
-/auth                 registro / inicio de sesión
-/app                  panel del usuario (protegido)
-/app/perros           perfiles de perro (multi-perro)
-/app/diagnostico      diagnóstico completo con IA
-/app/plan/:id         plan de acción con seguimiento
-/app/chat             asistente IA 24/7
-/app/calendario       Bono 1 — calendario de salud
-/app/juegos           Bono 2 — biblioteca de juegos
-```
+### 5. Limpieza post-prueba
+- Instrucciones para eliminar o desactivar los cupones 100% antes de lanzar a producción.
+- Script o panel para revocar licencias de prueba si es necesario.
 
-La landing queda intacta; la app vive bajo `/app` reutilizando los mismos tokens y componentes.
-
-## Fases
-
-**Fase 1 — Backend y cuentas**
-Activar Lovable Cloud. Registro/login con email, perfiles de usuario, tabla de perros, tablas de diagnósticos y planes, con seguridad por usuario. Ruta `/app` protegida.
-
-**Fase 2 — Diagnóstico con IA (el corazón)**
-Reemplazar el simulador estático por un diagnóstico real con IA: mismo formulario, misma estructura de salida (interpretación, causa raíz emocional, errores comunes, plan de acción, señales de progreso), pero generado y personalizado por perro. `src/lib/diagnostico.ts` pasa a ser el prompt maestro que garantiza calidad y tono. Se guarda el historial.
-
-**Fase 3 — Plan de acción vivo**
-Cada plan con pasos accionables, check diario, racha, progreso semanal y reevaluación. Es lo que convierte una compra en una suscripción que se retiene.
-
-**Fase 4 — Asistente IA 24/7**
-Chat con memoria del perfil del perro y de los diagnósticos previos.
-
-**Fase 5 — Bonos**
-Calendario inteligente de salud (vacunas, desparasitación, recordatorios) y biblioteca de juegos filtrable por edad, energía y espacio.
-
-**Fase 6 — Monetización y cierre del embudo**
-Conectar el pago real (Paddle recomendado), muro de suscripción, diagnóstico gratuito como gancho hacia el registro, y estados de prueba/garantía de 7 días.
-
-## Orden de trabajo sugerido
-
-Fase 1 y 2 primero: con cuentas + un diagnóstico IA real ya tienes un producto vendible. Las fases 3–5 aumentan retención. La 6 se activa cuando quieras cobrar.
-
-## Detalles técnicos
-
-- Rutas nuevas en `src/routes/app/*` con layout protegido; la landing sigue en `src/routes/index.tsx`.
-- Lovable Cloud para base de datos, autenticación y funciones de servidor; políticas de acceso por usuario en cada tabla.
-- IA vía la pasarela integrada (sin claves propias), con salida estructurada validada para que el diagnóstico nunca rompa la interfaz.
-- Componentes de app en `src/components/app/*`, reutilizando `BreedPicker`, chips con íconos Lucide y los tokens existentes.
-- `head()` propio por ruta y `noindex` en las rutas privadas.
-- Todo mobile-first, igual que la landing.
-
-## Siguiente paso
-
-Pega acá tu prompt del producto. Con eso ajusto el alcance de las fases 2–5 y empezamos por la Fase 1.
+## Resultado esperado
+Podrás realizar compras de prueba reales en Hotmart sin pagar dinero, validando que el webhook crea la licencia correcta y que el usuario puede entrar a la app con la versión correspondiente.
