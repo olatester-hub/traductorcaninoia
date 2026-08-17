@@ -117,8 +117,9 @@ function AuthPage() {
           ) : (
             <form onSubmit={verificar} className="grid gap-3">
               <label htmlFor="codigo" className="text-sm font-bold">
-                Código enviado a {email}
+                Revisa {email}: abre el botón del correo o escribe aquí el código
               </label>
+
               <input
                 id="codigo"
                 inputMode="numeric"
