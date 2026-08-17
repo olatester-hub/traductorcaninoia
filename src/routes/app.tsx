@@ -1,8 +1,11 @@
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import logoUrl from "@/assets/logo.png";
 import { AccesoBloqueado } from "@/components/app/AccesoBloqueado";
 import { VERSION_LABEL, useLicencia } from "@/lib/version";
 import { usePerros } from "@/lib/app-store";
+import { verificarSoyAdmin } from "@/lib/admin.functions";
 import {
   Activity,
   BellRing,
@@ -13,6 +16,7 @@ import {
   LayoutDashboard,
   ListChecks,
   Scale,
+  Settings,
   Siren,
   Stethoscope,
 } from "lucide-react";
