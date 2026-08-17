@@ -49,8 +49,18 @@ export const Route = createFileRoute("/app")({
 });
 
 function AppLayout() {
-  const { version, hydrated } = useLicencia();
+  const { version, hydrated, email: licenciaEmail } = useLicencia();
   const { perfil, lista } = usePerros();
+  const [soyAdmin, setSoyAdmin] = useState(false);
+  const fetchSoyAdmin = useServerFn(verificarSoyAdmin);
+
+  useEffect(() => {
+    if (licenciaEmail) {
+      fetchSoyAdmin()
+        .then((res) => setSoyAdmin(res.esAdmin))
+        .catch(() => setSoyAdmin(false));
+    }
+  }, [fetchSoyAdmin, licenciaEmail]);
 
   if (!hydrated) return <div className="min-h-screen bg-background" />;
   if (!version) return <AccesoBloqueado />;
