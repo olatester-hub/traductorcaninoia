@@ -88,9 +88,12 @@ function DiagnosticoPage() {
     setSimulando(true);
     setMensaje(null);
     try {
-      const res = await fnSimular({
-        data: { email: emailSimular, version: versionSimular, nombre: nombreSimular || undefined },
-      });
+      const payload: { email: string; version: "base" | "premium"; nombre?: string } = {
+        email: emailSimular,
+        version: versionSimular,
+      };
+      if (nombreSimular.trim()) payload.nombre = nombreSimular.trim();
+      const res = await fnSimular({ data: payload });
       setMensaje({
         tipo: "ok",
         texto: `Licencia ${res.version} creada para ${res.email} (${res.transaction}).`,
