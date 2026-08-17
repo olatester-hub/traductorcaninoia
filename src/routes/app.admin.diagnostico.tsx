@@ -419,7 +419,7 @@ function EstadoCard({
   icon: Icon,
   detail,
 }: {
-  ok?: boolean;
+  ok: boolean | undefined;
   label: string;
   icon: typeof Activity;
   detail: string;
