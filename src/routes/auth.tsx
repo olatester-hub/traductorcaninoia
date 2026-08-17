@@ -82,8 +82,10 @@ function AuthPage() {
           Entra con tu compra
         </h1>
         <p className="mt-3 text-base text-muted-foreground">
-          Usa el mismo correo con el que compraste en Hotmart. Te enviamos un código de 6 dígitos.
+          Usa el mismo correo con el que compraste en Hotmart. Te enviamos un correo con un botón de
+          acceso directo a la app (y un código de 6 dígitos si prefieres escribirlo aquí).
         </p>
+
 
         <div className="mt-8 w-full rounded-3xl border border-border bg-card p-6 text-left">
           {paso === "email" ? (
